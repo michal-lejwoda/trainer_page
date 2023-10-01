@@ -141,6 +141,7 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     # db.refresh(db_work_hour)
     return db_work_hour
 
+
 @app.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
@@ -229,13 +230,6 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
     trainer_model.address_id = address_model.id
     db.add(trainer_model)
     db.commit()
-
-
-# async def get_trainers(skip: int=0, limit: int=100, db: Session = Depends(get_db())):
-#     db_trainers = get_trainers(db, skip, limit)
-#     return db_trainers
-
-# return {"message": "Hello World"}
 
 
 @app.get("/hello/{name}")
