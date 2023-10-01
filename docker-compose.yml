@@ -1,0 +1,39 @@
+version: '3.7'
+
+volumes:
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
+
+
+services:
+  db:
+    image: postgres:15.3
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    networks:
+      - backend
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    ports:
+      - "5432:5432"
+  trainer_web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: trainer_web
+    volumes:
+      - .:/code:z
+    depends_on:
+      - db
+    links:
+      - "db:db"
+    networks:
+      - backend
+    ports:
+      - "80:80"
+
+networks:
+  backend:
