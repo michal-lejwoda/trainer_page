@@ -1,0 +1,58 @@
+version: '3.8'
+
+volumes:
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
+
+services:
+  trainer_db:
+    image: postgres:15.3
+    container_name: trainer_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    networks:
+      - backend
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    ports:
+      - "5432:5432"
+
+  trainer_frontend:
+    image: vite-docker-container
+    stdin_open: true
+    container_name: trainer_frontend
+    build:
+      context: .
+      dockerfile: ./compose/local/trainer_frontend/Dockerfile
+    links:
+      - "trainer_db:trainer_db"
+    depends_on:
+      - trainer_db
+    networks:
+      - backend
+#    command: ./start_scrapper_frontend
+    volumes:
+      - "./trainer_page:/usr/src/frontend:delegated"
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  trainer_backend:
+    container_name: trainer_backend
+    build:
+      context: .
+      dockerfile: ./compose/local/trainer_backend/Dockerfile
+#    command: /start_trainer_backend
+    links:
+      - "trainer_db:trainer_db"
+    networks:
+      - backend
+    ports:
+      - "8000:80"
+      #HOST:CONTAINER
+
+networks:
+  backend:
