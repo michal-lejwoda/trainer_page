@@ -10,7 +10,7 @@ function SystemReservation() {
     const [trainer, setTrainer] = useState({})
 
     useEffect(() => {
-        mutateTrainersData("", {
+        mutateTrainersData(undefined, {
             onSuccess: (data) => {
                 if(data.length > 0){
                     setTrainer(data[0])
@@ -35,8 +35,7 @@ function SystemReservation() {
         mutate: mutatePlanData
     } = useGetTrainerPlan()
 
-    console.log(trainersData)
-    console.log(trainerPlanData)
+
     const selectHour = (e) => {
         console.log("selected hour")
         console.log(e)
