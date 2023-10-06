@@ -7,10 +7,18 @@ import Select from 'react-select';
 function SystemReservation() {
     const [value, onChange] = useState(new Date());
     const minDate = new Date()
+    const [trainer, setTrainer] = useState({})
 
     useEffect(() => {
-        mutateTrainersData()
+        mutateTrainersData("", {
+            onSuccess: (data) => {
+                if(data.length > 0){
+                    setTrainer(data[0])
+                }
+            }
+        })
     }, [])
+
 
     useEffect(() => {
         mutatePlanData({"trainer_id": "1"})
@@ -19,7 +27,6 @@ function SystemReservation() {
     const {
         data: trainersData,
         mutate: mutateTrainersData,
-        // isLoading: isLoadingTrainersData
     } = useGetTrainers()
 
 
@@ -53,7 +60,7 @@ function SystemReservation() {
                     Trenera</label>
                 {trainersData &&
                     <Select
-
+                        defaultValue={trainer}
                         // value={trainersData[0]}
                         // onChange={this.handleChange}
                         options={trainersData}
