@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Date, Enum, Time
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Date, Float, Time
 from .database import Base
 from sqlalchemy.orm import relationship
 
@@ -18,6 +18,7 @@ class WorkHours(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
+    day = Column(Date)
     start_time = Column(Time)
     end_time = Column(Time)
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
@@ -87,5 +88,13 @@ class SmallBreak(Base):
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
     trainer_small_break = relationship("Trainer", back_populates="small_break")
 
+
+class Plan(Base):
+    __tablename__ = "plans"
+    id = Column(Integer, nullable=False, primary_key=True, index=True)
+    title = Column(String)
+    price = Column(Float)
+    currency = Column(String)
+    trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
 
 

@@ -77,6 +77,7 @@ class WorkHourBase(BaseModel):
 
 
 class WorkHourCreate(BaseModel):
+    day: datetime.date
     start_time: datetime.time
     end_time: datetime.time
     trainer_id: int
@@ -85,6 +86,13 @@ class WorkHourCreate(BaseModel):
     class Config:
         from_attributes = True
 
+class WorkHourGet(BaseModel):
+    trainer_id: int
+    is_active: bool
+    day: datetime.date
+
+    class Config:
+        from_attributes = True
 
 class TrainerHolidayBase(BaseModel):
     start_holidays: datetime.date
@@ -115,4 +123,14 @@ class TimeDiff(BaseModel):
 class DateRange(BaseModel):
     start_time: datetime.date
     end_time: datetime.date
+    trainer_id: int
+
+
+class TrainerPlans(BaseModel):
+    title: str
+    price: float
+    currency: str
+    trainer_id: int
+
+class TrainerId(BaseModel):
     trainer_id: int

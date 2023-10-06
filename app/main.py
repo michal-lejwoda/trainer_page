@@ -1,14 +1,16 @@
 import datetime
 from typing import Any, List
-from sqlalchemy import func
+
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.schemas import TrainerBase, ReservationCreate, ReservationList, WorkingHourBase, TrainerHolidayBase, \
-    SmallBreakBase, TimeDiff, WorkHourBase, DateRange, WorkHourCreate
+    SmallBreakBase, TimeDiff, DateRange, WorkHourCreate, WorkHourGet, TrainerPlans, TrainerId
 from .database import engine, SessionLocal, Base
 from .helpers import daterange, hour_range
-from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours
+from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours, Plan
 from .schemas import AddressBase
 
 app = FastAPI()
@@ -22,6 +24,17 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/reservation")
@@ -148,7 +161,7 @@ def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends
     for single_date in daterange(date_range.start_time, date_range.end_time):
         hours_based_on_weekday = [x for x in default_hours if x.weekday == single_date.weekday()]
         for hours in hours_based_on_weekday:
-            for hour in hour_range(hours.start_hour, hours.end_hour, date_range.trainer_id):
+            for hour in hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id):
                 create_work_hour(hour, db)
 
 
@@ -235,3 +248,28 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
 @app.get("/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
+
+
+@app.post("/get_day_work_hours")
+async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_db)):
+    trainer_work_hours = db.query(WorkHours).filter(WorkHours.day == work_hours.day,
+                                                    WorkHours.trainer_id == work_hours.trainer_id,
+                                                    WorkHours.is_active == work_hours.is_active).all()
+    return trainer_work_hours
+
+
+@app.post("/get_trainer_plans")
+async def get_trainer_plans(trainer_model: TrainerId, db: Session = Depends(get_db)):
+    print("trainer_id")
+    print(trainer_model.trainer_id)
+    trainer_plans = db.query(Plan).filter(Plan.trainer_id == trainer_model.trainer_id).all()
+    return trainer_plans
+
+
+@app.post("/create_trainer_plan")
+async def create_trainer_plan(plan: TrainerPlans, db: Session = Depends(get_db)):
+    dumped_trainer_plan_model = plan.model_dump()
+    db_trainer_plan = Plan(**dumped_trainer_plan_model)
+    db.add(db_trainer_plan)
+    db.commit()
+    return db_trainer_plan

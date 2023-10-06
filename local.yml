@@ -34,7 +34,7 @@ services:
       - backend
 #    command: ./start_scrapper_frontend
     volumes:
-      - "./trainer_page:/usr/src/frontend:delegated"
+      - "./trainer_page:/usr/src/frontend"
     ports:
       - "3000:3000"
     environment:
@@ -46,6 +46,8 @@ services:
       context: .
       dockerfile: ./compose/local/trainer_backend/Dockerfile
 #    command: /start_trainer_backend
+    volumes:
+      - ".:/code:z"
     links:
       - "trainer_db:trainer_db"
     networks:

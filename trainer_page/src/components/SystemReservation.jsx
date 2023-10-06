@@ -1,11 +1,35 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Calendar from "react-calendar";
-// import moment from "moment/moment.js";
 import '../css/react-calendar.css'
+import {useGetTrainerPlan, useGetTrainers} from "./mutations.jsx";
+import Select from 'react-select';
 
 function SystemReservation() {
     const [value, onChange] = useState(new Date());
     const minDate = new Date()
+
+    useEffect(() => {
+        mutateTrainersData()
+    }, [])
+
+    useEffect(() => {
+        mutatePlanData({"trainer_id": "1"})
+    }, [])
+
+    const {
+        data: trainersData,
+        mutate: mutateTrainersData,
+        // isLoading: isLoadingTrainersData
+    } = useGetTrainers()
+
+
+    const {
+        data: trainerPlanData,
+        mutate: mutatePlanData
+    } = useGetTrainerPlan()
+
+    console.log(trainersData)
+    console.log(trainerPlanData)
     const selectHour = (e) => {
         console.log("selected hour")
         console.log(e)
@@ -27,6 +51,14 @@ function SystemReservation() {
             <div>
                 <label htmlFor="trainers" className="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Wybierz
                     Trenera</label>
+                {trainersData &&
+                    <Select
+
+                        // value={trainersData[0]}
+                        // onChange={this.handleChange}
+                        options={trainersData}
+                    />
+                }
                 <select id="trainers"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="US">Michał</option>
