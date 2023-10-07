@@ -1,5 +1,5 @@
 import {useMutation} from "react-query";
-import {getTrainerPlan, getTrainers} from "./api.jsx";
+import {getDayWorkHours, getTrainerPlan, getTrainers} from "./api.jsx";
 
 export const useGetTrainers = () => {
     return useMutation(getTrainers)
@@ -7,4 +7,8 @@ export const useGetTrainers = () => {
 
 export const useGetTrainerPlan = () =>{
     return useMutation(getTrainerPlan)
+}
+
+export const useGetDayWorkHours = () =>{
+    return useMutation(getDayWorkHours)
 }
