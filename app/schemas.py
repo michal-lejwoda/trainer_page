@@ -13,6 +13,8 @@ class AddressBase(BaseModel):
 
     class Config:
         from_attributes = True
+
+
 class TrainerBase(BaseModel):
     id: int
     name: str
@@ -38,6 +40,7 @@ class Trainer(TrainerBase):
 
 class ReservationBase(BaseModel):
     title: str
+
 
 class ReservationList(ReservationBase):
     start_time: datetime.datetime
@@ -86,6 +89,7 @@ class WorkHourCreate(BaseModel):
     class Config:
         from_attributes = True
 
+
 class WorkHourGet(BaseModel):
     trainer_id: int
     is_active: bool
@@ -93,6 +97,7 @@ class WorkHourGet(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class TrainerHolidayBase(BaseModel):
     start_holidays: datetime.date
@@ -114,11 +119,13 @@ class SmallBreakBase(BaseModel):
     class Config:
         from_attributes = True
 
+
 class TimeDiff(BaseModel):
     start_time: datetime.datetime
     end_time: datetime.datetime
     interval: int
     trainer_id: int
+
 
 class DateRange(BaseModel):
     start_time: datetime.date
@@ -131,6 +138,7 @@ class TrainerPlans(BaseModel):
     price: float
     currency: str
     trainer_id: int
+
 
 class TrainerId(BaseModel):
     trainer_id: int
@@ -151,3 +159,23 @@ class GetWorkHours(BaseModel):
     @field_validator('end_time')
     def parse_end_time(cls, v):
         return v.strftime('%H:%M')
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str or None = None
+
+
+class User(BaseModel):
+    username: str
+    email: str or None = None
+    full_name: str or None = None
+    disabled: bool or None = None
+
+
+class UserInDb(User):
+    hashed_password: str
