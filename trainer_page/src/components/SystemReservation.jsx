@@ -6,12 +6,44 @@ import Select from 'react-select';
 
 function SystemReservation() {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [trainer, setTrainer] = useState({})
-    const [trainerPlan, setTrainerPlan] = useState({})
+    const [trainer, setTrainer] = useState(null)
+    const [trainerPlan, setTrainerPlan] = useState(null)
 
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
+
+    const handleCalendarDateChange = (date) => {
+        setCurrentDate(date)
+        if (trainer !== null && trainerPlan !== null) {
+            const work_hours_args = {
+                "trainer_id": trainerPlan.id, "is_active": true,
+                "day": date.toISOString().split('T')[0]
+            }
+            mutateWorkHoursData(work_hours_args)
+        }
+    }
+
+    const handleTrainerDataChange = (trainer_data) => {
+        setTrainer(trainer_data)
+        mutatePlanData({"trainer_id": trainer_data.id}, {
+            onSuccess: (plan_data) => {
+                if (plan_data.length > 0) {
+                    setTrainerPlan(plan_data[0])
+                    const work_hours_args = {
+                        "trainer_id": plan_data[0].id, "is_active": true,
+                        "day": currentDate.toISOString().split('T')[0]
+                    }
+                    mutateWorkHoursData(work_hours_args)
+                }else{
+                    setTrainerPlan(null)
+                }
+            }
+        })
+
+    }
+
+
     useEffect(() => {
         mutateTrainersData(undefined, {
             onSuccess: (data) => {
@@ -25,10 +57,10 @@ function SystemReservation() {
                                     "trainer_id": plan_data[0].id, "is_active": true,
                                     "day": currentDate.toISOString().split('T')[0]
                                 }
-                                console.log("work_hours_args")
-                                console.log(work_hours_args)
                                 mutateWorkHoursData(work_hours_args)
-
+                            }
+                            else{
+                                setTrainerPlan(null)
                             }
                         }
                     })
@@ -55,11 +87,6 @@ function SystemReservation() {
         data: dayWorkHoursData,
         mutate: mutateWorkHoursData
     } = useGetDayWorkHours()
-    console.log("dayWorkHoursData")
-    console.log(dayWorkHoursData)
-
-    console.log("trainer_plan")
-    console.log(trainerPlan)
 
     const selectHour = (e) => {
         console.log("selected hour")
@@ -85,7 +112,7 @@ function SystemReservation() {
                     <Select
                         defaultValue={trainer}
                         // value={trainersData[0]}
-                        // onChange={this.handleChange}
+                        onChange={handleTrainerDataChange}
                         options={trainersData}
                     />
                 }
@@ -117,7 +144,9 @@ function SystemReservation() {
 
                 <Calendar prev2Label={null} next2Label={null} view={"month"} minDate={minDate}
                           maxDate={maxDate}
-                          onChange={setCurrentDate} value={currentDate}/>
+                          onChange={handleCalendarDateChange}
+                    // onChange={setCurrentDate}
+                          value={currentDate}/>
                 <div className="mt-5 text-lg font-semibold">
                     <h2>Dostępne Terminy:</h2>
                 </div>
