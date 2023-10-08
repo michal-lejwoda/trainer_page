@@ -143,6 +143,7 @@ class GetWorkHours(BaseModel):
     day: datetime.date
     trainer_id: int
     is_active: bool
+
     @field_validator('start_time')
     def parse_start_time(cls, v):
         return v.strftime('%H:%M')
