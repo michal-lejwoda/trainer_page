@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator, field_validator
 
 from app.models import Day_of_Week
 
@@ -134,3 +134,19 @@ class TrainerPlans(BaseModel):
 
 class TrainerId(BaseModel):
     trainer_id: int
+
+
+class GetWorkHours(BaseModel):
+    id: int
+    start_time: datetime.time
+    end_time: datetime.time
+    day: datetime.date
+    trainer_id: int
+    is_active: bool
+    @field_validator('start_time')
+    def parse_start_time(cls, v):
+        return v.strftime('%H:%M')
+
+    @field_validator('end_time')
+    def parse_end_time(cls, v):
+        return v.strftime('%H:%M')

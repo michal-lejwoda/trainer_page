@@ -7,7 +7,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.schemas import TrainerBase, ReservationCreate, ReservationList, WorkingHourBase, TrainerHolidayBase, \
-    SmallBreakBase, TimeDiff, DateRange, WorkHourCreate, WorkHourGet, TrainerPlans, TrainerId
+    SmallBreakBase, TimeDiff, DateRange, WorkHourCreate, WorkHourGet, TrainerPlans, TrainerId, GetWorkHours
 from .database import engine, SessionLocal, Base
 from .helpers import daterange, hour_range
 from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours, Plan
@@ -250,18 +250,17 @@ async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
 
-@app.post("/get_day_work_hours")
+@app.post("/get_day_work_hours", response_model=List[GetWorkHours])
 async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_db)):
     trainer_work_hours = db.query(WorkHours).filter(WorkHours.day == work_hours.day,
                                                     WorkHours.trainer_id == work_hours.trainer_id,
                                                     WorkHours.is_active == work_hours.is_active).all()
+
     return trainer_work_hours
 
 
 @app.post("/get_trainer_plans")
 async def get_trainer_plans(trainer_model: TrainerId, db: Session = Depends(get_db)):
-    print("trainer_id")
-    print(trainer_model.trainer_id)
     trainer_plans = db.query(Plan).filter(Plan.trainer_id == trainer_model.trainer_id).all()
     return trainer_plans
 
