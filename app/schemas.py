@@ -1,8 +1,10 @@
 import datetime
+import re
 from typing import Optional
 
 from pydantic import BaseModel, Field, validator, field_validator
 from pydantic_core import PydanticCustomError
+from validate_email import validate_email
 
 from app.models import Day_of_Week
 
@@ -178,7 +180,7 @@ class UserBaseSchema(BaseModel):
     phone_number: str
 
     @field_validator('name')
-    def parse_name(cls, name):
+    def name_validator(cls, name):
         if len(name) < 3:
             raise PydanticCustomError(
                 'validation_error',
@@ -187,7 +189,7 @@ class UserBaseSchema(BaseModel):
             )
 
     @field_validator('last_name')
-    def parse_last_name(cls, last_name):
+    def last_name_validator(cls, last_name):
         if len(last_name) < 3:
             raise PydanticCustomError(
                 'validation_error',
@@ -195,7 +197,28 @@ class UserBaseSchema(BaseModel):
                 # {'number': v},
             )
 
-    # @field_validator('phone_number')
+    @field_validator('email')
+    def email_validator(cls, email):
+        check_email = validate_email(email)
+        if check_email is False:
+            raise PydanticCustomError(
+                'validation_error',
+                'Email is incorrect',
+                # {'number': v},
+            )
+
+        import re
+    @field_validator('phone_number')
+    def phone_number_validator(cls, phone_number):
+        pattern = re.compile("^\\+?[1-9][0-9]{7,14}$", re.IGNORECASE)
+        if pattern.match(phone_number) is None:
+            raise PydanticCustomError(
+                'validation_error',
+                'Phone number is incorrect',
+                # {'number': v},
+            )
+
+        # @field_validator('phone_number')
     # def parse_phone_number(cls, phone_number):
     #     print(phone_number)
     #     if len(phone_number) == 9:
