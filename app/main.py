@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, List
+from typing import Any, List, Annotated
 
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -105,15 +105,6 @@ def list_trainers(db: Session = Depends(get_db)) -> Any:
     return db.query(Trainer).all()
 
 
-@app.post("/trainer", response_model=None)
-def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
-    # return "Create Trainer"
-    trainer_model = Trainer()
-    trainer_model.name = trainer.name
-    trainer_model.last_name = trainer.last_name
-    db.add(trainer_model)
-    db.commit()
-    return trainer
 
 
 @app.get("/get_all_working_hours")
@@ -360,6 +351,31 @@ async def read_users_me(current_user: UserBaseSchema = Depends(get_current_activ
 async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
     return [{"item_id": 1, "owner": current_user}]
 
-@app.post("/register")
-async def register_user(user: UserBaseSchema, db: Session = Depends(get_db)):
+@app.post("/register_user", response_model=None)
+def register_user(user: UserBaseSchema,
+                        db: Session = Depends(get_db)
+                        ):
+    print("user")
+    print(user)
+    print(user.password)
+    hashed = get_password_hash(user.password)
+    print("hashed")
+    print(hashed)
+    # payload = jwt.decode(user.password, SECRET_KEY, algorithms=[ALGORITHM])
+    # print("payload")
+    # print(payload)
     return [{"item_id": 1}]
+
+@app.post("/trainer", response_model=None)
+def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
+    trainer_model = Trainer()
+    trainer_model.name = trainer.name
+    trainer_model.last_name = trainer.last_name
+    db.add(trainer_model)
+    db.commit()
+    return trainer
+
+
+@app.get("/items/")
+async def read_items(token: Annotated[str, Depends(oauth_2_scheme)]):
+    return {"token": token}

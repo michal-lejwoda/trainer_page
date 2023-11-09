@@ -178,6 +178,10 @@ class UserBaseSchema(BaseModel):
     last_name: str
     email: str
     phone_number: str
+    password: str
+
+    class Config:
+        from_attributes = True
 
     @field_validator('name')
     def name_validator(cls, name):
@@ -187,6 +191,7 @@ class UserBaseSchema(BaseModel):
                 'name has less than 3 letters!',
                 # {'number': v},
             )
+        return name
 
     @field_validator('last_name')
     def last_name_validator(cls, last_name):
@@ -196,6 +201,7 @@ class UserBaseSchema(BaseModel):
                 'name has less than 3 letters!',
                 # {'number': v},
             )
+        return last_name
 
     @field_validator('email')
     def email_validator(cls, email):
@@ -206,8 +212,7 @@ class UserBaseSchema(BaseModel):
                 'Email is incorrect',
                 # {'number': v},
             )
-
-        import re
+        return email
     @field_validator('phone_number')
     def phone_number_validator(cls, phone_number):
         pattern = re.compile("^\\+?[1-9][0-9]{7,14}$", re.IGNORECASE)
@@ -215,19 +220,25 @@ class UserBaseSchema(BaseModel):
             raise PydanticCustomError(
                 'validation_error',
                 'Phone number is incorrect',
-                # {'number': v},
             )
+        return phone_number
+    #
+    @field_validator('password')
+    def password_validator(cls, password):
+        if len(password) < 5:
+            raise PydanticCustomError(
+                'validation_error',
+                'Password is too short',
 
-        # @field_validator('phone_number')
-    # def parse_phone_number(cls, phone_number):
-    #     print(phone_number)
-    #     if len(phone_number) == 9:
-    #         return True
-    #     else:
-    #         return False
+            )
+        if len(password) > 100:
+            raise PydanticCustomError(
+                'validation_error',
+                'Password is too long',
 
-    class Config:
-        from_attributes = True
+            )
+        return password
+
 
 
 class UserInDb(UserBaseSchema):

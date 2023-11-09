@@ -109,3 +109,4 @@ class User(Base):
     email = Column(String)
     last_name = Column(String)
     phone_number = Column(String)
+    password = Column(String)
