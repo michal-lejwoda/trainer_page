@@ -3,7 +3,7 @@ from typing import Any, List
 
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from sqlalchemy import func
@@ -12,7 +12,7 @@ from starlette import status
 
 from app.schemas import TrainerBase, ReservationCreate, ReservationList, WorkingHourBase, TrainerHolidayBase, \
     SmallBreakBase, TimeDiff, DateRange, WorkHourCreate, WorkHourGet, TrainerPlans, TrainerId, GetWorkHours, UserInDb, \
-    TokenData
+    TokenData, Token, UserBaseSchema
 from .database import engine, SessionLocal, Base
 from .helpers import daterange, hour_range
 from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours, Plan
@@ -191,8 +191,6 @@ def create_small_break(small_break: SmallBreakBase, db: Session = Depends(get_db
 
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
     dumped_hour_model = hour_data.model_dump()
-    print("dumped_hour_model")
-    print(dumped_hour_model)
     db_work_hour = WorkHours(**dumped_hour_model)
     db.add(db_work_hour)
     db.commit()
@@ -340,3 +338,28 @@ async def get_current_active_user(current_user: UserInDb = Depends(get_current_u
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive User")
     return current_user
+
+
+@app.post("/token", response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(get_db(), form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate": "Bearer"})
+    access_token_expires = datetime.timedelta(minutes=80)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@app.get("users/me/", response_model=UserBaseSchema)
+async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
+    return current_user
+
+@app.get("users/me/items")
+async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
+    return [{"item_id": 1, "owner": current_user}]
+
+@app.post("/register")
+async def register_user(user: UserBaseSchema, db: Session = Depends(get_db)):
+    return [{"item_id": 1}]

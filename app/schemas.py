@@ -2,6 +2,7 @@ import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field, validator, field_validator
+from pydantic_core import PydanticCustomError
 
 from app.models import Day_of_Week
 
@@ -170,12 +171,42 @@ class TokenData(BaseModel):
     username: str or None = None
 
 
-class User(BaseModel):
-    username: str
-    email: str or None = None
-    full_name: str or None = None
-    disabled: bool or None = None
+class UserBaseSchema(BaseModel):
+    name: str
+    last_name: str
+    email: str
+    phone_number: str
+
+    @field_validator('name')
+    def parse_name(cls, name):
+        if len(name) < 3:
+            raise PydanticCustomError(
+                'validation_error',
+                'name has less than 3 letters!',
+                # {'number': v},
+            )
+
+    @field_validator('last_name')
+    def parse_last_name(cls, last_name):
+        if len(last_name) < 3:
+            raise PydanticCustomError(
+                'validation_error',
+                'name has less than 3 letters!',
+                # {'number': v},
+            )
+
+    # @field_validator('phone_number')
+    # def parse_phone_number(cls, phone_number):
+    #     print(phone_number)
+    #     if len(phone_number) == 9:
+    #         return True
+    #     else:
+    #         return False
+
+    class Config:
+        from_attributes = True
 
 
-class UserInDb(User):
+class UserInDb(UserBaseSchema):
     hashed_password: str
+
