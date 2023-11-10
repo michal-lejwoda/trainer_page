@@ -1,4 +1,5 @@
 import datetime
+from contextvars import ContextVar
 from typing import Any, List, Annotated
 
 from fastapi import FastAPI, Depends, HTTPException
@@ -12,10 +13,10 @@ from starlette import status
 
 from app.schemas import TrainerBase, ReservationCreate, ReservationList, WorkingHourBase, TrainerHolidayBase, \
     SmallBreakBase, TimeDiff, DateRange, WorkHourCreate, WorkHourGet, TrainerPlans, TrainerId, GetWorkHours, UserInDb, \
-    TokenData, Token, UserBaseSchema
+    TokenData, Token, UserBaseSchema, UserLogin
 from .database import engine, SessionLocal, Base
 from .helpers import daterange, hour_range
-from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours, Plan
+from .models import Trainer, Address, WorkingHour, TrainerHoliday, SmallBreak, WorkHours, Plan, User
 from .schemas import AddressBase
 
 
@@ -28,6 +29,13 @@ app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -36,20 +44,8 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-
-def get_user(db, username: str):
-    if username in db:
-        user_data = db[username]
-        return UserInDb(**user_data)
-
-
-def authenticate_user(db, username: str, password: str):
-    user = get_user(db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
+def get_user_by_email(email: str, db: Session):
+    return db.query(User).filter(User.email == email).first()
 
 
 def create_access_token(data: dict, expires_delta: datetime.timedelta or None = None):
@@ -62,13 +58,6 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta or None = 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
 
 
 origins = ["*"]
@@ -309,63 +298,72 @@ async def create_trainer_plan(plan: TrainerPlans, db: Session = Depends(get_db))
 
 
 
-async def get_current_user(token: str = Depends(oauth_2_scheme)):
-    credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credential_exception
+# async def get_current_user(db: Session,token: str = Depends(oauth_2_scheme, )):
+#     credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         username: str = payload.get("sub")
+#         if username is None:
+#             raise credential_exception
+#
+#         token_data = TokenData(username=username)
+#     except JWTError:
+#         raise credential_exception
+#     #TODO Check db
+#     user = get_user_by_email(username=token_data.username, db=db)
+#     print("user_by_mail")
+#     print(user)
+#
+# async def get_current_active_user(current_user: UserInDb = Depends(get_current_user)):
+#     if current_user.disabled:
+#         raise HTTPException(status_code=400, detail="Inactive User")
+#     return current_user
 
-        token_data = TokenData(username=username)
-
-
-    except JWTError:
-        raise credential_exception
-    #TODO Check db
-    user = get_user(get_db(), username=token_data.username)
-
-async def get_current_active_user(current_user: UserInDb = Depends(get_current_user)):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive User")
-    return current_user
-
-
+def authenticate_user(email: str, password: str, db: Session):
+    user = get_user_by_email(email, db)
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    return user
 @app.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(get_db(), form_data.username, form_data.password)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate": "Bearer"})
     access_token_expires = datetime.timedelta(minutes=80)
     access_token = create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.get("users/me/", response_model=UserBaseSchema)
-async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
-    return current_user
 
-@app.get("users/me/items")
-async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
-    return [{"item_id": 1, "owner": current_user}]
+# @app.get("users/me/items")
+# async def read_users_me(current_user: UserBaseSchema = Depends(get_current_active_user)):
+#     return [{"item_id": 1, "owner": current_user}]
 
 @app.post("/register_user", response_model=None)
-def register_user(user: UserBaseSchema,
-                        db: Session = Depends(get_db)
-                        ):
-    print("user")
-    print(user)
-    print(user.password)
-    hashed = get_password_hash(user.password)
-    print("hashed")
-    print(hashed)
-    # payload = jwt.decode(user.password, SECRET_KEY, algorithms=[ALGORITHM])
-    # print("payload")
-    # print(payload)
-    return [{"item_id": 1}]
+def register_user(user: UserBaseSchema, db: Session = Depends(get_db)):
+    hashed_password = get_password_hash(user.password)
+    user.password = hashed_password
+    dumped_user = user.model_dump()
+    db_user = User(**dumped_user)
+    db.add(db_user)
+    db.commit()
+    return db_user
 
+# @app.post("/login_user", response_model=None)
+# def login_user(user_login: UserLogin):
+#     user_by_email = get_user_by_email(user_login.email)
+
+@app.get("/users", response_model=None)
+def get_users(db: Session = Depends(get_db)):
+    for i in db.query(User).all():
+        print(type(i.phone_number))
+        print(i.phone_number)
+    # return db.query(User).all()
+    return db.query(User).all()
 @app.post("/trainer", response_model=None)
 def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     trainer_model = Trainer()
@@ -379,3 +377,34 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
 @app.get("/items/")
 async def read_items(token: Annotated[str, Depends(oauth_2_scheme)]):
     return {"token": token}
+
+def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        token_data = TokenData(email=email)
+    except JWTError:
+        raise credentials_exception
+    user = get_user_by_email(token_data.email, db)
+    if user is None:
+        raise credentials_exception
+    return user
+
+
+# async def read_users_me(current_user: UserBaseSchema = Depends(get_current_user)):
+@app.get("/users/me/", response_model=UserBaseSchema)
+async def read_users_me(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)):
+    user = get_current_user(token, db)
+    print("user")
+    print(user)
+    print(type(user.phone_number))
+    print(user.phone_number)
+    return user
+#

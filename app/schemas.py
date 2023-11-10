@@ -170,8 +170,15 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str or None = None
+    email: str or None = None
 
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+    class Config:
+        from_attributes = True
 
 class UserBaseSchema(BaseModel):
     name: str
