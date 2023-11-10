@@ -1,7 +1,7 @@
 import enum
 
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Date, Float, Time
-from .database import Base
+from app.database import Base
 from sqlalchemy.orm import relationship
 
 
@@ -102,11 +102,3 @@ class Plan(Base):
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
 
 
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, nullable=False, primary_key=True, index=True)
-    name = Column(String)
-    email = Column(String)
-    last_name = Column(String)
-    phone_number = Column(String)
-    password = Column(String)

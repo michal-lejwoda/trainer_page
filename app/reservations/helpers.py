@@ -1,7 +1,7 @@
 import datetime
 from typing import List
 
-from app.schemas import WorkHourCreate
+from app.reservations.schemas import WorkHourCreate
 
 
 def hour_range(single_date: datetime.date, start_hour: datetime.time, end_hour: datetime.time, trainer_id: int) -> List[WorkHourCreate]:

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import models
+from .reservations import models
 
 
 def get_trainers(db: Session, skip: int = 0, limit: int = 100):
