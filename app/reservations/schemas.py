@@ -28,7 +28,7 @@ class TrainerCreate(TrainerBase):
     pass
 
 
-class Trainer(TrainerBase):
+class TrainerSchema(TrainerBase):
     id: int
     owner_id: int
 
@@ -44,7 +44,7 @@ class ReservationList(ReservationBase):
     start_time: datetime.datetime
     end_time: datetime.datetime
     trainer_id: int
-    trainer: Trainer
+    trainer: TrainerSchema
 
     class Config:
         from_attributes = True

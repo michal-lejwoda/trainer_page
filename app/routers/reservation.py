@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
-from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan
-from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, Trainer, \
+from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan, Trainer
+from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans
 
@@ -33,7 +33,10 @@ def read_api(db: Session = Depends(get_db)):
 
 
 # @router.get("/trainers", response_model=List[Trainer])
-@router.get("/trainers", response_model=List[TrainerBase])
+@router.get("/trainers",
+            response_model=None
+    # , response_model=List[TrainerBase]
+            )
 def list_trainers(db: Session = Depends(get_db)) -> Any:
     return db.query(Trainer).all()
 
