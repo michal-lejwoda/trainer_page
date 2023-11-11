@@ -1,21 +1,8 @@
-import os
-
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
-from passlib.context import CryptContext
 
-from .database import engine, SessionLocal, Base
+from .database import engine, Base
 from .routers import users, reservation
-
-load_dotenv()
-
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
-OAUTH_SECRET_KEY = os.getenv("OAUTH_SECRET_KEY")
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app = FastAPI()
 

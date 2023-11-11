@@ -2,19 +2,14 @@ import datetime
 from typing import Annotated
 
 from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
-from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from starlette import status
 
+from app.database import SECRET_KEY, oauth_2_scheme, ALGORITHM, pwd_context
 from app.user.models import User
 from app.user.schemas import TokenData
 
-SECRET_KEY = "sada2341235432423xfsds4dxgbfdb"
-ALGORITHM = "HS256"
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def authenticate_user(email: str, password: str, db: Session):
     user = get_user_by_email(email, db)
