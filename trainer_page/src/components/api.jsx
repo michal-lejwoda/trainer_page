@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {list} from "postcss";
 
 const instance = axios.create();
 

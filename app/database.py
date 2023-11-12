@@ -15,7 +15,7 @@ OAUTH_SECRET_KEY = os.getenv("OAUTH_SECRET_KEY")
 POSTGRES_URL = os.getenv("POSTGRES_URL")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth_2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
+CURRENT_DOMAIN = os.getenv("DOMAIN")
 
 
 engine = create_engine('postgresql://postgres:example@trainer_db:5432/postgres')

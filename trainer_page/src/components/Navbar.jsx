@@ -3,6 +3,7 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import { NavLink } from "react-router-dom";
 
+
 const navigation = [
     {name: 'Strona Domowa', href: '/', current: false},
     {name: 'O mnie', href: '/about-me', current: false},
@@ -12,8 +13,6 @@ const navigation = [
 ]
 
 function classNames(...classes) {
-    console.log("classes")
-    console.log(classes)
     return classes.filter(Boolean).join(' ')
 }
 // const handleNavigation = (name) =>{
@@ -31,6 +30,8 @@ function classNames(...classes) {
 // }
 
 export default function Navbar() {
+    console.log("import.meta.DOMAIN")
+    console.log(import.meta.env.VITE_DOMAIN)
     return (
         <Disclosure as="nav" className="bg-background-black-color">
             {({open}) => (
