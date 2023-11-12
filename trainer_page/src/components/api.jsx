@@ -4,6 +4,7 @@ import {list} from "postcss";
 const instance = axios.create();
 
 
+
 export async function getTrainers() {
     const response = await instance.get(`http://0.0.0.0:8000/trainers`);
     let list_of_elements = []

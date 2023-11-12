@@ -8,6 +8,7 @@ function SystemReservation() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [trainer, setTrainer] = useState(null)
     const [trainerPlan, setTrainerPlan] = useState(null)
+    const [selectedPlanHour, setSelectedPlanHour] = useState({})
 
     const minDate = new Date()
     const number_of_months = 1
@@ -35,7 +36,7 @@ function SystemReservation() {
                         "day": currentDate.toISOString().split('T')[0]
                     }
                     mutateWorkHoursData(work_hours_args)
-                }else{
+                } else {
                     setTrainerPlan(null)
                 }
             }
@@ -58,8 +59,7 @@ function SystemReservation() {
                                     "day": currentDate.toISOString().split('T')[0]
                                 }
                                 mutateWorkHoursData(work_hours_args)
-                            }
-                            else{
+                            } else {
                                 setTrainerPlan(null)
                             }
                         }
@@ -88,9 +88,9 @@ function SystemReservation() {
         mutate: mutateWorkHoursData
     } = useGetDayWorkHours()
 
-    const selectHour = (e) => {
-        console.log("selected hour")
-        console.log(e)
+    const selectHour = (e, data) => {
+        let selected_hour_dict = {"plan": trainerPlan, "time_data": data}
+        setSelectedPlanHour(selected_hour_dict)
     }
 
     function addMonths(date, months) {
@@ -98,7 +98,6 @@ function SystemReservation() {
         date_with_added_months.setMonth(date.getMonth() + months);
         return date_with_added_months;
     }
-
 
     return (
         <div className="px-4">
@@ -111,41 +110,22 @@ function SystemReservation() {
                 {trainersData &&
                     <Select
                         defaultValue={trainer}
-                        // value={trainersData[0]}
                         onChange={handleTrainerDataChange}
                         options={trainersData}
                     />
                 }
+                <label htmlFor="trainers" className="block my-2 text-lg font-semibold text-gray-900 dark:text-white">Wybierz
+                    Plan</label>
                 {trainerPlanData &&
                     <Select
                         defaultValue={trainerPlan}
                         options={trainerPlanData}
                     />
                 }
-                {/*<select id="trainers"*/}
-                {/*        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
-                {/*    <option value="US">Michał</option>*/}
-                {/*    <option value="CA">Robert</option>*/}
-                {/*    <option value="FR">Tomasz</option>*/}
-                {/*    <option value="DE">Jarek</option>*/}
-                {/*</select>*/}
-
-                {/*<label htmlFor="schedule"*/}
-                {/*       className="block mb-2 text-lg my-5 font-semibold text-gray-900 dark:text-white">Wybierz*/}
-                {/*    plan</label>*/}
-                {/*<select id="schedule"*/}
-                {/*        className="bg-gray-50 mb-5 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">*/}
-                {/*    <option>Trening 60 minut(150 zł)</option>*/}
-                {/*    <option>Trening 120 minut(180 zł)</option>*/}
-                {/*    <option>Konsultacja 20 minut(80 zł)</option>*/}
-                {/*    <option>Trening grupowy dla 2-4 osób 60 minut(200 zł)</option>*/}
-                {/*    <option>Trening grupowy dla 2-4 osób 120 minut(250 zł)</option>*/}
-                {/*</select>*/}
 
                 <Calendar prev2Label={null} next2Label={null} view={"month"} minDate={minDate}
                           maxDate={maxDate}
                           onChange={handleCalendarDateChange}
-                    // onChange={setCurrentDate}
                           value={currentDate}/>
                 <div className="mt-5 text-lg font-semibold">
                     <h2>Dostępne Terminy:</h2>
@@ -153,32 +133,11 @@ function SystemReservation() {
                 <div className="term__container w-full">
                     {dayWorkHoursData && dayWorkHoursData.map(element => {
                         return (
-                            <button onClick={selectHour}
+                            <button key={element.id} onClick={(e) => selectHour(e, element)}
                                     className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">
                                 {element.start_time} - {element.end_time}
                             </button>)
                     })}
-
-                    {/*<button onClick={selectHour}*/}
-                    {/*        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">*/}
-                    {/*    14:00*/}
-                    {/*</button>*/}
-                    {/*<button onClick={selectHour}*/}
-                    {/*        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">*/}
-                    {/*    15:00*/}
-                    {/*</button>*/}
-                    {/*<button onClick={selectHour}*/}
-                    {/*        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">*/}
-                    {/*    16:00*/}
-                    {/*</button>*/}
-                    {/*<button onClick={selectHour}*/}
-                    {/*        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">*/}
-                    {/*    17:00*/}
-                    {/*</button>*/}
-                    {/*<button onClick={selectHour}*/}
-                    {/*        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">*/}
-                    {/*    18:00*/}
-                    {/*</button>*/}
                 </div>
                 <div className="flex flex-row justify-center">
                     <button
