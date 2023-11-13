@@ -17,6 +17,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx"
 import {QueryClient, QueryClientProvider} from "react-query";
 import Login from "./components/auth/Login.jsx";
 import Register from "./components/auth/Register.jsx";
+import RegisterFormik from "./components/auth/RegisterFormik.jsx";
 
 
 const queryClient = new QueryClient()
@@ -30,7 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Routes>
                     <Route path="/" element={<Homepage/>}/>
                     <Route path="login" element={<Login />}/>
-                    <Route path="register" element={<Register />}/>
+                    <Route path="register" element={<RegisterFormik />}/>
                     <Route path="contact" element={<Contact/>}/>
                     <Route path="reservation" element={<SystemReservation/>}/>
                     <Route path="about-me" element={<AboutMe/>}/>

@@ -3,25 +3,17 @@ import {checkIfUserLogged, getLogin} from "./api.jsx";
 import {useCookies} from "react-cookie";
 
 function Login() {
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt-trainer-auth']);
+    const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const handleLogin = async (e) => {
         e.preventDefault()
-        console.log("Handle login")
         let form = new FormData()
         form.append("username", username)
         form.append("password", password)
         let login_data = await getLogin(form)
-        console.log("login_data")
-        console.log(login_data)
-        // setCookie('jwt-trainer-auth', login_data,{secure: true, sameSite: 'none'})
-        // setCookie('jwt-trainer-auth', login_data, {'sameSite': 'lax'})
-        // setCookie('jwt-trainer-auth', `Bearer ${login_data.access_token}`, {'sameSite': 'lax'})
-        setCookie('jwt-trainer-auth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHJpbmdAZ21haWwuY29tIiwiZXhwIjoxNjk5ODI1NjcyfQ.KwCj7A9OwFgXMthqeYuWd1jsmY3sXtfxv7YaqzEpyrU', {'sameSite': 'lax'})
-
+        setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
         let users_me = await checkIfUserLogged()
-        console.log(users_me)
 
     }
 

@@ -5,7 +5,6 @@ from fastapi import HTTPException, Depends, Cookie
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette import status
-from starlette.requests import Request
 
 from app.database import get_db
 from app.user.dependencies import authenticate_user, create_access_token, get_password_hash, get_current_user, \
@@ -49,9 +48,19 @@ def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
 
 
-@router.get("/users/me/", response_model=UserBaseSchema)
-async def read_users_me(token: Annotated[str, Depends(oauth_2_scheme)], request: Request, db: Session = Depends(get_db)):
-    test = request.cookies.get('jwt-trainer-auth')
-    print(test)
-    user = get_current_user(token, db)
+# @router.get("/users/me/", response_model=UserBaseSchema)
+# async def read_users_me(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)):
+#     user = get_current_user(token, db)
+#     return user
+
+@router.get("/users/me/")
+async def read_users_me(jwt_trainer_auth: Annotated[str | None, Cookie()] = None, db: Session = Depends(get_db)):
+    print("start")
+    print(jwt_trainer_auth)
+    print("koniec")
+    user = get_current_user(jwt_trainer_auth, db)
     return user
+    # print(ads_id.csrftoken)
+    # return {"test": jwt_trainer_auth}
+    # user = get_current_user(token, db)
+    # return user
