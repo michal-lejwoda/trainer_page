@@ -57,4 +57,4 @@ const LoginForm = () => {
     );
 
 };
-export default SignupForm
+export default LoginForm
