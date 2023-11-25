@@ -1,7 +1,11 @@
-import {Fragment} from 'react'
+import {Fragment, useEffect} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import {useAuth} from "./auth/AuthContext.jsx";
+import {checkIfUserLogged, getLogin} from "./auth/api.jsx";
+import {useCookies} from "react-cookie";
+import axios from "axios";
 
 
 const navigation = [
@@ -15,23 +19,27 @@ const navigation = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-// const handleNavigation = (name) =>{
-//     console.log("name")
-//     console.log(name)
-//     for(let i=0;i<navigation.length;i++){
-//         if(navigation[i]['name'] == name){
-//             navigation[i]['current'] = true
-//         }else{
-//             navigation[i]['current'] = false
-//         }
-//     }
-//     console.log(navigation)
-//
-// }
 
 export default function Navbar() {
+
+    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
     console.log("import.meta.DOMAIN")
     console.log(import.meta.env.VITE_DOMAIN)
+    console.log("cookies")
+    console.log(cookies)
+    const handleAuthentication = async () => {
+        let logged_user = await checkIfUserLogged()
+        setAuthUser(logged_user)
+        setIsLoggedIn(true)
+    }
+    // let users_me = getUserBasedOnToken()
+
+    useEffect( ()=>{
+        handleAuthentication()
+    },[])
+    console.log("authUser")
+    console.log(authUser)
     return (
         <Disclosure as="nav" className="bg-background-black-color">
             {({open}) => (
@@ -72,13 +80,13 @@ export default function Navbar() {
                                                 // onClick={()=>handleNavigation(item.name)}
                                                 key={item.name}
                                                 // href={item.href}
-                                                className={({isActive}) =>classNames(
+                                                className={({isActive}) => classNames(
                                                     isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
-  //                                               className={({ isActive }) =>
-  //   isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-  // }
+                                                //                                               className={({ isActive }) =>
+                                                //   isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+                                                // }
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
@@ -165,10 +173,10 @@ export default function Navbar() {
                                 <NavLink
                                     key={item.name}
                                     to={item.href}
-                                    className={({isActive}) =>classNames(
-                                                    isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'block rounded-md px-3 py-2 text-base font-medium'
-                                                )}
+                                    className={({isActive}) => classNames(
+                                        isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        'block rounded-md px-3 py-2 text-base font-medium'
+                                    )}
                                     aria-current={item.current ? 'page' : undefined}
                                 >
                                     {item.name}

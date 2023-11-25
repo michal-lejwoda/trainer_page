@@ -15,9 +15,10 @@ import PrivatePolicy from "./components/PrivatePolicy.jsx";
 import {CookieConsent} from "react-cookie-consent";
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import {QueryClient, QueryClientProvider} from "react-query";
-import Login from "./components/auth/Login.jsx";
 import Register from "./components/auth/Register.jsx";
 import RegisterFormik from "./components/auth/RegisterFormik.jsx";
+import LoginFormik from "./components/auth/LoginFormik.jsx";
+import {AuthProvider} from "./components/auth/AuthContext.jsx";
 
 
 const queryClient = new QueryClient()
@@ -25,37 +26,40 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
 
         <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-                <Navbar/>
-                <ScrollToTop/>
-                <Routes>
-                    <Route path="/" element={<Homepage/>}/>
-                    <Route path="login" element={<Login />}/>
-                    <Route path="register" element={<RegisterFormik />}/>
-                    <Route path="contact" element={<Contact/>}/>
-                    <Route path="reservation" element={<SystemReservation/>}/>
-                    <Route path="about-me" element={<AboutMe/>}/>
-                    <Route path="transformations" element={<Transformations/>}/>
-                    <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
-                    <Route path="cookies-policy" element={<CookiesPolicy/>}/>
-                    <Route path="private-policy" element={<PrivatePolicy/>}/>
-                </Routes>
-                <Footer/>
-                <CookieConsent
-                    location="bottom"
-                    buttonText="Akceptuję"
-                    enableDeclineButton
-                    declineButtonText="Nie zgadzam się"
-                    cookieName="myAwesomeCookieName2"
-                    style={{background: "#2B373B"}}
-                    buttonStyle={{color: "#4e503b", fontSize: "13px"}}
-                    expires={150}
-                >
-                    Ta strona używa plików cookie. Kontynuując jej przeglądanie, wyrażasz zgodę na Politykę
-                    Prywatności. <NavLink to="/cookies-policy">Uzykaj więcej informacji o plikach cookie</NavLink>
+            <AuthProvider>
+                <BrowserRouter>
+                    <Navbar/>
+                    <ScrollToTop/>
+                    <Routes>
+                        <Route path="/" element={<Homepage/>}/>
+                        <Route path="login" element={<LoginFormik/>}/>
+                        <Route path="register" element={<RegisterFormik/>}/>
+                        <Route path="register123" element={<Register/>}/>
+                        <Route path="contact" element={<Contact/>}/>
+                        <Route path="reservation" element={<SystemReservation/>}/>
+                        <Route path="about-me" element={<AboutMe/>}/>
+                        <Route path="transformations" element={<Transformations/>}/>
+                        <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
+                        <Route path="cookies-policy" element={<CookiesPolicy/>}/>
+                        <Route path="private-policy" element={<PrivatePolicy/>}/>
+                    </Routes>
+                    <Footer/>
+                    <CookieConsent
+                        location="bottom"
+                        buttonText="Akceptuję"
+                        enableDeclineButton
+                        declineButtonText="Nie zgadzam się"
+                        cookieName="myAwesomeCookieName2"
+                        style={{background: "#2B373B"}}
+                        buttonStyle={{color: "#4e503b", fontSize: "13px"}}
+                        expires={150}
+                    >
+                        Ta strona używa plików cookie. Kontynuując jej przeglądanie, wyrażasz zgodę na Politykę
+                        Prywatności. <NavLink to="/cookies-policy">Uzykaj więcej informacji o plikach cookie</NavLink>
 
-                </CookieConsent>
-            </BrowserRouter>
+                    </CookieConsent>
+                </BrowserRouter>
+            </AuthProvider>
         </QueryClientProvider>
 
         {/*<RouterProvider router={router}/>*/}

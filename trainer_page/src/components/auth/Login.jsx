@@ -17,7 +17,6 @@ function Login() {
         let login_data = await getLogin(form)
         setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
         let users_me = await checkIfUserLogged()
-
     }
 
     return (

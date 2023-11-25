@@ -1,5 +1,6 @@
 import re
 
+from fastapi import Form
 from pydantic import BaseModel, field_validator
 from pydantic_core import PydanticCustomError
 from validate_email import validate_email

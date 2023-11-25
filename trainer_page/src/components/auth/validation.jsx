@@ -8,9 +8,8 @@ export const validate_login = values => {
    }
    if (!values.password) {
      errors.password = 'Required';
-   } else if (values.lastName.length > 6) {
-     errors.lastName = 'Must be 6 characters or less';
    }
+
    return errors;
  };
 

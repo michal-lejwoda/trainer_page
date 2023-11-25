@@ -2,10 +2,28 @@ import React from 'react';
 
 import {useFormik} from 'formik';
 import {validateRegistration} from "./validation.jsx";
+import {useCookies} from "react-cookie";
+import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
 
 
 const SignupForm = () => {
-
+    const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
+    const handleRegister = async (values) => {
+        let form = new FormData()
+        form.append("name", values.name)
+        form.append("last_name", values.last_name)
+        form.append("email", values.email)
+        form.append("phone_number", values.phone_number)
+        form.append("password", values.password)
+        form.append("repeat_password", values.repeat_password)
+        // validate_login(values)
+        console.log("form")
+        console.log(form)
+        let register_data = await postRegistration(form)
+        // let login_data = await getLogin(form)
+        // setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
+        // let users_me = await checkIfUserLogged()
+    }
     const {values,handleSubmit, handleChange, errors} = useFormik({
 
         initialValues: {
@@ -21,8 +39,9 @@ const SignupForm = () => {
         validateOnChange: false,
         validationOnBlue: false,
         onSubmit: values => {
+            handleRegister(values)
             // validateRegistration(values)
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
         },
 
     });
