@@ -1,17 +1,16 @@
 import datetime
-from typing import Annotated, Union
+from typing import Annotated
 
+from fastapi import APIRouter
 from fastapi import HTTPException, Depends, Cookie, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from starlette import status
 
 from app.database import get_db
-from app.user.dependencies import authenticate_user, create_access_token, get_password_hash, get_current_user, \
-    oauth_2_scheme
+from app.user.dependencies import authenticate_user, create_access_token, get_password_hash, get_current_user
 from app.user.models import User
-from app.user.schemas import Token, UserBaseSchema
-from fastapi import APIRouter
+from app.user.schemas import Token
 
 router = APIRouter(
     tags=["users"],
@@ -34,7 +33,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 @router.post("/register_user", response_model=None)
 def register_user(name: Annotated[str, Form()], last_name: Annotated[str, Form()], email: Annotated[str, Form()],
-                  phone_number: Annotated[str, Form()], password: Annotated[str, Form()], db: Session = Depends(get_db)):
+                  phone_number: Annotated[str, Form()], password: Annotated[str, Form()],
+                  db: Session = Depends(get_db)):
     hashed_password = get_password_hash(password)
     password = hashed_password
     user_dict = {"name": name, "last_name": last_name, "email": email, "phone_number": phone_number,
@@ -55,10 +55,11 @@ def get_users(db: Session = Depends(get_db)):
 #     user = get_current_user(token, db)
 #     return user
 
-@router.get("/users/me/")
+@router.get("/users/me")
 async def read_users_me(jwt_trainer_auth: Annotated[str | None, Cookie()] = None, db: Session = Depends(get_db)):
     print("jwt_trainer_auth")
     print(jwt_trainer_auth)
+    print("koniec jwt_trainer_auth")
     user = get_current_user(jwt_trainer_auth, db)
     print(user)
     return user
