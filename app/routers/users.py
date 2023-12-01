@@ -1,14 +1,12 @@
-import datetime
 from typing import Annotated
 
 from fastapi import APIRouter
-from fastapi import HTTPException, Depends, Cookie, Form
+from fastapi import Depends, Cookie, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from starlette import status
 
 from app.database import get_db
-from app.user.dependencies import authenticate_user, create_access_token, get_password_hash, get_current_user, \
+from app.user.dependencies import get_password_hash, get_current_user, \
     authenticate_and_generate_token_for_user
 from app.user.models import User
 from app.user.schemas import Token
