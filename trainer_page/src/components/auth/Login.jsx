@@ -4,7 +4,7 @@ import {useCookies} from "react-cookie";
 import {validate_login} from "./validation.jsx";
 
 function Login() {
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
+    const [setCookie] = useCookies(['jwt_trainer_auth']);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -16,7 +16,7 @@ function Login() {
         validate_login()
         let login_data = await getLogin(form)
         setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
-        let users_me = await checkIfUserLogged()
+        await checkIfUserLogged()
     }
 
     return (

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import {useFormik} from 'formik';
-import {validate_login, validateLogin} from "./validation.jsx";
+import {validateLogin} from "./validation.jsx";
 import {checkIfUserLogged, getLogin} from "./api.jsx";
 import {useCookies} from "react-cookie";
 
 const LoginForm = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
+    const [cookies,setCookie] = useCookies(['jwt_trainer_auth']);
     const handleLogin = async (values) => {
         let form = new FormData()
         form.append("username", values.email)
@@ -14,12 +14,9 @@ const LoginForm = () => {
         // validate_login(values)
         let login_data = await getLogin(form)
         setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
-        let users_me = await checkIfUserLogged()
-        console.log("czt dziala")
-        console.log(users_me)
+        await checkIfUserLogged()
     }
     const {values, handleSubmit, handleChange, errors} = useFormik({
-
         initialValues: {
             name: '',
             last_name: '',
@@ -33,8 +30,6 @@ const LoginForm = () => {
         validationOnBlue: false,
         onSubmit: values => {
             handleLogin(values)
-            // validateRegistration(values)
-            // alert(JSON.stringify(values, null, 2));
         },
 
     });

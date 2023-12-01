@@ -10,6 +10,16 @@ from app.database import SECRET_KEY, oauth_2_scheme, ALGORITHM, pwd_context
 from app.user.models import User
 from app.user.schemas import TokenData
 
+def authenticate_and_generate_token_for_user(email: str, password: str, db: Session):
+    user = authenticate_user(email, password, db)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password",
+                            headers={"WWW-Authenticate": "Bearer"})
+    access_token_expires = datetime.timedelta(minutes=80)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
 def authenticate_user(email: str, password: str, db: Session):
     user = get_user_by_email(email, db)
