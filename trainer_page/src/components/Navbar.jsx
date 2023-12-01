@@ -3,9 +3,8 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {NavLink} from "react-router-dom";
 import {useAuth} from "./auth/AuthContext.jsx";
-import {checkIfUserLogged, getLogin} from "./auth/api.jsx";
+import {checkIfUserLogged} from "./auth/api.jsx";
 import {useCookies} from "react-cookie";
-import axios from "axios";
 
 
 const navigation = [
@@ -24,20 +23,31 @@ export default function Navbar() {
 
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
-    console.log("import.meta.DOMAIN")
-    console.log(import.meta.env.VITE_DOMAIN)
-    console.log("cookies")
-    console.log(cookies)
-    const handleAuthentication = async () => {
-        let logged_user = await checkIfUserLogged()
-        setAuthUser(logged_user)
-        setIsLoggedIn(true)
-    }
-    // let users_me = getUserBasedOnToken()
 
-    useEffect( ()=>{
+    // console.log("import.meta.DOMAIN")
+    // console.log(import.meta.env.VITE_DOMAIN)
+    // console.log("authUser")
+    // console.log(authUser)
+    // // console.log("cookies")
+    // // console.log(cookies)
+    const handleAuthentication = async () => {
+        try {
+            let logged_user = await checkIfUserLogged()
+            setAuthUser(logged_user)
+            setIsLoggedIn(true)
+        } catch (err) {
+            // console.log("err ddd")
+            // console.log(err)
+            setAuthUser(null)
+            setIsLoggedIn(false)
+        }
+    }
+
+// let users_me = getUserBasedOnToken()
+
+    useEffect(() => {
         handleAuthentication()
-    },[])
+    }, [])
     console.log("authUser")
     console.log(authUser)
     return (
@@ -91,7 +101,10 @@ export default function Navbar() {
                                             >
                                                 {item.name}
                                             </NavLink>
+
+
                                         ))}
+                                        {authUser && `Witaj ${authUser.name}`}
                                     </div>
                                 </div>
                             </div>

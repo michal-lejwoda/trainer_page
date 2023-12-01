@@ -4,17 +4,39 @@ import {useFormik} from 'formik';
 import {validateLogin} from "./validation.jsx";
 import {checkIfUserLogged, getLogin} from "./api.jsx";
 import {useCookies} from "react-cookie";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "./AuthContext.jsx";
 
 const LoginForm = () => {
-    const [cookies,setCookie] = useCookies(['jwt_trainer_auth']);
+    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
+    const navigate = useNavigate();
+
     const handleLogin = async (values) => {
         let form = new FormData()
         form.append("username", values.email)
         form.append("password", values.password)
-        // validate_login(values)
-        let login_data = await getLogin(form)
-        setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
-        await checkIfUserLogged()
+        try {
+            let login_data = await getLogin(form)
+            await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
+            try {
+                let logged_user = await checkIfUserLogged()
+                setAuthUser(logged_user)
+                setIsLoggedIn(true)
+            } catch (err) {
+                // console.log("err ddd")
+                // console.log(err)
+                setAuthUser(null)
+                setIsLoggedIn(false)
+            }
+            await navigate("/");
+
+        } catch (err) {
+            console.log("error")
+            console.log(err)
+            console.log(err.response)
+        }
+        // await checkIfUserLogged()
     }
     const {values, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {

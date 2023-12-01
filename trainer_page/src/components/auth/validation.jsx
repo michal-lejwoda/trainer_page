@@ -55,3 +55,5 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
      email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
      password: yup.string().min(5, "Hasło jest za krótkie").required("Hasło jest wymagane"),
  })
+
+

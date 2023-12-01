@@ -7,6 +7,7 @@ import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
 
 
 const SignupForm = () => {
+    const [cookies,setCookie] = useCookies(['jwt_trainer_auth']);
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)
@@ -15,9 +16,11 @@ const SignupForm = () => {
         form.append("phone_number", values.phone_number)
         form.append("password", values.password)
         form.append("repeat_password", values.repeat_password)
-        await postRegistration(form)
+        const registration_data = await postRegistration(form)
+        console.log("registration_data")
+        console.log(registration_data)
         // let login_data = await getLogin(form)
-        // setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
+        setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax'})
         // let users_me = await checkIfUserLogged()
     }
     const {values,handleSubmit, handleChange, errors} = useFormik({
