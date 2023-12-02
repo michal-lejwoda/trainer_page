@@ -42,12 +42,9 @@ def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
 
 
-# @router.get("/users/me/", response_model=UserBaseSchema)
-# async def read_users_me(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)):
-#     user = get_current_user(token, db)
-#     return user
-
 @router.get("/users/me")
 async def read_users_me(jwt_trainer_auth: Annotated[str | None, Cookie()] = None, db: Session = Depends(get_db)):
+    if jwt_trainer_auth is None:
+        return None
     user = get_current_user(jwt_trainer_auth, db)
     return user

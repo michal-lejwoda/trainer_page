@@ -36,8 +36,6 @@ export default function Navbar() {
             setAuthUser(logged_user)
             setIsLoggedIn(true)
         } catch (err) {
-            // console.log("err ddd")
-            // console.log(err)
             setAuthUser(null)
             setIsLoggedIn(false)
         }
