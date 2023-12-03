@@ -4,6 +4,7 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {NavLink} from "react-router-dom";
 import {useAuth} from "./auth/AuthContext.jsx";
 import {checkIfUserLogged} from "./auth/api.jsx";
+import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
 
@@ -23,13 +24,25 @@ export default function Navbar() {
 
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
-
+    const navigate = useNavigate();
     // console.log("import.meta.DOMAIN")
     // console.log(import.meta.env.VITE_DOMAIN)
     // console.log("authUser")
     // console.log(authUser)
     // // console.log("cookies")
     // // console.log(cookies)
+
+
+    const moveToLogin = () =>{
+        navigate("/login")
+    }
+    const handleLogout = () => {
+        removeCookie("jwt_trainer_auth")
+        setAuthUser(null)
+        setIsLoggedIn(false)
+    }
+
+
     const handleAuthentication = async () => {
         try {
             let logged_user = await checkIfUserLogged()
@@ -103,6 +116,7 @@ export default function Navbar() {
 
                                         ))}
                                         {authUser && `Witaj ${authUser.name}`}
+                                        {authUser ? <button onClick={handleLogout}>Wyloguj się</button> : <button onClick={moveToLogin}>Zaloguj się</button> }
                                     </div>
                                 </div>
                             </div>

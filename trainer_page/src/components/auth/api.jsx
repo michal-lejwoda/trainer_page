@@ -20,7 +20,5 @@ export async function getLogin(form) {
 
 export async function postRegistration(form) {
     const response = await instance.post(`http://0.0.0.0:8000/register_user`, form);
-    console.log("response register")
-    console.log(response)
     return response.data
 }
