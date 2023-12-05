@@ -59,8 +59,8 @@ export default function Navbar() {
     useEffect(() => {
         handleAuthentication()
     }, [])
-    console.log("authUser")
-    console.log(authUser)
+    // console.log("authUser")
+    // console.log(authUser)
     return (
         <Disclosure as="nav" className="bg-background-black-color">
             {({open}) => (
