@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Contact from "./components/Contact.jsx";
-import SystemReservation from "./components/SystemReservation.jsx";
+import SystemReservation from "./components/booking/SystemReservation.jsx";
 import Navbar from "./components/Navbar.jsx"
 import AboutMe from "./components/AboutMe.jsx"
 import './index.css'
@@ -18,6 +18,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import RegisterFormik from "./components/auth/RegisterFormik.jsx";
 import LoginFormik from "./components/auth/LoginFormik.jsx";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
+import Booking from "./components/booking/Booking.jsx";
 
 
 const queryClient = new QueryClient()
@@ -33,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Route path="login" element={<LoginFormik />}/>
                         <Route path="register" element={<RegisterFormik />}/>
                         <Route path="contact" element={<Contact />}/>
-                        <Route path="reservation" element={<SystemReservation />}/>
+                        <Route path="reservation" element={<Booking />}/>
                         <Route path="about-me" element={<AboutMe />}/>
                         <Route path="transformations" element={<Transformations />}/>
                         <Route path="terms-and-conditions" element={<TermsAndConditions />}/>

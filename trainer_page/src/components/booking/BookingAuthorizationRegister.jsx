@@ -1,9 +1,11 @@
 import React from 'react';
 
 import {useFormik} from 'formik';
-import {validateRegistration} from "./validation.jsx";
+// import {validateRegistration} from "./validation.jsx";
 import {useCookies} from "react-cookie";
-import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
+// import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
+import {validateRegistration} from "../auth/validation.jsx";
+import {postRegistration} from "../auth/api.jsx";
 
 
 const BookingAuthorizationRegister = () => {

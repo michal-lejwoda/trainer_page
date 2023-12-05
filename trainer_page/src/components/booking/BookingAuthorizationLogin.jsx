@@ -30,11 +30,8 @@ const BookingAuthorizationLogin = () => {
             await navigate("/");
 
         } catch (err) {
-            console.log("error")
-            console.log(err)
-            console.log(err.response)
         }
-        // await checkIfUserLogged()
+        ;
     }
     const {values, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {

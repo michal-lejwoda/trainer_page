@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import Calendar from "react-calendar";
-import '../css/react-calendar.css'
-import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "./mutations.jsx";
+import '../../css/react-calendar.css'
+import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutations.jsx";
 import Select from 'react-select';
 
-import ReservationModal from "./modals/ReservationModal.jsx";
+import ReservationModal from "../modals/ReservationModal.jsx";
 
 
 function SystemReservation() {
