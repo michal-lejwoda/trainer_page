@@ -10,17 +10,17 @@ import {useAuth} from "../auth/AuthContext.jsx";
 
 function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [trainer, setTrainer] = useState(null)
-    const [trainerPlan, setTrainerPlan] = useState(null)
-    const [selectedPlanHour, setSelectedPlanHour] = useState(null)
+    // const [trainer, setTrainer] = useState(null)
+    // const [trainerPlan, setTrainerPlan] = useState(null)
+    // const [selectedPlanHour, setSelectedPlanHour] = useState(null)
     const [show, setShow] = useState(false);
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     console.log("trainer")
-    console.log(trainer)
+    console.log(props.trainer)
     console.log("trainerPlan")
-    console.log(trainerPlan)
+    console.log(props.trainerPlan)
     console.log("selectedPlanHour")
-    console.log(selectedPlanHour)
+    console.log(props.selectedPlanHour)
 
 
     const minDate = new Date()
@@ -40,21 +40,21 @@ function SystemReservation(props) {
     }
 
     const handleTrainerDataChange = (trainer_data) => {
-        setTrainer(trainer_data)
+        props.setTrainer(trainer_data)
         // setTrainerPlan(null)
-        setSelectedPlanHour(null)
+        props.setSelectedPlanHour(null)
 
         mutatePlanData({"trainer_id": trainer_data.id}, {
             onSuccess: (plan_data) => {
                 if (plan_data.length > 0) {
-                    setTrainerPlan(plan_data[0])
+                    props.setTrainerPlan(plan_data[0])
                     const work_hours_args = {
                         "trainer_id": plan_data[0].id, "is_active": true,
                         "day": currentDate.toISOString().split('T')[0]
                     }
                     mutateWorkHoursData(work_hours_args)
                 } else {
-                    setTrainerPlan(null)
+                    props.setTrainerPlan(null)
                 }
             }
         })
@@ -66,18 +66,18 @@ function SystemReservation(props) {
         mutateTrainersData(undefined, {
             onSuccess: (data) => {
                 if (data.length > 0) {
-                    setTrainer(data[0])
+                    props.setTrainer(data[0])
                     mutatePlanData({"trainer_id": data[0].id}, {
                         onSuccess: (plan_data) => {
                             if (plan_data.length > 0) {
-                                setTrainerPlan(plan_data[0])
+                                props.setTrainerPlan(plan_data[0])
                                 const work_hours_args = {
                                     "trainer_id": plan_data[0].id, "is_active": true,
                                     "day": currentDate.toISOString().split('T')[0]
                                 }
                                 mutateWorkHoursData(work_hours_args)
                             } else {
-                                setTrainerPlan(null)
+                                props.setTrainerPlan(null)
                             }
                         }
                     })
@@ -106,15 +106,15 @@ function SystemReservation(props) {
     } = useGetDayWorkHours()
 
     const selectHour = (e, data) => {
-        let selected_hour_dict = {"plan": trainerPlan, "time_data": data, "trainer": trainer}
-        setSelectedPlanHour(selected_hour_dict)
+        let selected_hour_dict = {"plan": props.trainerPlan, "time_data": data, "trainer": props.trainer}
+        props.setSelectedPlanHour(selected_hour_dict)
     }
 
     const handleReservation = () => {
         if (authUser === null) {
             return props.goToBookingAuthorization()
         }
-        if (trainer !== null && trainerPlan !== null && selectedPlanHour !== null){
+        if (props.trainer !== null && props.trainerPlan !== null && props.selectedPlanHour !== null){
             return props.goToBookingConfirmation()
         }
     }
@@ -137,7 +137,7 @@ function SystemReservation(props) {
                         Trenera</label>
                     {trainersData &&
                         <Select
-                            defaultValue={trainer}
+                            defaultValue={props.trainer}
                             onChange={handleTrainerDataChange}
                             options={trainersData}
                         />
@@ -147,7 +147,7 @@ function SystemReservation(props) {
                         Plan</label>
                     {trainerPlanData &&
                         <Select
-                            defaultValue={trainerPlan}
+                            defaultValue={props.trainerPlan}
                             options={trainerPlanData}
                         />
                     }

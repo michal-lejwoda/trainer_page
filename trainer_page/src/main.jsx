@@ -15,8 +15,8 @@ import PrivatePolicy from "./components/PrivatePolicy.jsx";
 import {CookieConsent} from "react-cookie-consent";
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import {QueryClient, QueryClientProvider} from "react-query";
-import RegisterFormik from "./components/auth/RegisterFormik.jsx";
-import LoginFormik from "./components/auth/LoginFormik.jsx";
+import RegisterForm from "./components/auth/RegisterForm.jsx";
+import LoginForm from "./components/auth/LoginForm.jsx";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
 import Booking from "./components/booking/Booking.jsx";
 
@@ -31,8 +31,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <ScrollToTop/>
                     <Routes>
                         <Route path="/" element={<Homepage />}/>
-                        <Route path="login" element={<LoginFormik />}/>
-                        <Route path="register" element={<RegisterFormik />}/>
+                        <Route path="login" element={<LoginForm />}/>
+                        <Route path="register" element={<RegisterForm />}/>
                         <Route path="contact" element={<Contact />}/>
                         <Route path="reservation" element={<Booking />}/>
                         <Route path="about-me" element={<AboutMe />}/>

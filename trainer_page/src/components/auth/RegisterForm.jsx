@@ -3,7 +3,7 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {validateRegistration} from "./validation.jsx";
 import {useCookies} from "react-cookie";
-import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
+import {checkIfUserLogged, postRegistration} from "./api.jsx";
 import {useAuth} from "./AuthContext.jsx";
 
 

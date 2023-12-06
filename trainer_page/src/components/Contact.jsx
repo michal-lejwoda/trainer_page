@@ -79,7 +79,7 @@ function Contact() {
                                     // theme="dark"
                                     // grecaptcha={grecaptchaObject}
                                     // onChange={onChange}
-                                />,
+                                />
                                 <div className="my-5">
                                     <input type="checkbox"/> <span>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
                                 </div>
