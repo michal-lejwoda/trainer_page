@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {useFormik} from 'formik';
-import {validateLogin} from "./validation.jsx";
-import {checkIfUserLogged, getLogin} from "./api.jsx";
 import {useCookies} from "react-cookie";
-import {useNavigate} from "react-router-dom";
-import {useAuth} from "./AuthContext.jsx";
+import {validateLogin} from "../auth/validation.jsx";
+import {checkIfUserLogged, getLogin} from "../auth/api.jsx";
+import {useAuth} from "../auth/AuthContext.jsx";
 
-const BookingAuthorizationLogin = () => {
+const BookingAuthorizationLogin = (props) => {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const [errorlogin, setErrorLogin] = useState(null)
     const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
-    const navigate = useNavigate();
 
     const handleLogin = async (values) => {
         let form = new FormData()
@@ -27,9 +26,10 @@ const BookingAuthorizationLogin = () => {
                 setAuthUser(null)
                 setIsLoggedIn(false)
             }
-            await navigate("/");
+            await props.goToBookingConfirmation()
 
         } catch (err) {
+            setErrorLogin(err.response.data.detail)
         }
         ;
     }
@@ -76,6 +76,7 @@ const BookingAuthorizationLogin = () => {
                 // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             {errors.password && <p>{errors.password}</p>}
+            {errorlogin && <p>{errorlogin}</p>}
             <button type="submit">Zaloguj się</button>
         </form>
 

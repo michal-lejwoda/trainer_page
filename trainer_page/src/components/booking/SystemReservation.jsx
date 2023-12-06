@@ -5,15 +5,16 @@ import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutation
 import Select from 'react-select';
 
 import ReservationModal from "../modals/ReservationModal.jsx";
+import {useAuth} from "../auth/AuthContext.jsx";
 
 
-function SystemReservation() {
+function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [trainer, setTrainer] = useState(null)
     const [trainerPlan, setTrainerPlan] = useState(null)
     const [selectedPlanHour, setSelectedPlanHour] = useState(null)
     const [show, setShow] = useState(false);
-
+    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     console.log("trainer")
     console.log(trainer)
     console.log("trainerPlan")
@@ -22,24 +23,10 @@ function SystemReservation() {
     console.log(selectedPlanHour)
 
 
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
 
-
-    // const openModal = () => {
-    //     console.log("open modal")
-    //     setIsOpen(true);
-    // }
-    //
-    // const closeModal = () => {
-    //     console.log("close modal")
-    //     setIsOpen(false);
-    // }
 
     const handleCalendarDateChange = (date) => {
         setCurrentDate(date)
@@ -123,11 +110,13 @@ function SystemReservation() {
         setSelectedPlanHour(selected_hour_dict)
     }
 
-    const handleBookAnAppointment = () => {
-        if (trainer !== null && trainerPlan !== null && selectedPlanHour !== null){
-            setShow(true);
+    const handleReservation = () => {
+        if (authUser === null) {
+            return props.goToBookingAuthorization()
         }
-
+        if (trainer !== null && trainerPlan !== null && selectedPlanHour !== null){
+            return props.goToBookingConfirmation()
+        }
     }
 
     function addMonths(date, months) {
@@ -180,14 +169,14 @@ function SystemReservation() {
                         })}
                     </div>
                     <div className="flex flex-row justify-center">
-                        <button onClick={handleBookAnAppointment}
+                        <button onClick={handleReservation}
                             className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
                             Zarezerwuj termin
                         </button>
                     </div>
                 </div>
             </div>
-            {show && <ReservationModal show={show} handleClose={handleClose} selectedPlanHour={selectedPlanHour} />}
+            {/*{show && <ReservationModal show={show} handleClose={handleClose} selectedPlanHour={selectedPlanHour} />}*/}
         </>
     )
 }

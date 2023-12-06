@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {useFormik} from 'formik';
 import {validateLogin} from "./validation.jsx";
@@ -9,6 +9,7 @@ import {useAuth} from "./AuthContext.jsx";
 
 const LoginForm = () => {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const [errorlogin, setErrorLogin] = useState(null)
     const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
 
@@ -30,9 +31,7 @@ const LoginForm = () => {
             await navigate("/");
 
         } catch (err) {
-            console.log("error")
-            console.log(err)
-            console.log(err.response)
+            setErrorLogin(err.response.data.detail)
         }
         // await checkIfUserLogged()
     }
@@ -79,6 +78,7 @@ const LoginForm = () => {
                 // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             {errors.password && <p>{errors.password}</p>}
+            {errorlogin && <p>{errorlogin}</p>}
             <button type="submit">Zaloguj się</button>
         </form>
 

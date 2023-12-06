@@ -4,10 +4,12 @@ import {useFormik} from 'formik';
 import {validateRegistration} from "./validation.jsx";
 import {useCookies} from "react-cookie";
 import {checkIfUserLogged, getLogin, postRegistration} from "./api.jsx";
+import {useAuth} from "./AuthContext.jsx";
 
 
-const SignupForm = () => {
-    const [cookies,setCookie] = useCookies(['jwt_trainer_auth']);
+const RegisterForm = () => {
+    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
+    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)
@@ -16,14 +18,23 @@ const SignupForm = () => {
         form.append("phone_number", values.phone_number)
         form.append("password", values.password)
         form.append("repeat_password", values.repeat_password)
-        const registration_data = await postRegistration(form)
-        console.log("registration_data")
-        console.log(registration_data)
-        // let login_data = await getLogin(form)
-        setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax'})
-        // let users_me = await checkIfUserLogged()
+        try {
+            const registration_data = await postRegistration(form)
+            setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax'})
+            try {
+                let logged_user = await checkIfUserLogged()
+                setAuthUser(logged_user)
+                setIsLoggedIn(true)
+            } catch (err) {
+                setAuthUser(null)
+                setIsLoggedIn(false)
+            }
+            await props.goToBookingConfirmation()
+        } catch (err) {
+            setErrorRegister(err.response.data.detail)
+        }
     }
-    const {values,handleSubmit, handleChange, errors} = useFormik({
+    const {values, handleSubmit, handleChange, errors} = useFormik({
 
         initialValues: {
             name: '',
@@ -73,7 +84,7 @@ const SignupForm = () => {
                 name="email"
                 type="email"
                 required
-                className={errors.email ? "input-error": ""}
+                className={errors.email ? "input-error" : ""}
             />
             {errors.email && <p>{errors.email}</p>}
             <label htmlFor="phone_number">Numer telefonu</label>
@@ -96,7 +107,7 @@ const SignupForm = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className={errors.password  ? "input-error": ""}
+                className={errors.password ? "input-error" : ""}
                 // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             {errors.password && <p>{errors.password}</p>}
@@ -109,7 +120,7 @@ const SignupForm = () => {
                 type="password"
                 autoComplete="repeat_current-password"
                 required
-                className={errors.repeat_password ? "input-error": ""}
+                className={errors.repeat_password ? "input-error" : ""}
                 // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
             {errors.repeat_password && <p>{errors.repeat_password}</p>}
@@ -119,4 +130,4 @@ const SignupForm = () => {
     );
 
 };
-export default SignupForm
+export default RegisterForm
