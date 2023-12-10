@@ -5,8 +5,10 @@ import {useAuth} from "../auth/AuthContext.jsx";
 const BookingConfirmation = (props) => {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const handleReservation = () => {
+        console.log("authUser")
         console.log(authUser)
         console.log("handleReservation")
+        console.log(props.selectedPlanHour)
     }
     //Use auth
     useEffect(() => {

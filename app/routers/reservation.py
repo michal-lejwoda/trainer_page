@@ -7,23 +7,29 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
-from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan, Trainer
+from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan, Trainer, \
+    Reservation
 from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
-    GetWorkHours, TrainerId, TrainerPlans
+    GetWorkHours, TrainerId, TrainerPlans, AssignReservation
+from app.user.models import User
 
 router = APIRouter(
     tags=["reservation"],
 )
 @router.post("/reservation")
 def create_reservation(reservation: ReservationCreate, db: Session = Depends(get_db)):
-    reservation_model = ReservationCreate()
-    pass
+    user = db.query(User).filter(User.id == reservation.user_id).first()
+    work_hours = db.query(WorkHours).filter(WorkHours.id == reservation.work_hours_id).first()
+    print(user)
+    print(work_hours)
+
+
 
 
 @router.get("/reservation")
 def list_reservations(db: Session = Depends(get_db)):
-    return db.query(ReservationList).all()
+    return db.query(Reservation).all()
 
 
 @router.get("/")
@@ -251,3 +257,8 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     db.add(trainer_model)
     db.commit()
     return trainer
+
+@router.post("/assign_reservation", response_model=None)
+def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == assign_reservation.user_id).first()
+    # reservation = db.query(Re).filter(User.id == assign_reservation.user_id).first()

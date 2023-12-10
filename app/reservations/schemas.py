@@ -51,9 +51,8 @@ class ReservationList(ReservationBase):
 
 
 class ReservationCreate(ReservationBase):
-    start_time: datetime.datetime
-    end_time: datetime.datetime
-    trainer_id: int
+    user_id: int
+    work_hours_id: int
 
 
 class WorkingHourBase(BaseModel):
@@ -159,4 +158,6 @@ class GetWorkHours(BaseModel):
         return v.strftime('%H:%M')
 
 
-
+class AssignReservation(BaseModel):
+    user_id: int
+    reservation_id: int

@@ -4,6 +4,9 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, D
 from app.database import Base
 from sqlalchemy.orm import relationship
 
+from app.user.models import User
+
+
 
 class Day_of_Week(enum.Enum):
     MONDAY = 0
@@ -34,7 +37,12 @@ class Reservation(Base):
     title = Column(String)
     start_time = Column(DateTime(timezone=True))
     end_time = Column(DateTime(timezone=True))
+    work_hour_id = Column(Integer, ForeignKey("workhours.id"))
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    users = relationship("User", back_populates="reservations")
+    # user_id = Column(Integer, ForeignKey("users.id"))
+    # user_fk = relationship("User", backref="reservations_fk")
     # trainer = relationship("Trainer")
 
 
