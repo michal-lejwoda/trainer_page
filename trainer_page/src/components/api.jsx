@@ -3,7 +3,6 @@ import axios from 'axios'
 const instance = axios.create();
 
 
-
 export async function getTrainers() {
     const response = await instance.get(`http://0.0.0.0:8000/trainers`);
     let list_of_elements = []
@@ -37,7 +36,12 @@ export async function getTrainerPlan(data) {
 }
 
 
-export async function getDayWorkHours(data){
+export async function getDayWorkHours(data) {
     const response = await instance.post(`http://0.0.0.0:8000/get_day_work_hours`, data)
+    return response.data
+}
+
+export async function postReservation(data) {
+    const response = await instance.post('http://0.0.0.0:8000/reservation', data, {withCredentials: true})
     return response.data
 }

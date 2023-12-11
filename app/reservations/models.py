@@ -29,17 +29,20 @@ class WorkHours(Base):
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
     is_active = Column(Boolean, default=True)
 
+    reservation = relationship("Reservation", back_populates="work_hours")
+
 
 class Reservation(Base):
     __tablename__ = "reservations"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    start_time = Column(DateTime(timezone=True))
-    end_time = Column(DateTime(timezone=True))
+    # start_time = Column(DateTime(timezone=True))
+    # end_time = Column(DateTime(timezone=True))
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
-    trainer_id = Column(Integer, ForeignKey("trainers.id"))
+    # trainer_id = Column(Integer, ForeignKey("trainers.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
+    work_hours = relationship("WorkHours", back_populates="reservation")
     users = relationship("User", back_populates="reservations")
     # user_id = Column(Integer, ForeignKey("users.id"))
     # user_fk = relationship("User", backref="reservations_fk")

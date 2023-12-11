@@ -10,17 +10,8 @@ import {useAuth} from "../auth/AuthContext.jsx";
 
 function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
-    // const [trainer, setTrainer] = useState(null)
-    // const [trainerPlan, setTrainerPlan] = useState(null)
-    // const [selectedPlanHour, setSelectedPlanHour] = useState(null)
     const [show, setShow] = useState(false);
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
-    console.log("trainer")
-    console.log(props.trainer)
-    console.log("trainerPlan")
-    console.log(props.trainerPlan)
-    console.log("selectedPlanHour")
-    console.log(props.selectedPlanHour)
 
 
     const minDate = new Date()
@@ -30,9 +21,9 @@ function SystemReservation(props) {
 
     const handleCalendarDateChange = (date) => {
         setCurrentDate(date)
-        if (trainer !== null && trainerPlan !== null) {
+        if (props.trainer !== null && props.trainerPlan !== null) {
             const work_hours_args = {
-                "trainer_id": trainerPlan.id, "is_active": true,
+                "trainer_id": props.trainerPlan.id, "is_active": true,
                 "day": date.toISOString().split('T')[0]
             }
             mutateWorkHoursData(work_hours_args)
@@ -41,7 +32,6 @@ function SystemReservation(props) {
 
     const handleTrainerDataChange = (trainer_data) => {
         props.setTrainer(trainer_data)
-        // setTrainerPlan(null)
         props.setSelectedPlanHour(null)
 
         mutatePlanData({"trainer_id": trainer_data.id}, {

@@ -1,7 +1,7 @@
 import datetime
-from typing import List, Any
+from typing import List, Any, Annotated
 
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends, HTTPException, APIRouter, Form, Cookie
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -12,19 +12,32 @@ from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, Worki
 from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, AssignReservation
+from app.user.dependencies import get_current_user
 from app.user.models import User
 
 router = APIRouter(
     tags=["reservation"],
 )
+
+
 @router.post("/reservation")
-def create_reservation(reservation: ReservationCreate, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == reservation.user_id).first()
-    work_hours = db.query(WorkHours).filter(WorkHours.id == reservation.work_hours_id).first()
-    print(user)
-    print(work_hours)
-
-
+def create_reservation(title: Annotated[str, Form()], user_id: Annotated[str, Form()],
+                       work_hours_id: Annotated[str, Form()], jwt_trainer_auth: Annotated[str | None, Cookie()] = None,
+                       db: Session = Depends(get_db)):
+    user_based_on_id = db.query(User).filter(User.id == user_id).first()
+    work_hours = db.query(WorkHours).filter(WorkHours.id == work_hours_id, WorkHours.is_active == True).first()
+    if jwt_trainer_auth is None:
+        raise HTTPException(status_code=401, detail='You need to log in')
+    user = get_current_user(jwt_trainer_auth, db)
+    if user.id == user_based_on_id.id:
+        reservation_model = Reservation()
+        reservation_model.title = title
+        reservation_model.work_hour_id = work_hours.id
+        reservation_model.user_id = user.id
+        work_hours.is_active = False
+        db.add(reservation_model)
+        db.add(work_hours)
+        db.commit()
 
 
 @router.get("/reservation")
@@ -41,12 +54,10 @@ def read_api(db: Session = Depends(get_db)):
 # @router.get("/trainers", response_model=List[Trainer])
 @router.get("/trainers",
             response_model=None
-    # , response_model=List[TrainerBase]
+            # , response_model=List[TrainerBase]
             )
 def list_trainers(db: Session = Depends(get_db)) -> Any:
     return db.query(Trainer).all()
-
-
 
 
 @router.get("/get_all_working_hours")
@@ -201,6 +212,7 @@ def get_reservation_hours(trainer_id: int, date_of_break: datetime.date, hours: 
                                                        TrainerHoliday.is_active == True).all()
     return small_breaks
 
+
 @router.get("/address")
 async def get_address(db: Session = Depends(get_db)):
     return db.query(Address).all()
@@ -257,6 +269,7 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     db.add(trainer_model)
     db.commit()
     return trainer
+
 
 @router.post("/assign_reservation", response_model=None)
 def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
