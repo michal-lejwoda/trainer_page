@@ -3,8 +3,13 @@ import 'leaflet/dist/leaflet.css';
 import '../css/map.css'
 import {ReCAPTCHA} from "react-google-recaptcha";
 
-function Contact() {
 
+function Contact() {
+    const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
+    console.log("import.meta.DOMAIN")
+    console.log(import.meta.env.VITE_DOMAIN)
+    console.log("CAPTCHA_SITEKEY")
+    console.log(import.meta.env.VITE_CAPTCHA_SITE_KEY)
     const position = [50.019581842782905, 22.01792718408926]
     return (
         <div className="contact">
@@ -74,7 +79,7 @@ function Contact() {
                                     </div>
                                 </div>
                                 <ReCAPTCHA
-                                    sitekey={"6LeEIYMmAAAAAIl0vfJ5BqGZqAybQhT5PvAPSk9r"}
+                                    sitekey={CAPTCHA_SITE_KEY}
                                     // style={{ display: "inline-block" }}
                                     // theme="dark"
                                     // grecaptcha={grecaptchaObject}

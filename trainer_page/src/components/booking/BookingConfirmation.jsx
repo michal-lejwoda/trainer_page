@@ -6,6 +6,7 @@ import {postReservation} from "../api.jsx";
 
 const BookingConfirmation = (props) => {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
     const handleReservation = async () => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
@@ -54,7 +55,9 @@ const BookingConfirmation = (props) => {
                     </div>
                 </div>
             </div>
-            <ReCAPTCHA sitekey={"6LeEIYMmAAAAAIl0vfJ5BqGZqAybQhT5PvAPSk9r"}/>
+            <ReCAPTCHA
+                sitekey={CAPTCHA_SITE_KEY}
+            />
             <button onClick={handleReservation}>Potwierdź rezerwację</button>
         </div>
 
