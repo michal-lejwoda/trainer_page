@@ -104,7 +104,7 @@ function SystemReservation(props) {
         if (authUser === null) {
             return props.goToBookingAuthorization()
         }
-        if (props.trainer !== null && props.trainerPlan !== null && props.selectedPlanHour !== null){
+        if (props.trainer !== null && props.trainerPlan !== null && props.selectedPlanHour !== null) {
             return props.goToBookingConfirmation()
         }
     }
@@ -160,7 +160,7 @@ function SystemReservation(props) {
                     </div>
                     <div className="flex flex-row justify-center">
                         <button onClick={handleReservation}
-                            className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
+                                className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
                             Zarezerwuj termin
                         </button>
                     </div>

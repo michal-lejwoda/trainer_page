@@ -7,7 +7,6 @@ from sqlalchemy.orm import relationship
 from app.user.models import User
 
 
-
 class Day_of_Week(enum.Enum):
     MONDAY = 0
     TUESDAY = 1
@@ -37,16 +36,10 @@ class Reservation(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    # start_time = Column(DateTime(timezone=True))
-    # end_time = Column(DateTime(timezone=True))
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
-    # trainer_id = Column(Integer, ForeignKey("trainers.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
     work_hours = relationship("WorkHours", back_populates="reservation")
     users = relationship("User", back_populates="reservations")
-    # user_id = Column(Integer, ForeignKey("users.id"))
-    # user_fk = relationship("User", backref="reservations_fk")
-    # trainer = relationship("Trainer")
 
 
 class Trainer(Base):
@@ -75,8 +68,6 @@ class WorkingHour(Base):
     __tablename__ = "working_hours"
     id = Column(Integer, nullable=False, primary_key=True, index=True)
     weekday = Column(Integer)
-    # start_time = Column(Time())
-    # end_time = Column(Time())
     start_hour = Column(Time())
     end_hour = Column(Time())
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
@@ -111,5 +102,3 @@ class Plan(Base):
     price = Column(Float)
     currency = Column(String)
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
-
-
