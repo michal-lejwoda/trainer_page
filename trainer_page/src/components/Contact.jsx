@@ -1,21 +1,25 @@
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css'
-import {ReCAPTCHA} from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 function Contact() {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
-    console.log("import.meta.DOMAIN")
-    console.log(import.meta.env.VITE_DOMAIN)
-    console.log("CAPTCHA_SITEKEY")
-    console.log(import.meta.env.VITE_CAPTCHA_SITE_KEY)
+    console.log("CAPTCHA_SITE_KEY")
+    console.log(CAPTCHA_SITE_KEY)
+    function onChange(value) {
+        console.log("Captcha value:", value);
+    }
+
     const position = [50.019581842782905, 22.01792718408926]
     return (
         <div className="contact">
             <div className="md:flex md:flex-row justify-stretch">
                 <div className="contact--image  items-stretch md:basis-2/5">
-                    <img className="inline-block object-cover object-top h-72 w-full md:h-full md:object-center md:object-cover" src="/kontakt-01.jpg" alt=""/>
+                    <img
+                        className="inline-block object-cover object-top h-72 w-full md:h-full md:object-center md:object-cover"
+                        src="/kontakt-01.jpg" alt=""/>
                 </div>
                 <div className="md:basis-3/5">
                     <div className="contact--description px-2">
@@ -78,13 +82,16 @@ function Contact() {
                                         </div>
                                     </div>
                                 </div>
-                                <ReCAPTCHA
-                                    sitekey={CAPTCHA_SITE_KEY}
-                                    // style={{ display: "inline-block" }}
-                                    // theme="dark"
-                                    // grecaptcha={grecaptchaObject}
-                                    // onChange={onChange}
-                                />
+                                <div className="recaptcha">
+                                    <ReCAPTCHA
+                                        sitekey={CAPTCHA_SITE_KEY}
+                                        onChange={onChange}
+                                        // style={{ display: "inline-block" }}
+                                        // theme="dark"
+                                        // grecaptcha={grecaptchaObject}
+                                        // onChange={onChange}
+                                    />
+                                </div>
                                 <div className="my-5">
                                     <input type="checkbox"/> <span>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
                                 </div>

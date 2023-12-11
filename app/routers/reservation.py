@@ -4,6 +4,7 @@ from typing import List, Any, Annotated
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie
 from sqlalchemy import func
 from sqlalchemy.orm import Session
+from starlette.background import BackgroundTasks
 
 from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
@@ -12,6 +13,7 @@ from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, Worki
 from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, AssignReservation
+from app.send_email import send_email_async, send_email_background
 from app.user.dependencies import get_current_user
 from app.user.models import User
 
@@ -275,3 +277,14 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
 def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == assign_reservation.user_id).first()
     # reservation = db.query(Re).filter(User.id == assign_reservation.user_id).first()
+
+
+@router.get('/send-email/asynchronous')
+async def send_email_asynchronous():
+    await send_email_async('Hello World','someemail@gmail.com',
+    {'title': 'Hello World', 'name': 'John Doe'})
+    return 'Success'@router.get('/send-email/backgroundtasks')
+def send_email_backgroundtasks(background_tasks: BackgroundTasks):
+    send_email_background(background_tasks, 'Hello World',
+    'someemail@gmail.com', {'title': 'Hello World', 'name':       'John Doe'})
+    return 'Success'

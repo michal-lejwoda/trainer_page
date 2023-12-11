@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
-import {ReCAPTCHA} from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 import {useAuth} from "../auth/AuthContext.jsx";
-import {checkIfUserLogged, getLogin} from "../auth/api.jsx";
 import {postReservation} from "../api.jsx";
 
 const BookingConfirmation = (props) => {
