@@ -10,7 +10,7 @@ from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
 from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan, Trainer, \
     Reservation
-from app.reservations.schemas import TimeDiff, ReservationCreate, ReservationList, TrainerBase, \
+from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, AssignReservation
 from app.send_email import send_email_async, send_email_background
@@ -281,10 +281,12 @@ def assign_reservation_to_user(assign_reservation: AssignReservation, db: Sessio
 
 @router.get('/send-email/asynchronous')
 async def send_email_asynchronous():
-    await send_email_async('Hello World','someemail@gmail.com',
-    {'title': 'Hello World', 'name': 'John Doe'})
-    return 'Success'@router.get('/send-email/backgroundtasks')
+    await send_email_async('Hello World', 'someemail@gmail.com',
+                           {'title': 'Hello World', 'name': 'John Doe'})
+    return 'Success' @ router.get('/send-email/backgroundtasks')
+
+
 def send_email_backgroundtasks(background_tasks: BackgroundTasks):
     send_email_background(background_tasks, 'Hello World',
-    'someemail@gmail.com', {'title': 'Hello World', 'name':       'John Doe'})
+                          'someemail@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
     return 'Success'
