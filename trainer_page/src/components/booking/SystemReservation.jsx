@@ -6,7 +6,6 @@ import Select from 'react-select';
 import {useAuth} from "../auth/AuthContext.jsx";
 
 
-
 function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [show, setShow] = useState(false);
@@ -19,6 +18,12 @@ function SystemReservation(props) {
 
 
     const handleCalendarDateChange = (date) => {
+        console.log("date")
+        console.log(date)
+        console.log("props.trainer")
+        console.log(props.trainer)
+        console.log("props.trainerPlan")
+        console.log(props.trainerPlan)
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
             const work_hours_args = {
@@ -95,8 +100,27 @@ function SystemReservation(props) {
     } = useGetDayWorkHours()
 
     const selectHour = (e, data) => {
+        console.log("e")
+        console.log(e)
         let selected_hour_dict = {"plan": props.trainerPlan, "time_data": data, "trainer": props.trainer}
         props.setSelectedPlanHour(selected_hour_dict)
+        // e.setAttribute('className', 'bg-red-700')
+        let reds = document.getElementsByClassName("bg-red-600")
+
+        for (let i = 0; i < reds.length; i++) {
+            console.log("reds one")
+            console.log(reds)
+            console.log(i)
+            console.log(reds[i])
+            let temp_red = reds[i]
+            temp_red.classList.remove("bg-red-600")
+            temp_red.classList.add("bg-transparent")
+        }
+        console.log("reds")
+        console.log(reds)
+        e.target.classList.remove("bg-transparent")
+        e.target.classList.add("bg-red-600")
+        console.log(e)
     }
 
     const handleReservation = () => {
@@ -158,7 +182,10 @@ function SystemReservation(props) {
                     <Calendar prev2Label={null} next2Label={null} view={"month"} minDate={minDate}
                               maxDate={maxDate}
                               onChange={handleCalendarDateChange}
-                              value={currentDate}/>
+                              value={currentDate}
+                              minDetail="month"
+                              maxDetail="month"
+                    />
                     <div className="mt-5 text-lg font-semibold">
                         <h2 className="text-center">Dostępne Terminy:</h2>
                     </div>
