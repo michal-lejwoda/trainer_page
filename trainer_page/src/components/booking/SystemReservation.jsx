@@ -3,9 +3,8 @@ import Calendar from "react-calendar";
 import '../../css/react-calendar.css'
 import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutations.jsx";
 import Select from 'react-select';
-
-import ReservationModal from "../modals/ReservationModal.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
+
 
 
 function SystemReservation(props) {
@@ -118,27 +117,41 @@ function SystemReservation(props) {
     return (
         <>
             <div className="px-4 test">
-                <div className="reservation--title my-5">
+                <div className="reservation--title my-5 text-center">
                     <h1>Rezerwacja treningu</h1>
                 </div>
-                <div>
+                <div className="reservation__container mx-5">
                     <label htmlFor="trainers"
-                           className="block mb-2 text-lg font-semibold text-gray-900 dark:text-white">Wybierz
+                           className="block mb-4 text-xl font-semibold text-gray-900 dark:text-white">Wybierz
                         Trenera</label>
                     {trainersData &&
-                        <Select
-                            defaultValue={props.trainer}
-                            onChange={handleTrainerDataChange}
-                            options={trainersData}
-                        />
+                        <div>
+                            <Select
+                                defaultValue={props.trainer}
+                                styles={{
+                                    option: (base) => ({
+                                        ...base,
+                                        color: `black`,
+                                    }),
+                                }}
+                                onChange={handleTrainerDataChange}
+                                options={trainersData}
+                            />
+                        </div>
                     }
                     <label htmlFor="trainers"
-                           className="block my-2 text-lg font-semibold text-gray-900 dark:text-white">Wybierz
+                           className="block my-4 text-xl font-semibold text-gray-900 dark:text-white">Wybierz
                         Plan</label>
                     {trainerPlanData &&
                         <Select
                             defaultValue={props.trainerPlan}
                             options={trainerPlanData}
+                            styles={{
+                                option: (base) => ({
+                                    ...base,
+                                    color: `black`,
+                                }),
+                            }}
                         />
                     }
 
@@ -147,9 +160,9 @@ function SystemReservation(props) {
                               onChange={handleCalendarDateChange}
                               value={currentDate}/>
                     <div className="mt-5 text-lg font-semibold">
-                        <h2>Dostępne Terminy:</h2>
+                        <h2 className="text-center">Dostępne Terminy:</h2>
                     </div>
-                    <div className="term__container w-full">
+                    <div className="term__container w-full text-center">
                         {dayWorkHoursData && dayWorkHoursData.map(element => {
                             return (
                                 <button key={element.id} onClick={(e) => selectHour(e, element)}
