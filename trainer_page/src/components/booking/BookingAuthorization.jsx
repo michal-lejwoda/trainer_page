@@ -13,7 +13,7 @@ const BookingAuthorization = props => {
                                                goToSystemReservation={props.goToSystemReservation}/>
                 </div>
                 <div className="booking__register bg-container-grey p-10 rounded-2xl">
-                    <p className="text-4xl flex justify-center">Rezerwuj jako gość, automatycznie stworzymy dla ciebie konto</p>
+                    <p className="text-4xl flex justify-center mb-4">Rezerwuj jako gość, automatycznie stworzymy dla ciebie konto</p>
                     <BookingAuthorizationRegister goToBookingConfirmation={props.goToBookingConfirmation}
                                                   goToSystemReservation={props.goToSystemReservation}/>
                 </div>
