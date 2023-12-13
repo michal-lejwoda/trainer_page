@@ -28,7 +28,6 @@ function SystemReservation(props) {
     const handleTrainerDataChange = (trainer_data) => {
         props.setTrainer(trainer_data)
         props.setSelectedPlanHour(null)
-
         mutatePlanData({"trainer_id": trainer_data.id}, {
             onSuccess: (plan_data) => {
                 if (plan_data.length > 0) {
