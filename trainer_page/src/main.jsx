@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Contact from "./components/Contact.jsx";
-import SystemReservation from "./components/booking/SystemReservation.jsx";
 import Navbar from "./components/Navbar.jsx"
 import AboutMe from "./components/AboutMe.jsx"
 import './index.css'

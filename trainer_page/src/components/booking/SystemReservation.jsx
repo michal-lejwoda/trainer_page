@@ -10,20 +10,11 @@ function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
-
-
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
-
-
     const handleCalendarDateChange = (date) => {
-        console.log("date")
-        console.log(date)
-        console.log("props.trainer")
-        console.log(props.trainer)
-        console.log("props.trainerPlan")
-        console.log(props.trainerPlan)
+        props.setSelectedPlanHour(null)
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
             const work_hours_args = {
@@ -100,27 +91,16 @@ function SystemReservation(props) {
     } = useGetDayWorkHours()
 
     const selectHour = (e, data) => {
-        console.log("e")
-        console.log(e)
         let selected_hour_dict = {"plan": props.trainerPlan, "time_data": data, "trainer": props.trainer}
         props.setSelectedPlanHour(selected_hour_dict)
-        // e.setAttribute('className', 'bg-red-700')
-        let reds = document.getElementsByClassName("bg-red-600")
-
-        for (let i = 0; i < reds.length; i++) {
-            console.log("reds one")
-            console.log(reds)
-            console.log(i)
-            console.log(reds[i])
-            let temp_red = reds[i]
+        let selected_element = document.getElementsByClassName("bg-red-600")
+        for (let i = 0; i < selected_element.length; i++) {
+            let temp_red = selected_element[i]
             temp_red.classList.remove("bg-red-600")
             temp_red.classList.add("bg-transparent")
         }
-        console.log("reds")
-        console.log(reds)
         e.target.classList.remove("bg-transparent")
         e.target.classList.add("bg-red-600")
-        console.log(e)
     }
 
     const handleReservation = () => {
@@ -199,10 +179,11 @@ function SystemReservation(props) {
                         })}
                     </div>
                     <div className="flex flex-row justify-center">
-                        <button onClick={handleReservation}
-                                className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
-                            Zarezerwuj termin
-                        </button>
+                        {props.selectedPlanHour &&
+                            <button onClick={handleReservation}
+                                    className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
+                                Zarezerwuj termin
+                            </button>}
                     </div>
                 </div>
             </div>
