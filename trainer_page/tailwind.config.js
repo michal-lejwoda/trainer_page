@@ -8,14 +8,14 @@ export default {
     extend: {
       backgroundImage: {
         'tourists': "url('/public/tourists.jpg')",
-        // 'footer-texture': "url('/img/footer-texture.png')",
       },
       colors: {
         'regal-blue': '#243c5a',
         'lighter-grey': '#A9A9B2',
         'darky-grey': '#283747',
         'even-more-darky-grey': '#333333',
-        'background-black-color': '#242424'
+        'background-black-color': '#242424',
+        'container-grey': 'rgba(44,44,44,1)'
       },
     },
   },
