@@ -92,14 +92,14 @@ function SystemReservation(props) {
     const selectHour = (e, data) => {
         let selected_hour_dict = {"plan": props.trainerPlan, "time_data": data, "trainer": props.trainer}
         props.setSelectedPlanHour(selected_hour_dict)
-        let selected_element = document.getElementsByClassName("bg-red-600")
+        let selected_element = document.getElementsByClassName("bg-blue-500")
         for (let i = 0; i < selected_element.length; i++) {
             let temp_red = selected_element[i]
-            temp_red.classList.remove("bg-red-600")
+            temp_red.classList.remove("bg-blue-500")
             temp_red.classList.add("bg-transparent")
         }
         e.target.classList.remove("bg-transparent")
-        e.target.classList.add("bg-red-600")
+        e.target.classList.add("bg-blue-500")
     }
 
     const handleReservation = () => {
@@ -172,7 +172,7 @@ function SystemReservation(props) {
                         {dayWorkHoursData && dayWorkHoursData.map(element => {
                             return (
                                 <button key={element.id} onClick={(e) => selectHour(e, element)}
-                                        className="bg-transparent hover:bg-lighter-grey text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">
+                                        className="bg-transparent hover:bg-blue-300 text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">
                                     {element.start_time} - {element.end_time}
                                 </button>)
                         })}

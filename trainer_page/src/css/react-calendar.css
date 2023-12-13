@@ -4,9 +4,10 @@
     border-radius: 15px;
     margin-top: 20px;
 }
-.react-calendar__tile--active{
-    background-color: #A9A9B2 !important;
-}
+/*.react-calendar__tile--active{*/
+/*    !*background-color: #A9A9B2 !important;*!*/
+/*    !*background-color: rgba(0, 0, 0, 0.3)*!*/
+/*}*/
 .react-calendar__navigation__arrow{
     padding: 0.6em 0.8em !important;
 }
