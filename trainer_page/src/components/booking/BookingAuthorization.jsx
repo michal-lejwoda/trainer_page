@@ -8,7 +8,7 @@ const BookingAuthorization = props => {
             <div className="booking__container w-7/12 py-10 ">
                 <div className="booking__login bg-container-grey p-10 mb-10 rounded-2xl">
                     <p className="text-4xl mb-4">Zarezerwuj wizytę</p>
-                    <p className="text-4xl ">Posiadam konto</p>
+                    <p className="text-2xl ">Posiadam konto</p>
                     <BookingAuthorizationLogin goToBookingConfirmation={props.goToBookingConfirmation}
                                                goToSystemReservation={props.goToSystemReservation}/>
                 </div>
