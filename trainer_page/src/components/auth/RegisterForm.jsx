@@ -83,7 +83,6 @@ const RegisterForm = () => {
                                 required
                                 placeholder="Nazwisko"
                                 className="text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
-                                // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             {errors.last_name && <p>{errors.last_name}</p>}
                         </div>
@@ -132,7 +131,6 @@ const RegisterForm = () => {
                                 required
                                 className={errors.password ? "input-error text-lg py-2 px-3 mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Hasło"
-                                // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             {errors.password && <p>{errors.password}</p>}
                         </div>
