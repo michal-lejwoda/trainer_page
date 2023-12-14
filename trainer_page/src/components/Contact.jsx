@@ -6,8 +6,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 function Contact() {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
-    console.log("CAPTCHA_SITE_KEY")
-    console.log(CAPTCHA_SITE_KEY)
     function onChange(value) {
         console.log("Captcha value:", value);
     }
@@ -21,8 +19,8 @@ function Contact() {
                         className="inline-block object-cover object-top h-72 w-full md:h-full md:object-center md:object-cover"
                         src="/kontakt-01.jpg" alt=""/>
                 </div>
-                <div className="md:basis-3/5">
-                    <div className="contact--description px-2">
+                <div className="md:basis-3/5  ">
+                    <div className="contact--description px-2 flex flex-col items-center">
                         <p className="text-xl my-5">Treningi prowadzone są na siłowni:</p>
                         <p className="text-xl mb-6 font-bold">Cityfit Rzeszów</p>
                         <p className="text-xl my-5">Numer konta</p>
@@ -31,9 +29,9 @@ function Contact() {
                     <hr/>
                     <div className="contact--mail px-4">
                         <form>
-                            <div className="border-b border-gray-900/10 pb-12">
-                                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-6">
-                                    <div className="md:col-span-4">
+                            <div className="border-b border-gray-900/10 pb-12 flex flex-col items-center">
+                                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-6 ">
+                                    <div className="md:col-span-4 ">
                                         <label htmlFor="first-name"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
                                             Imię
