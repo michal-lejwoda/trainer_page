@@ -72,7 +72,7 @@ function Contact() {
                                                 onChange={handleChange}
                                                 className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
-                                            {errors.name && <p>{errors.name}</p>}
+                                            {errors.name && <p className="mt-3 text-red-800">{errors.name}</p>}
                                         </div>
                                     </div>
 
@@ -93,7 +93,7 @@ function Contact() {
                                                 onChange={handleChange}
                                                 className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
-                                            {errors.email && <p>{errors.email}</p>}
+                                            {errors.email && <p className="mt-3 text-red-800">{errors.email}</p>}
                                         </div>
                                     </div>
                                     <div className="md:col-span-4 ">
@@ -111,7 +111,7 @@ function Contact() {
                                         onChange={handleChange}
                                         className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                     />
-                                            {errors.message && <p>{errors.message}</p>}
+                                            {errors.message && <p className="mt-3 text-red-800">{errors.message}</p>}
                                         </div>
                                     </div>
 
@@ -120,10 +120,11 @@ function Contact() {
                                             sitekey={CAPTCHA_SITE_KEY}
                                             onChange={handleRecaptchaChange}
                                         />
+                                        {errors.captcha && <p className="mt-3 text-red-800">{errors.captcha}</p>}
                                     </div>
                                     <div className="my-5">
                                         <input type="checkbox" name="toggle" onChange={handleChange}/><span> Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
-                                        {errors.toggle && <p>{errors.toggle}</p>}
+                                        {errors.toggle && <p className="mt-3 text-red-800">{errors.toggle}</p>}
                                     </div>
                                     <div className="flex justify-center">
                                         <button type="submit" className="border-solid border-1 rounded-lg border-white mr-4" onClick={handleSubmit}>Wyślij wiadomość</button>
