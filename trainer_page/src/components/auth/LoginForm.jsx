@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {useAuth} from "./AuthContext.jsx";
 
 const LoginForm = () => {
-    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const {setAuthUser, setIsLoggedIn} = useAuth()
     const [errorlogin, setErrorLogin] = useState(null)
     const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
@@ -33,7 +33,6 @@ const LoginForm = () => {
         } catch (err) {
             setErrorLogin(err.response.data.detail)
         }
-        // await checkIfUserLogged()
     }
     const {values, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {
@@ -84,7 +83,6 @@ const LoginForm = () => {
                                 required
                                 placeholder="Hasło"
                                 className={errors.password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
-                                // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
                         {errors.password && <p>{errors.password}</p>}
