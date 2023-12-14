@@ -90,7 +90,10 @@ const LoginForm = () => {
                         {errors.password && <p>{errors.password}</p>}
                         {errorlogin && <p>{errorlogin}</p>}
                     </div>
-                    <div className="booking__login__button w-full flex justify-end">
+
+                    <div className="booking__login__button w-full flex flex-col items-end">
+                        <a className="mb-4 cursor-pointer mr-4">Przypomnij hasło</a>
+                        <a className="mb-4 cursor-pointer mr-4">Jeśli nie posiadasz konta. Zarejestruj się</a>
                         <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zaloguj się
                         </button>
                     </div>
