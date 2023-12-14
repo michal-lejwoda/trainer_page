@@ -2,13 +2,37 @@ import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css'
 import ReCAPTCHA from "react-google-recaptcha";
+import {useFormik} from "formik";
+import {validateContact, validateLogin} from "./auth/validation.jsx";
+import React from "react";
 
 
 function Contact() {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
 
-    function onChange(value) {
-        console.log("Captcha value:", value);
+
+    const {values,setFieldValue, handleSubmit, handleChange, errors} = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            message: '',
+            captcha: false,
+            toggle: false,
+
+        },
+        validationSchema: validateContact,
+        validateOnChange: false,
+        validationOnBlue: false,
+        onSubmit: values => {
+            // handleLogin(values)
+            console.log("submit")
+            console.log(values)
+        },
+
+    });
+
+    const handleRecaptchaChange = () => {
+        setFieldValue('captcha', true)
     }
 
     const position = [50.019581842782905, 22.01792718408926]
@@ -29,7 +53,7 @@ function Contact() {
                     </div>
                     <hr/>
                     <div className="contact--mail px-4">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="border-b border-gray-900/10 pb-12 flex flex-col items-center">
                                 <div className="mt-10 w-4/6">
                                     <div className="md:col-span-4 ">
@@ -40,12 +64,15 @@ function Contact() {
                                         <div className="my-3">
                                             <input
                                                 type="text"
-                                                name="first-name"
-                                                id="first-name"
+                                                name="name"
+                                                required
                                                 placeholder="Imię*"
                                                 autoComplete="given-name"
+                                                value={values.name}
+                                                onChange={handleChange}
                                                 className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
+                                            {errors.name && <p>{errors.name}</p>}
                                         </div>
                                     </div>
 
@@ -59,10 +86,14 @@ function Contact() {
                                                 id="email"
                                                 name="email"
                                                 type="email"
+                                                required
                                                 placeholder="Adres Email*"
                                                 autoComplete="email"
+                                                value={values.email}
+                                                onChange={handleChange}
                                                 className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
+                                            {errors.email && <p>{errors.email}</p>}
                                         </div>
                                     </div>
                                     <div className="md:col-span-4 ">
@@ -72,30 +103,30 @@ function Contact() {
                                         </label>
                                         <div className="my-3">
                                     <textarea
-                                        id="content"
-                                        name="content"
+                                        name="message"
                                         rows="8"
+                                        required
                                         placeholder="Treść Wiadomości*"
+                                        value={values.message}
+                                        onChange={handleChange}
                                         className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                     />
+                                            {errors.message && <p>{errors.message}</p>}
                                         </div>
                                     </div>
 
                                     <div className="recaptcha my-5">
                                         <ReCAPTCHA
                                             sitekey={CAPTCHA_SITE_KEY}
-                                            onChange={onChange}
-                                            // style={{ display: "inline-block" }}
-                                            // theme="dark"
-                                            // grecaptcha={grecaptchaObject}
-                                            // onChange={onChange}
+                                            onChange={handleRecaptchaChange}
                                         />
                                     </div>
                                     <div className="my-5">
-                                        <input type="checkbox"/> <span>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
+                                        <input type="checkbox" name="toggle" onChange={handleChange}/><span> Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
+                                        {errors.toggle && <p>{errors.toggle}</p>}
                                     </div>
                                     <div className="flex justify-center">
-                                        <button className="border-solid border-1 rounded-lg border-white mr-4">Wyślij wiadomość</button>
+                                        <button type="submit" className="border-solid border-1 rounded-lg border-white mr-4" onClick={handleSubmit}>Wyślij wiadomość</button>
                                     </div>
                                 </div>
                             </div>
