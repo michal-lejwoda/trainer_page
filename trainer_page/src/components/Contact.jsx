@@ -6,6 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 function Contact() {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
+
     function onChange(value) {
         console.log("Captcha value:", value);
     }
@@ -30,13 +31,13 @@ function Contact() {
                     <div className="contact--mail px-4">
                         <form>
                             <div className="border-b border-gray-900/10 pb-12 flex flex-col items-center">
-                                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-6 ">
+                                <div className="mt-10 w-4/6">
                                     <div className="md:col-span-4 ">
                                         <label htmlFor="first-name"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
                                             Imię
                                         </label>
-                                        <div className="mt-2">
+                                        <div className="my-3">
                                             <input
                                                 type="text"
                                                 name="first-name"
@@ -53,7 +54,7 @@ function Contact() {
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
                                             Adres Email
                                         </label>
-                                        <div className="mt-2">
+                                        <div className="my-3">
                                             <input
                                                 id="email"
                                                 name="email"
@@ -64,12 +65,12 @@ function Contact() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="md:col-span-4">
+                                    <div className="md:col-span-4 ">
                                         <label htmlFor="email"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
                                             Treść Wiadomości
                                         </label>
-                                        <div className="mt-2">
+                                        <div className="my-3">
                                     <textarea
                                         id="content"
                                         name="content"
@@ -79,19 +80,23 @@ function Contact() {
                                     />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="recaptcha">
-                                    <ReCAPTCHA
-                                        sitekey={CAPTCHA_SITE_KEY}
-                                        onChange={onChange}
-                                        // style={{ display: "inline-block" }}
-                                        // theme="dark"
-                                        // grecaptcha={grecaptchaObject}
-                                        // onChange={onChange}
-                                    />
-                                </div>
-                                <div className="my-5">
-                                    <input type="checkbox"/> <span>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
+
+                                    <div className="recaptcha my-5">
+                                        <ReCAPTCHA
+                                            sitekey={CAPTCHA_SITE_KEY}
+                                            onChange={onChange}
+                                            // style={{ display: "inline-block" }}
+                                            // theme="dark"
+                                            // grecaptcha={grecaptchaObject}
+                                            // onChange={onChange}
+                                        />
+                                    </div>
+                                    <div className="my-5">
+                                        <input type="checkbox"/> <span>Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <button className="border-solid border-1 rounded-lg border-white mr-4">Wyślij wiadomość</button>
+                                    </div>
                                 </div>
                             </div>
 
