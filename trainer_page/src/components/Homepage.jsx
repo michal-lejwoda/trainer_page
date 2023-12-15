@@ -217,20 +217,16 @@ function Homepage() {
                             </div>
                             <div className="w-full flex justify-center my-10">
                                 <div className="w-2/4 xl:hidden">
-                                    {/*// className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">*/}
                                     <Carousel showThumbs={false} autoPlay infiniteLoop centerMode interval={3000}>
                                         <div>
                                             <img
                                                 className="h-96 w-96 rounded-2xl"
-                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
                                                 src="/Wojciech.jpg"
                                                 alt=""/>
-                                            {/*<p>test</p>*/}
                                         </div>
                                         <div>
                                             <img
                                                 className="h-96 w-96 rounded-2xl"
-                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
                                                 src="/Bartosz.jpg"
                                                 alt=""/>
                                             {/*<p>test</p>*/}
@@ -238,42 +234,20 @@ function Homepage() {
                                         <div>
                                             <img
                                                 className="h-96 w-96 rounded-2xl"
-                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
                                                 src="/Ewa_gnaslogo.png"
                                                 alt=""/>
-                                            {/*<p>test</p>*/}
                                         </div>
                                         <div>
                                             <img
                                                 className="h-96 w-96 rounded-2xl"
-                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
                                                 src="/Tomasz2.jpg"
                                                 alt=""/>
-                                            {/*<p>test</p>*/}
                                         </div>
                                     </Carousel>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/*<div className="homepage__contact relative">*/}
-                    {/*    <div className="homepage__contact--title my-8">*/}
-                    {/*        <strong>*/}
-                    {/*            <span className="text-5xl text-lighter-grey my-5">ZAPRASZAM</span>*/}
-                    {/*            <br/>*/}
-                    {/*            <span className="text-4xl mb-5">DO KONTAKTU</span>*/}
-                    {/*        </strong>*/}
-                    {/*    </div>*/}
-                    {/*    <font className="font-bold text-3xl text-center">TELEFON</font>*/}
-                    {/*    <p className="text-lighter-grey font-bold text-3xl my-5 ">+ 48 501 779 384</p>*/}
-                    {/*    <font className="font-bold text-3xl text-center">E-MAIL</font>*/}
-                    {/*    <p className="text-lighter-grey font-bold text-2xl my-5">michal.lejwoda@gmail.com</p>*/}
-                    {/*    /!*<font className="font-bold text-4xl">SOCIAL MEDIA</font>*!/*/}
-                    {/*    /!*<p className="text-red-800 font-bold text-4xl my-5 ">+ 48 501 779 384</p>*!/*/}
-                    {/*    /!*<div className="shape-1 absolute z-[-1] left-0 bottom-20">*!/*/}
-                    {/*    /!*    <img src="/public/shape-1.png" alt="shape_1"/>*!/*/}
-                    {/*    /!*</div>*!/*/}
-                    {/*</div>*/}
                 </div>
             </div>
         </div>
