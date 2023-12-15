@@ -15,7 +15,8 @@ export default {
         'darky-grey': '#283747',
         'even-more-darky-grey': '#333333',
         'background-black-color': '#242424',
-        'container-grey': 'rgba(44,44,44,1)'
+        'container-grey': 'rgba(44,44,44,1)',
+        'purple-text': '#646cff',
       },
     },
   },
