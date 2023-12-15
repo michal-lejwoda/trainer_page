@@ -46,7 +46,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Wojtek</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Wojtkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -60,7 +60,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Ania</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Anią współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -73,7 +73,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Andrzej</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Andrzejem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -86,7 +86,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Karol</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Karolem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -98,7 +98,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Tomek</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Tomkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -110,7 +110,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Natalia</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Natalią współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -122,7 +122,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center my-3 font-semibold text-center">Paweł</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Pawłem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -134,7 +134,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center my-3 font-semibold text-center">Piotr</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Piotrem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -146,7 +146,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Kazimierz</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Kaziemierzem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -158,7 +158,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Julia</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Julią współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -170,7 +170,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Konrad</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Konradem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -182,7 +182,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Oskar</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Oskarem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -194,7 +194,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Tomasz</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Tomaszem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -206,7 +206,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center   my-3 font-semibold text-center">Maja</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Mają współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
@@ -218,7 +218,7 @@ function Transformations() {
                         <div className="transformation__image__description p-4">
                             <p className="flex justify-center my-3 font-semibold text-center">Mateusz</p>
                             <p className="text-center ">
-                                Z Bartkiem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
+                                Z Mateuszem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego
                                 tłuszczu oraz uzyskanie atletycznej sylwetki.
                             </p>
                             <p className="font-semibold text-center mt-4 mb-10">Realizacja 100%.</p>
