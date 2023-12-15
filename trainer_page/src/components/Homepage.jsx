@@ -1,3 +1,6 @@
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 function Homepage() {
     return (
         <div className="homepage">
@@ -26,10 +29,11 @@ function Homepage() {
                             </a>
                         </div>
                     </div>
-                    <div className="homepage__about_me relative my-11 px-2.5 flex flex-col lg:flex-row lg: justify-around">
+                    <div
+                        className="homepage__about_me relative my-11 px-2.5 flex flex-col lg:flex-row lg: justify-around">
                         <img
-                                className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
-                                src="/public/trainer_homepage.jpg" alt=""/>
+                            className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
+                            src="/public/trainer_homepage.jpg" alt=""/>
                         <div className="lg:w-1/2">
                             <div className="homepage__about_me--title my-8">
                                 <strong>
@@ -201,7 +205,7 @@ function Homepage() {
                                 <span className="text-4xl mb-5">PODOPIECZNYCH</span>
                             </strong>
                             <div
-                                className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
+                                className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center hidden xl:flex ">
                                 <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Wojciech.jpg"
                                      alt=""/>
                                 <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Bartosz.jpg"
@@ -210,6 +214,45 @@ function Homepage() {
                                      alt=""/>
                                 <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Tomasz2.jpg"
                                      alt=""/>
+                            </div>
+                            <div className="w-full flex justify-center my-10">
+                                <div className="w-2/4 xl:hidden">
+                                    {/*// className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">*/}
+                                    <Carousel showThumbs={false} autoPlay infiniteLoop centerMode interval={3000}>
+                                        <div>
+                                            <img
+                                                className="h-96 w-96 rounded-2xl"
+                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
+                                                src="/Wojciech.jpg"
+                                                alt=""/>
+                                            {/*<p>test</p>*/}
+                                        </div>
+                                        <div>
+                                            <img
+                                                className="h-96 w-96 rounded-2xl"
+                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
+                                                src="/Bartosz.jpg"
+                                                alt=""/>
+                                            {/*<p>test</p>*/}
+                                        </div>
+                                        <div>
+                                            <img
+                                                className="h-96 w-96 rounded-2xl"
+                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
+                                                src="/Ewa_gnaslogo.png"
+                                                alt=""/>
+                                            {/*<p>test</p>*/}
+                                        </div>
+                                        <div>
+                                            <img
+                                                className="h-96 w-96 rounded-2xl"
+                                                // className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4"
+                                                src="/Tomasz2.jpg"
+                                                alt=""/>
+                                            {/*<p>test</p>*/}
+                                        </div>
+                                    </Carousel>
+                                </div>
                             </div>
                         </div>
                     </div>
