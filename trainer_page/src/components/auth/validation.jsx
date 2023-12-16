@@ -67,3 +67,7 @@ export const validateContact = yup.object().shape({
 });
 
 
+export const validateResetPassword = yup.object().shape({
+    password: yup.string().min(5, "Hasło jest za krótkie").required("Hasło jest wymagane"),
+    repeat_password: yup.string().oneOf([yup.ref("password"), null], "Hasła muszą do siebie pasować")
+});

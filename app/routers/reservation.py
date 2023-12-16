@@ -4,6 +4,7 @@ from typing import List, Any, Annotated
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie
 from sqlalchemy import func
 from sqlalchemy.orm import Session
+from starlette import status
 from starlette.background import BackgroundTasks
 
 from app.database import get_db
@@ -13,8 +14,8 @@ from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, Worki
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, AssignReservation
-from app.send_email import send_email_async, send_email_background
-from app.user.dependencies import get_current_user
+from app.send_email import send_email_async, send_email_background, send_email
+from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
 router = APIRouter(
@@ -281,12 +282,42 @@ def assign_reservation_to_user(assign_reservation: AssignReservation, db: Sessio
 
 @router.get('/send-email/asynchronous')
 async def send_email_asynchronous():
-    await send_email_async('Hello World', 'someemail@gmail.com',
+    await send_email_async('Hello World', 'saxatachi@gmail.com',
                            {'title': 'Hello World', 'name': 'John Doe'})
-    return 'Success' @ router.get('/send-email/backgroundtasks')
+    # return 'Success' @ router.get('/send-email/backgroundtasks')
+    return "Success"
 
 
+@router.get("/send-email/background_task")
 def send_email_backgroundtasks(background_tasks: BackgroundTasks):
     send_email_background(background_tasks, 'Hello World',
-                          'someemail@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
+                          'saxatachi@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
     return 'Success'
+
+
+@router.post("/send_reset_password_on_email")
+def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    user = get_user_by_email(email, db)
+    url = f"http://0.0.0.0:3000/reset_password/{user.id}/{user.name}"
+    send_email(background_tasks, 'Reset hasła na stronie trener michał',
+               email, {'email': email, 'url': url}, 'reset_password.html')
+
+
+@router.post("/reset_password")
+def reset_password(password: Annotated[str, Form()], repeat_password: Annotated[str, Form()],
+                   email: Annotated[str, Form()], db: Session = Depends(get_db)):
+    if password == repeat_password:
+        user = get_user_by_email(email, db)
+        if user is not None:
+            hashed_password = get_password_hash(password)
+            user.password = hashed_password
+            db.add(user)
+            db.commit()
+            return user
+        else:
+            credentials_exception = HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+            raise credentials_exception

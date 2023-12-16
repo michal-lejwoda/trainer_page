@@ -18,6 +18,7 @@ import RegisterForm from "./components/auth/RegisterForm.jsx";
 import LoginForm from "./components/auth/LoginForm.jsx";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
 import Booking from "./components/booking/Booking.jsx";
+import ResetPassword from "./components/auth/ResetPassword.jsx";
 
 
 const queryClient = new QueryClient()
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <Route path="terms-and-conditions" element={<TermsAndConditions />}/>
                         <Route path="cookies-policy" element={<CookiesPolicy />}/>
                         <Route path="private-policy" element={<PrivatePolicy />}/>
+                        <Route path="reset_password/:id/:name" element={<ResetPassword />}/>
                     </Routes>
                     <Footer/>
                     <CookieConsent

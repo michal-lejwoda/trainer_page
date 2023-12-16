@@ -22,3 +22,8 @@ export async function postRegistration(form) {
     const response = await instance.post(`http://0.0.0.0:8000/register_user`, form);
     return response.data
 }
+
+export async function postResetPassword(form){
+    const response = await instance.post('http://0.0.0.0:8000/reset_password', form);
+    return response.data
+}
