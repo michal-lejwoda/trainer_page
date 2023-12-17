@@ -151,7 +151,7 @@ const RegisterForm = () => {
                         </div>
                     </div>
                     <div className="booking__login__button w-full flex flex-col items-end mt-2">
-                        <a className="mb-4 cursor-pointer mr-4">Jeśli posiadasz konto. Zaloguj się</a>
+                        <a className="mb-4 cursor-pointer mr-4" href="http://0.0.0.0:3000/login">Jeśli posiadasz konto. Zaloguj się</a>
                         <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zarejestruj
                             się
                         </button>
