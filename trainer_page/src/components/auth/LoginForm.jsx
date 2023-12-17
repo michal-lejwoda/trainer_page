@@ -56,8 +56,8 @@ const LoginForm = () => {
             <p className="text-4xl mb-4">Logowanie</p>
             <div>
                 <form onSubmit={handleSubmit} className="w-full mt-5 ">
-                    <div className="flex justify-between mb-4">
-                        <div className="w-1/2 flex flex-col mr-3 ">
+                    <div className="flex flex-col md:flex-row md:justify-between mb-4">
+                        <div className="w-full md:w-1/2 flex flex-col md:mr-3 ">
                             <label className="mb-4 text-lg">Adres E-mail</label>
                             <input
                                 onChange={handleChange}
@@ -67,12 +67,12 @@ const LoginForm = () => {
                                 type="email"
                                 required
                                 placeholder="Adres email"
-                                className={errors.email ? "text-lg mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg mr-3 border-2 rounded-lg border-white"}
+                                className={errors.email ? "text-lg md:mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg md:mr-3 border-2 rounded-lg border-white"}
                             />
                             {errors.email && <p>{errors.email}</p>}
                         </div>
-                        <div className="w-1/2 flex flex-col ml-3">
-                            <label className="mb-4 text-lg">Hasło</label>
+                        <div className="w-full md:w-1/2 flex flex-col md:ml-3">
+                            <label className="mb-4 text-lg mt-4 md:mt-0">Hasło</label>
                             <input
                                 value={values.password}
                                 onChange={handleChange}
@@ -91,7 +91,7 @@ const LoginForm = () => {
 
                     <div className="booking__login__button w-full flex flex-col items-end">
                         <a className="mb-4 cursor-pointer mr-4" href="http://0.0.0.0:3000/password_reminder">Przypomnij hasło</a>
-                        <a className="mb-4 cursor-pointer mr-4">Jeśli nie posiadasz konta. Zarejestruj się</a>
+                        <a className="mb-4 cursor-pointer mr-4" href="http://0.0.0.0:3000/register">Jeśli nie posiadasz konta. Zarejestruj się</a>
                         <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zaloguj się
                         </button>
                     </div>

@@ -57,8 +57,8 @@ const RegisterForm = () => {
             <p className="text-4xl mb-4">Rejestracja</p>
             <div className="booking__register__inputs ">
                 <form className="flex flex-wrap " onSubmit={handleSubmit}>
-                    <div className="w-full flex justify-between">
-                        <div className="w-1/2 flex flex-col">
+                    <div className="w-full flex flex-col md:flex-row md:justify-between">
+                        <div className="w-full md:w-1/2 flex flex-col">
                             <label className="mb-4 text-lg">Imię</label>
                             <input
                                 value={values.name}
@@ -68,11 +68,11 @@ const RegisterForm = () => {
                                 type="text"
                                 required
                                 placeholder="Imię"
-                                className=" text-lg py-2 px-3 mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
+                                className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
                             {errors.name && <p>{errors.name}</p>}
                         </div>
-                        <div className="w-1/2 ml-3 flex flex-col">
+                        <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                             <label className="mb-4 text-lg">Nazwisko</label>
                             <input
                                 value={values.last_name}
@@ -87,8 +87,8 @@ const RegisterForm = () => {
                             {errors.last_name && <p>{errors.last_name}</p>}
                         </div>
                     </div>
-                    <div className="w-full flex justify-between">
-                        <div className="w-1/2 flex flex-col">
+                    <div className="w-full flex flex-col md:flex-row md:justify-between">
+                        <div className="w-full md:w-1/2 flex flex-col">
                             <label className="mb-4 text-lg ">Adres E-mail</label>
                             <input
                                 onChange={handleChange}
@@ -98,12 +98,12 @@ const RegisterForm = () => {
                                 type="email"
                                 required
 
-                                className={errors.email ? "input-error text-lg py-2 px-3 mb-5 mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.email ? "input-error text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Adres E-mail"
                             />
                             {errors.email && <p>{errors.email}</p>}
                         </div>
-                        <div className="w-1/2 ml-3 flex flex-col">
+                        <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                             <label className="mb-4 text-lg">Numer telefonu</label>
                             <input
                                 value={values.phone_number}
@@ -118,8 +118,8 @@ const RegisterForm = () => {
                             {errors.phone_number && <p>{errors.phone_number}</p>}
                         </div>
                     </div>
-                    <div className="w-full flex justify-between">
-                        <div className="w-1/2 flex flex-col">
+                    <div className="w-full flex flex-col md:flex-row md:justify-between">
+                        <div className="w-full md:w-1/2 flex flex-col">
                             <label className="mb-4 text-lg">Hasło</label>
                             <input
                                 value={values.password}
@@ -129,12 +129,12 @@ const RegisterForm = () => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                className={errors.password ? "input-error text-lg py-2 px-3 mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.password ? "input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Hasło"
                             />
                             {errors.password && <p>{errors.password}</p>}
                         </div>
-                        <div className="w-1/2 flex flex-col ml-3">
+                        <div className="w-full md:w-1/2 flex flex-col md:ml-3">
                             <label className="mb-4 text-lg">Powtórz hasło</label>
                             <input
                                 value={values.repeat_password}
