@@ -25,15 +25,11 @@ export default function Navbar() {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
-    // console.log("import.meta.DOMAIN")
-    // console.log(import.meta.env.VITE_DOMAIN)
-    // console.log("authUser")
-    // console.log(authUser)
-    // // console.log("cookies")
-    // // console.log(cookies)
 
-
-    const moveToLogin = () =>{
+    const moveToLogin = () => {
+        removeCookie("jwt_trainer_auth")
+        setAuthUser(null)
+        setIsLoggedIn(false)
         navigate("/login")
     }
     const handleLogout = () => {
@@ -98,25 +94,39 @@ export default function Navbar() {
                                         {navigation.map((item) => (
                                             <NavLink
                                                 to={item.href}
-                                                // onClick={()=>handleNavigation(item.name)}
                                                 key={item.name}
-                                                // href={item.href}
                                                 className={({isActive}) => classNames(
                                                     isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                                     'rounded-md px-3 py-2 text-sm font-medium'
                                                 )}
-                                                //                                               className={({ isActive }) =>
-                                                //   isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-                                                // }
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
                                             </NavLink>
-
-
                                         ))}
-                                        {authUser && `Witaj ${authUser.name}`}
-                                        {authUser ? <button onClick={handleLogout}>Wyloguj się</button> : <button onClick={moveToLogin}>Zaloguj się</button> }
+                                        {authUser &&
+                                            <NavLink
+                                                className="text-gray-300 cursor-default hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium"
+                                            >
+                                                Witaj ${authUser.name}
+                                            </NavLink>
+                                        }
+                                        {authUser ? <NavLink
+                                                className="text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
+                                                onClick={handleLogout}
+                                            >
+                                                Wyloguj się
+                                            </NavLink> :
+                                            <NavLink
+                                                to="/login"
+                                                className="text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
+                                                onClick={moveToLogin}
+                                            >
+                                                Zaloguj się
+                                            </NavLink>}
+                                        {/*{authUser && `Witaj ${authUser.name}`}*/}
+                                        {/*{authUser ? <button onClick={handleLogout}>Wyloguj się</button> :*/}
+                                        {/*    <button onClick={moveToLogin}>Zaloguj się</button>}*/}
                                     </div>
                                 </div>
                             </div>

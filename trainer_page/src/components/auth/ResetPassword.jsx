@@ -10,7 +10,7 @@ import {useAuth} from "./AuthContext.jsx";
 const ResetPassword = () => {
     const [user, setUser] = useState(null)
     const {id, name} = useParams();
-
+    const navigate = useNavigate();
 
     const getUser = async(form) => {
         const data =  await postGetUser(form)
@@ -22,7 +22,11 @@ const ResetPassword = () => {
         form.append("email", user.email)
         form.append("password", values.password)
         form.append("repeat_password", values.repeat_password)
-        await postResetPassword(form)
+        const res = await postResetPassword(form)
+        console.log(res)
+        if (res.status == 200){
+            await navigate("/login");
+        }
     }
 
     const {values, handleSubmit, handleChange, errors} = useFormik({

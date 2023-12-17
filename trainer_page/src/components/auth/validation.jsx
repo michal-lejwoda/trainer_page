@@ -74,4 +74,5 @@ export const validateResetPassword = yup.object().shape({
 
 export const validateResetPasswordBasedOnEmail = yup.object().shape({
     email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
+    captcha: yup.boolean().oneOf([true], 'Przejdź weryfikację captcha'),
 });
