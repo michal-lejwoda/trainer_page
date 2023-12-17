@@ -21,8 +21,6 @@ const BookingAuthorizationRegister = (props) => {
         form.append("repeat_password", values.repeat_password)
         try {
             const registration_data = await postRegistration(form)
-            console.log("registration_data")
-            console.log(registration_data)
             setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax'})
             try {
                 let logged_user = await checkIfUserLogged()

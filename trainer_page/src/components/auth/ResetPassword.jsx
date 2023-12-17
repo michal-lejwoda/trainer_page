@@ -23,7 +23,6 @@ const ResetPassword = () => {
         form.append("password", values.password)
         form.append("repeat_password", values.repeat_password)
         const res = await postResetPassword(form)
-        console.log(res)
         if (res.status == 200){
             await navigate("/login");
         }

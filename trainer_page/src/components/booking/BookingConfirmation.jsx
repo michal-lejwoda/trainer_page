@@ -15,7 +15,7 @@ const BookingConfirmation = (props) => {
             await postReservation(form)
 
         } catch (err) {
-            console.log(err.response)
+            return err.response
         }
         // await navigate("/");
 

@@ -15,17 +15,14 @@ const Booking = () => {
     }, [])
 
     const goToSystemReservation = () => {
-        console.log("goToSystemReservation")
         setBookingStep(1)
     }
 
     const goToBookingAuthorization = () => {
-        console.log("goToBookingAuthorization")
         setBookingStep(2)
     }
 
     const goToBookingConfirmation = () => {
-        console.log("gotoBookingConfirmation")
         setBookingStep(3)
     }
 

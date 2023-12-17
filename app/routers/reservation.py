@@ -310,13 +310,7 @@ def reset_password(password: Annotated[str, Form()], repeat_password: Annotated[
     if password == repeat_password:
         user = get_user_by_email(email, db)
         if user is not None:
-            print("password")
-            print(password)
             hashed_password = get_password_hash(password)
-            print("hashed password")
-            print(hashed_password)
-            print("user.password")
-            print(user.password)
             user.password = hashed_password
             db.add(user)
             db.commit()

@@ -3,12 +3,8 @@ import {Dialog, Transition} from '@headlessui/react'
 import {useAuth} from "../auth/AuthContext.jsx";
 
 const ReservationModal = props => {
-    console.log("props")
-    console.log(props)
   // const cancelButtonRef = useRef(null)
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
-    console.log("authUser")
-    console.log(authUser)
     return (
         <Transition.Root show={props.show} as={Fragment}>
             {props.selectedPlanHour &&
