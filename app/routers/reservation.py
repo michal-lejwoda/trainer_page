@@ -296,7 +296,8 @@ def send_email_backgroundtasks(background_tasks: BackgroundTasks):
 
 
 @router.post("/send_reset_password_on_email")
-def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks,
+                                 db: Session = Depends(get_db)):
     user = get_user_by_email(email, db)
     url = f"http://0.0.0.0:3000/reset_password/{user.id}/{user.name}"
     send_email(background_tasks, 'Reset hasła na stronie trener michał',
@@ -309,7 +310,13 @@ def reset_password(password: Annotated[str, Form()], repeat_password: Annotated[
     if password == repeat_password:
         user = get_user_by_email(email, db)
         if user is not None:
+            print("password")
+            print(password)
             hashed_password = get_password_hash(password)
+            print("hashed password")
+            print(hashed_password)
+            print("user.password")
+            print(user.password)
             user.password = hashed_password
             db.add(user)
             db.commit()
@@ -321,3 +328,17 @@ def reset_password(password: Annotated[str, Form()], repeat_password: Annotated[
                 headers={"WWW-Authenticate": "Bearer"},
             )
             raise credentials_exception
+
+
+@router.post('/get_user')
+def get_user(id: Annotated[str, Form()], name: Annotated[str, Form()], db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == id, User.name == name).first()
+    if user is not None:
+        return user
+    else:
+        credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        raise credentials_exception

@@ -1,47 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useFormik} from 'formik';
 import {validateLogin, validateResetPassword} from "./validation.jsx";
-import {checkIfUserLogged, getLogin, postResetPassword} from "./api.jsx";
+import {checkIfUserLogged, getLogin, postGetUser, postResetPassword} from "./api.jsx";
 import {useCookies} from "react-cookie";
 import {useNavigate, useParams} from "react-router-dom";
 import {useAuth} from "./AuthContext.jsx";
 
 const ResetPassword = () => {
-    const {setAuthUser, setIsLoggedIn} = useAuth()
-    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
-    const navigate = useNavigate();
+    const [user, setUser] = useState(null)
     const {id, name} = useParams();
+
+
+    const getUser = async(form) => {
+        const data =  await postGetUser(form)
+        setUser(data)
+        return data
+    }
     const handleResetPassword = async (values) => {
         let form = new FormData()
-        form.append("username", values.email)
+        form.append("email", user.email)
         form.append("password", values.password)
         form.append("repeat_password", values.repeat_password)
         await postResetPassword(form)
     }
-    // const handleLogin = async (values) => {
-    //     let form = new FormData()
-    //     form.append("username", values.email)
-    //     form.append("password", values.password)
-    //     try {
-    //         let login_data = await getLogin(form)
-    //         await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
-    //         try {
-    //             let logged_user = await checkIfUserLogged()
-    //             setAuthUser(logged_user)
-    //             setIsLoggedIn(true)
-    //         } catch (err) {
-    //             setAuthUser(null)
-    //             setIsLoggedIn(false)
-    //         }
-    //         await navigate("/");
-    //
-    //     } catch (err) {
-    //         setErrorLogin(err.response.data.detail)
-    //     }
-    // }
+
     const {values, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {
+            user: null,
             password: '',
             repeat_password: '',
         },
@@ -49,13 +35,19 @@ const ResetPassword = () => {
         validateOnChange: false,
         validationOnBlue: false,
         onSubmit: values => {
-            console.log("values")
-            console.log(values)
             handleResetPassword(values)
-            // handleLogin(values)
         },
 
     });
+
+    useEffect(()=>{
+        let form = new FormData()
+        form.append("id", id)
+        form.append("name", name)
+        getUser(form)
+    },[])
+
+
     return (
         <div className="booking__login bg-container-grey p-10 rounded-2xl">
             <p className="text-4xl mb-4">Zmiana hasła</p>

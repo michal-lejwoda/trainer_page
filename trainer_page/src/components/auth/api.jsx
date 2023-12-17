@@ -23,7 +23,17 @@ export async function postRegistration(form) {
     return response.data
 }
 
+export async function postSendResetPassword(form){
+    const response = await instance.post('http://0.0.0.0:8000/send_reset_password_on_email', form);
+    return response.data
+}
+
 export async function postResetPassword(form){
     const response = await instance.post('http://0.0.0.0:8000/reset_password', form);
+    return response.data
+}
+
+export async function postGetUser(form){
+    const response = await instance.post('http://0.0.0.0:8000/get_user', form);
     return response.data
 }
