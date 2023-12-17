@@ -13,11 +13,9 @@ const BookingConfirmation = (props) => {
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
         try {
             await postReservation(form)
-
         } catch (err) {
             return err.response
         }
-        // await navigate("/");
 
     }
     //Use auth
