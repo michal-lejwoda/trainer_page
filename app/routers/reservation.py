@@ -14,7 +14,7 @@ from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, Worki
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, AssignReservation
-from app.send_email import send_email_async, send_email_background, send_email
+from app.send_email import send_email_async, send_email_background, send_email, send_mail_to_admin
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
@@ -336,3 +336,11 @@ def get_user(id: Annotated[str, Form()], name: Annotated[str, Form()], db: Sessi
             headers={"WWW-Authenticate": "Bearer"},
         )
         raise credentials_exception
+
+
+@router.post('/send_direct_message')
+def send_direct_message(name: Annotated[str, Form()], email: Annotated[str, Form()], message: Annotated[str, Form()],
+                        background_tasks: BackgroundTasks):
+    subject = f'Wiadomość od użytkownika {name} {email}'
+    send_mail_to_admin(background_tasks, subject,
+                       {'message': message}, 'mail_to_admin.html')

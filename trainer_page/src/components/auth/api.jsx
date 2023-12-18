@@ -37,3 +37,8 @@ export async function postGetUser(form){
     const response = await instance.post('http://0.0.0.0:8000/get_user', form);
     return response.data
 }
+
+export async function postMessageFromUser(form){
+    const response = await instance.post('http://0.0.0.0:8000/send_direct_message', form);
+    return response
+}

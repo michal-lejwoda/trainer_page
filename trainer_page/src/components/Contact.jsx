@@ -4,13 +4,13 @@ import '../css/map.css'
 import ReCAPTCHA from "react-google-recaptcha";
 import {useFormik} from "formik";
 import {validateContact, validateLogin} from "./auth/validation.jsx";
-import React from "react";
+import React, {useState} from "react";
+import {postMessageFromUser, postSendResetPassword} from "./auth/api.jsx";
 
 
 function Contact() {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
-
-
+    const [resetmessage, setResetMessage] = useState('')
     const {values,setFieldValue, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {
             name: '',
@@ -24,12 +24,21 @@ function Contact() {
         validateOnChange: false,
         validationOnBlue: false,
         onSubmit: values => {
-            // handleLogin(values)
-            console.log("submit")
-            console.log(values)
+            console.log("onSbmit")
+            handleSendMessageFromUser(values)
+
         },
 
     });
+
+    const handleSendMessageFromUser = async (values) => {
+        let form = new FormData()
+        form.append("name", values.name)
+        form.append("email", values.email)
+        form.append('message', values.message)
+        await postMessageFromUser(form)
+        setResetMessage('Wiadomość została wysłana')
+    }
 
     const handleRecaptchaChange = () => {
         setFieldValue('captcha', true)

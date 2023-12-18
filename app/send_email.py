@@ -63,3 +63,15 @@ def send_email(background_tasks: BackgroundTasks, subject: str, email_to: str, b
     fm = FastMail(conf)
     background_tasks.add_task(
         fm.send_message, message, template_name=template_name)
+
+
+def send_mail_to_admin(background_tasks: BackgroundTasks, subject: str, body: dict, template_name: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=['walt.kowalski345@gmail.com'],
+        template_body=body,
+        subtype='html',
+    )
+    fm = FastMail(conf)
+    background_tasks.add_task(
+        fm.send_message, message, template_name=template_name)
