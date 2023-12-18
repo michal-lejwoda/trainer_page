@@ -57,8 +57,8 @@ const BookingAuthorizationRegister = (props) => {
     return (
         <div className="booking__register__inputs ">
             <form className="flex flex-wrap " onSubmit={handleSubmit}>
-                <div className="w-full flex justify-between">
-                    <div className="w-1/2 flex flex-col">
+                <div className="w-full flex flex-col md:flex-row justify-between">
+                    <div className="w-full md:w-1/2 flex flex-col">
                         <label className="mb-4 text-lg">Imię</label>
                         <input
                             value={values.name}
@@ -68,11 +68,11 @@ const BookingAuthorizationRegister = (props) => {
                             type="text"
                             required
                             placeholder="Imię"
-                            className=" text-lg py-2 px-3 mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
+                            className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                         />
                         {errors.name && <p>{errors.name}</p>}
                     </div>
-                    <div className="w-1/2 ml-3 flex flex-col">
+                    <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                         <label className="mb-4 text-lg">Nazwisko</label>
                         <input
                             value={values.last_name}
@@ -88,8 +88,8 @@ const BookingAuthorizationRegister = (props) => {
                         {errors.last_name && <p>{errors.last_name}</p>}
                     </div>
                 </div>
-                <div className="w-full flex justify-between">
-                    <div className="w-1/2 flex flex-col mr-3">
+                <div className="w-full flex flex-col md:flex-row justify-between">
+                    <div className="w-full md:w-1/2 flex flex-col mr-3">
                         <label className="mb-4 text-lg ">Adres E-mail</label>
                         <input
                             onChange={handleChange}
@@ -104,7 +104,7 @@ const BookingAuthorizationRegister = (props) => {
                         />
                         {errors.email && <p>{errors.email}</p>}
                     </div>
-                    <div className="w-1/2 ml-3 flex flex-col">
+                    <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                         <label className="mb-4 text-lg">Numer telefonu</label>
                         <input
                             value={values.phone_number}
@@ -119,8 +119,8 @@ const BookingAuthorizationRegister = (props) => {
                         {errors.phone_number && <p>{errors.phone_number}</p>}
                     </div>
                 </div>
-                <div className="w-full flex justify-between">
-                    <div className="w-1/2 flex flex-col">
+                <div className="w-full flex flex-col md:flex-row justify-between">
+                    <div className="w-full md:w-1/2 flex flex-col">
                         <label className="mb-4 text-lg">Hasło</label>
                         <input
                             value={values.password}
@@ -130,13 +130,13 @@ const BookingAuthorizationRegister = (props) => {
                             type="password"
                             autoComplete="current-password"
                             required
-                            className={errors.password ? "input-error text-lg py-2 px-3 mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.password ? "input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Hasło"
                             // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                         {errors.password && <p>{errors.password}</p>}
                     </div>
-                    <div className="w-1/2 flex flex-col">
+                    <div className="w-full md:w-1/2 flex flex-col">
                         <label className="mb-4 text-lg">Powtórz hasło</label>
                         <input
                             value={values.repeat_password}
@@ -146,7 +146,7 @@ const BookingAuthorizationRegister = (props) => {
                             type="password"
                             autoComplete="repeat_current-password"
                             required
-                            className={errors.repeat_password ? "input-error text-lg py-2 px-3 ml-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 ml-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.repeat_password ? "input-error text-lg py-2 px-3 md:ml-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:ml-3 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Powtórz hasło"
                             // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
