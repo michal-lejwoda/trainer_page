@@ -90,8 +90,8 @@ const LoginForm = () => {
                     </div>
 
                     <div className="booking__login__button w-full flex flex-col items-end">
-                        <a className="mb-4 cursor-pointer mr-4" href="http://0.0.0.0:3000/password_reminder">Przypomnij hasło</a>
-                        <a className="mb-4 cursor-pointer mr-4" href="http://0.0.0.0:3000/register">Jeśli nie posiadasz konta. Zarejestruj się</a>
+                        <a className="mb-4 cursor-pointer mr-4" href="/password_reminder">Przypomnij hasło</a>
+                        <a className="mb-4 cursor-pointer mr-4" href="/register">Jeśli nie posiadasz konta. Zarejestruj się</a>
                         <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zaloguj się
                         </button>
                     </div>
