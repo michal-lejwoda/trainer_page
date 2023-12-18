@@ -24,9 +24,7 @@ function Contact() {
         validateOnChange: false,
         validationOnBlue: false,
         onSubmit: values => {
-            console.log("onSbmit")
             handleSendMessageFromUser(values)
-
         },
 
     });
@@ -138,6 +136,7 @@ function Contact() {
                                     <div className="flex justify-center">
                                         <button type="submit" className="border-solid border-1 rounded-lg border-white mr-4" onClick={handleSubmit}>Wyślij wiadomość</button>
                                     </div>
+                                    <p className="mt-4">{resetmessage}</p>
                                 </div>
                             </div>
 
