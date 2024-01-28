@@ -7,7 +7,7 @@ volumes:
 services:
   production_trainer_nginx:
     image: nginx
-    container_name: trainer_nginx
+    container_name: production_trainer_nginx
     build:
       context: .
       dockerfile: ./compose/production/nginx/Dockerfile
@@ -26,7 +26,7 @@ services:
 
   production_trainer_db:
     image: postgres:15.3
-    container_name: trainer_db
+    container_name: production_trainer_db
     restart: always
     environment:
       POSTGRES_PASSWORD: example
@@ -39,7 +39,7 @@ services:
       - "5432:5432"
 
   production_trainer_backend:
-    container_name: trainer_backend
+    container_name: production_trainer_backend
     env_file:
       - .env.production
     build:
