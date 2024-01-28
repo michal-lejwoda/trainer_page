@@ -11,6 +11,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/nginx/Dockerfile
+    env_file:
+      - .env.local
     ports:
       - "80:80"
       - "443:443"

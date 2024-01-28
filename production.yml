@@ -39,6 +39,8 @@ services:
 
   production_trainer_backend:
     container_name: trainer_backend
+    env_file:
+      - .env.production
     build:
       context: .
       dockerfile: ./compose/production/trainer_backend/Dockerfile
