@@ -8,7 +8,7 @@ import {useAuth} from "./AuthContext.jsx";
 
 
 const RegisterForm = () => {
-    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
+    const [, setCookie] = useCookies(['jwt_trainer_auth']);
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const handleRegister = async (values) => {
         let form = new FormData()

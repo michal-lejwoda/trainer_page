@@ -1,0 +1,57 @@
+version: '3.3'
+
+volumes:
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
+
+services:
+  production_trainer_nginx:
+    image: nginx
+    container_name: trainer_nginx
+    build:
+      context: .
+      dockerfile: ./compose/production/nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - "./trainer_page/dist:/dist"
+    depends_on:
+      - production_trainer_backend
+      - production_trainer_db
+    networks:
+      - production_backend
+
+  production_trainer_db:
+    image: postgres:15.3
+    container_name: trainer_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    networks:
+      - production_backend
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    ports:
+      - "5432:5432"
+
+  production_trainer_backend:
+    container_name: trainer_backend
+    build:
+      context: .
+      dockerfile: ./compose/production/trainer_backend/Dockerfile
+#    command: /start_trainer_backend
+    volumes:
+      - ".:/code"
+#    links:
+#      - "trainer_db:trainer_db"
+    networks:
+      - production_backend
+    ports:
+      - "8000:80"
+      #HOST:CONTAINER
+
+networks:
+  production_backend:

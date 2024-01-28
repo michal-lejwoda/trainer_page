@@ -1,10 +1,29 @@
-version: '3.8'
+version: '3.3'
 
 volumes:
   local_postgres_data: { }
   local_postgres_data_backups: { }
 
 services:
+  trainer_nginx:
+    image: nginx
+    container_name: trainer_nginx
+    build:
+      context: .
+      dockerfile: ./compose/local/nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - "/app/backend/local-backend-static:/app/backend/local-backend-static"
+    depends_on:
+      - trainer_backend
+      - trainer_frontend
+      - trainer_db
+    networks:
+      - backend
+
   trainer_db:
     image: postgres:15.3
     container_name: trainer_db
@@ -32,7 +51,6 @@ services:
       - trainer_db
     networks:
       - backend
-#    command: ./start_scrapper_frontend
     volumes:
       - "./trainer_page:/usr/src/frontend"
     ports:
