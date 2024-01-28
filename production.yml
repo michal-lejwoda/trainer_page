@@ -17,6 +17,7 @@ services:
     restart: always
     volumes:
       - "./trainer_page/dist:/dist"
+      - ".trainer_page/public:/dist"
     depends_on:
       - production_trainer_backend
       - production_trainer_db
