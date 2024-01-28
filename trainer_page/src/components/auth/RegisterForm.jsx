@@ -51,7 +51,6 @@ const RegisterForm = () => {
         onSubmit: values => {
             handleRegister(values)
         },
-
     });
     return (<div className="booking__login bg-container-grey p-10 rounded-2xl">
             <p className="text-4xl mb-4">Rejestracja</p>
