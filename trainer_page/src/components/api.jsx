@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 const instance = axios.create();
-const DOMAIN = import.meta.env.VITE_DOMAIN
+// const DOMAIN = import.meta.env.VITE_DOMAIN
 
 export async function getTrainers() {
-    const response = await instance.get(`${DOMAIN}/trainers`);
+    const response = await instance.get(`/api/trainers`);
     let list_of_elements = []
     for (let i = 0; i < response.data.length; i++) {
         list_of_elements.push({
@@ -19,7 +19,7 @@ export async function getTrainers() {
 }
 
 export async function getTrainerPlan(data) {
-    const response = await instance.post(`${DOMAIN}/get_trainer_plans`, data);
+    const response = await instance.post(`/api/get_trainer_plans`, data);
     let list_of_elements = []
     for (let i = 0; i < response.data.length; i++) {
         list_of_elements.push({
@@ -37,11 +37,11 @@ export async function getTrainerPlan(data) {
 
 
 export async function getDayWorkHours(data) {
-    const response = await instance.post(`${DOMAIN}/get_day_work_hours`, data)
+    const response = await instance.post(`/api/get_day_work_hours`, data)
     return response.data
 }
 
 export async function postReservation(data) {
-    const response = await instance.post(`${DOMAIN}/reservation`, data, {withCredentials: true})
+    const response = await instance.post(`/api/reservation`, data, {withCredentials: true})
     return response.data
 }

@@ -13,6 +13,7 @@ from app.user.schemas import Token
 
 router = APIRouter(
     tags=["users"],
+    prefix="/api"
 )
 
 

@@ -26,6 +26,7 @@ load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 router = APIRouter(
     tags=["reservation"],
+    prefix="/api"
 )
 
 
