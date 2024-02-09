@@ -1,12 +1,19 @@
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {useEffect} from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import {NavLink} from "react-router-dom";
 
 function Homepage() {
+    useEffect(() => {
+        Aos.init({duration: 2000})
+    }, []);
     return (
         <div className="homepage">
             <div className="homepage__description">
                 <div className=" items-center justify-center mb-5 ">
-                    <img className="inline-block object-cover w-full" src="/public/trainer_homepage2.jpg" alt=""/>
+                    <img className="inline-block object-cover w-full" src="/trainer_homepage2.jpg" alt=""/>
                 </div>
                 <div className="px-4">
                     <div>
@@ -21,19 +28,18 @@ function Homepage() {
                             obierzemy go razem i dojdziemy do końcowego rezultatu!</p>
 
                         <div className="flex flex-col items-center ">
-                            <a href="/reservation">
-                                <button className="mt-10  text-lg text-white no-underline"
-                                        href="/reservation">Zarezerwuj
-                                    wizytę
-                                </button>
-                            </a>
+
+                            <button className="mt-10  text-lg text-white no-underline">
+                                <NavLink to="/reservation">Zarezerwuj wizytę</NavLink>
+                            </button>
+
                         </div>
                     </div>
-                    <div
-                        className="homepage__about_me relative my-11 px-2.5 flex flex-col lg:flex-row lg: justify-around">
+                    <div data-aos="fade-left"
+                         className="homepage__about_me  relative my-11 px-2.5 flex flex-col lg:flex-row lg: justify-around">
                         <img
                             className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
-                            src="/public/trainer_homepage.jpg" alt=""/>
+                            src="/trainer_homepage.jpg" alt=""/>
                         <div className="lg:w-1/2">
                             <div className="homepage__about_me--title my-8">
                                 <strong>
@@ -44,21 +50,19 @@ function Homepage() {
                                 </strong>
                             </div>
                             <div className="shape-1 absolute z-[-1] right-0 top-20">
-                                <img src="/public/shape-1.png" alt="shape_1"/>
+                                <img src="/shape-1.png" alt="shape_1"/>
                             </div>
                             <div className="shape-2 absolute z-[-1] bottom-0 left-0">
-                                <img src="/public/shape-2.png" alt="shape_2"/>
+                                <img src="/shape-2.png" alt="shape_2"/>
                             </div>
-                            <p className="my-5">Hej! Mam na imię Michał, jestem trenerem personalnym z certyfikatem EFA,
-                                instruktorem zajęć
-                                grupowych, instruktorem pływania. Jestem absolwentem wychowania fizycznego na kierunku
+                            <p className="my-5">Hej! Mam na imię Michał, jestem trenerem personalnym z certyfikatem EFA.
+                                Jestem absolwentem wychowania fizycznego na kierunku
                                 trener
-                                personalny w Akademii Nauk Stosowanych Wincentego Pola w Lublinie.</p>
+                                personalny w akademia wychowania fizycznego im. bronisława czecha w Krakowie.</p>
                             <p className="mb-5">Zapraszam Cię do mnie na treningi jeśli masz problem ze zdrowiem,
-                                samopoczuciem
                                 lub
                                 po prostu
-                                potrzebujesz z kimś porozmawiać, a przy okazji zadbać o swoją kondycję fizyczną i
+                                potrzebujesz pomocy w treningu siłowym, a przy okazji zadbać o swoją kondycję fizyczną i
                                 zdrowie.</p>
                             <p className="font-semibold">Pomogę Ci osiągnąć Twój zamierzony cel, a jeśli takiego jeszcze
                                 nie
@@ -69,7 +73,7 @@ function Homepage() {
                         </div>
 
                     </div>
-                    <div className="homepage__personal_training relative my-8">
+                    <div data-aos="fade-right" className="homepage__personal_training relative my-8">
 
                         <div className="flex flex-col lg:flex-row lg: justify-around">
 
@@ -110,20 +114,20 @@ function Homepage() {
                             </div>
                             <img
                                 className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
-                                src="/public/trainer_homepage3.jpg" alt=""/>
+                                src="/trainer_homepage3.jpg" alt=""/>
                         </div>
                         <div className="shape-1 absolute z-[-1] left-0 top-10">
-                            <img src="/public/shape-1.png" alt="shape_1"/>
+                            <img src="/shape-1.png" alt="shape_1"/>
                         </div>
                         <div className="shape-2 absolute z-[-1] left-0 bottom-0">
-                            <img src="/public/shape-2.png" alt="shape_2"/>
+                            <img src="/shape-2.png" alt="shape_2"/>
                         </div>
                     </div>
                     <div className="homepage__offer flex-col sm:flex-row  sm:flex sm:flex-wrap sm:justify-center">
 
                         <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/public/imageedit-73-3552888680_orig.png" alt=""/>
+                                <img className="inline-block" src="/icons-3-05_1_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Odżywanie</div>
                             <p className="mt-3 text-center">Poznaj i zastosuj strategie żywieniowe, które odmienią Twoją
@@ -132,7 +136,7 @@ function Homepage() {
                         </div>
                         <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/public/imageedit-73-3552888680_orig.png" alt=""/>
+                                <img className="inline-block" src="/personheart_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Styl życia</div>
                             <p className="mt-3 text-center">Poznaj i wprowadź w życie ważne nawyki dotyczące stylu
@@ -142,7 +146,7 @@ function Homepage() {
                         </div>
                         <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/public/imageedit-73-3552888680_orig.png" alt=""/>
+                                <img className="inline-block" src="/imageedit-73-3552888680_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Mindset</div>
                             <p className="mt-3 text-center">Stosując zasady nastawienia do palącego pragnienia
@@ -152,7 +156,7 @@ function Homepage() {
                         </div>
                         <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/public/imageedit-73-3552888680_orig.png" alt=""/>
+                                <img className="inline-block" src="/imageedit-5-5594810482_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Ćwiczenia</div>
                             <p className="mt-3 text-center">Dopasowany, ustrukturyzowany, efektywny czasowo i
@@ -170,31 +174,28 @@ function Homepage() {
                                 <span className="text-6xl mb-5">CREDO</span>
                             </strong>
                         </div>
-                        <p className="my-10 font-semibold text-lg"> Busy men and women overhaul their health & fitness
-                            using
-                            a
-                            combination of tailored exercise, nutrition, lifestyle and mindset systems that are holistic
-                            and
-                            sustainable forever </p>
-                        <p className="my-5 ">✓ Feel confident and attractive around their friends, family, and out in
-                            public</p>
-                        <p className="my-5">✓ Feel Physically & mentally strong, capable of taking on any challenge
-                            without
-                            worrying that their energy levels or body weight will get in the way.</p>
-                        <p className="my-5">✓ Fit into the clothes they want to wear</p>
-                        <p className="my-5">✓ Stop worrying about getting diseases and dying young</p>
-                        <p className="my-5">✓ Run around with their kids, or grandkids, without feeling pain, winded or
-                            tired;
-                            and do it again the next day</p>
-                        <p className="my-5">✓ Add 10+ years of healthy living to their retirement</p>
-                        <p className="font-semibold my-7 text-xl">Without having to</p>
-                        <p className="my-3 text-lg">✓ Starve themselves - No diets!</p>
-                        <p className="my-3 text-lg">✓ Count calories or weigh foods</p>
-                        <p className="my-3 text-lg">✓ Give up the foods they enjoy</p>
-                        <p className="my-3 text-lg">✓ Spend hours cooking or exercising</p>
-                        <p className="my-3 text-lg">✓ Share a gym with others</p>
+                        <p className="my-10 font-semibold text-lg"> Zapracowani mężczyźni i kobiety poprawiają swoje
+                            zdrowie i kondycję, korzystając z kombinacji dostosowanych ćwiczeń, odżywiania, stylu życia
+                            i systemów mentalnych, które są holistyczne i trwałe na zawsze.</p>
+                        <p className="my-5 ">✓ Poczuj się pewnie i atrakcyjnie w gronie przyjaciół, rodziny i w
+                            miejscach
+                            publicznych publicznie.</p>
+                        <p className="my-5">✓ Poczuj się silny fizycznie i psychicznie, zdolny do podjęcia każdego
+                            wyzwania nie martwiąc się, że poziom energii lub masa ciała staną na przeszkodzie.</p>
+                        <p className="my-5">✓ Noś ubrania takie jakie chcesz nosić.</p>
+                        <p className="my-5">✓ Przestań martwić się chorobami i młodą śmiercią</p>
+                        <p className="my-5">✓ Biegaj ze swoimi dziećmi lub wnukami, nie czując bólu, wiatru ani
+                            zmęczenia i robiąc to ponownie następnego dnia.</p>
+                        <p className="my-5">✓ Dodaj sobie 10 lat zdrowego życia na emeryturze</p>
+                        <p className="font-semibold my-7 text-xl">Bez martwienia się o:</p>
+                        <p className="my-3 text-lg">✓ Głodzenie się</p>
+                        <p className="my-3 text-lg">✓ Liczenia kalorii lub ważenia żywności!</p>
+                        <p className="my-3 text-lg">✓ Rezygnowania z produktów, które lubisz</p>
                         <div className="flex justify-center">
-                            <button className="mt-7 ">O mnie</button>
+
+                                <button className="mt-7">
+                                    <NavLink to="/about-me">O mnie</NavLink></button>
+
                         </div>
                     </div>
                     <div className="homepage__transformations">
@@ -216,7 +217,7 @@ function Homepage() {
                                      alt=""/>
                             </div>
                             <div className="w-full flex justify-center my-10">
-                                <div className="w-2/4 xl:hidden">
+                                <div className="w-3/4 xl:hidden">
                                     <Carousel showThumbs={false} autoPlay infiniteLoop centerMode interval={3000}>
                                         <div>
                                             <img

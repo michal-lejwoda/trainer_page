@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'tourists': "url('/public/tourists.jpg')",
+        'tourists': "url('/tourists.jpg')",
       },
       colors: {
         'regal-blue': '#243c5a',

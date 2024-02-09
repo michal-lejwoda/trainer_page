@@ -1,3 +1,5 @@
+import {trainer_gallery_store} from "./trainer_gallery_store.jsx";
+
 function AboutMe() {
     return (
         <div className="px-4">
@@ -99,12 +101,11 @@ function AboutMe() {
                 </strong>
             </div>
             <div className="about_me__gallery__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Wojciech.jpg" alt=""/>
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Bartosz.jpg" alt=""/>
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Ewa_gnaslogo.png" alt=""/>
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Tomasz2.jpg" alt=""/>
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Wojciech.jpg" alt=""/>
-                <img className="rounded-2xl my-10 sm:w-2/4 lg:w-1/4 lg: mx-4" src="/Bartosz.jpg" alt=""/>
+                {trainer_gallery_store.map((image, key)=>{
+                    return (
+                        <img key={key} className="rounded-2xl h-96 my-10 sm:w-2/4 xl:w-1/4 lg: mx-4" src={image} alt=""/>
+                    )
+                })}
             </div>
         </div>
 

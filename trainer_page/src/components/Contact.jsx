@@ -49,7 +49,7 @@ function Contact() {
                 <div className="contact--image  items-stretch md:basis-2/5">
                     <img
                         className="inline-block object-cover object-top h-72 w-full md:h-full md:object-center md:object-cover"
-                        src="/public/contact_image.jpg" alt=""/>
+                        src="/contact_image.jpg" alt=""/>
                 </div>
                 <div className="md:basis-3/5  ">
                     <div className="contact--description px-2 flex flex-col items-center">
