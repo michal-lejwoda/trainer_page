@@ -165,7 +165,7 @@ function SystemReservation(props) {
                               minDetail="month"
                               maxDetail="month"
                     />
-                    <div className="mt-5 text-lg font-semibold">
+                    <div className="mt-5 mb-5 text-lg font-semibold">
                         <h2 className="text-center">Dostępne Terminy:</h2>
                     </div>
                     <div className="term__container w-full text-center">

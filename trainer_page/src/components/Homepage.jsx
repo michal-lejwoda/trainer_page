@@ -6,7 +6,7 @@ function Homepage() {
         <div className="homepage">
             <div className="homepage__description">
                 <div className=" items-center justify-center mb-5 ">
-                    <img className="inline-block object-cover w-full" src="/public/trainer_homepage.jpg" alt=""/>
+                    <img className="inline-block object-cover w-full" src="/public/trainer_homepage2.jpg" alt=""/>
                 </div>
                 <div className="px-4">
                     <div>
@@ -110,7 +110,7 @@ function Homepage() {
                             </div>
                             <img
                                 className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
-                                src="/public/trainer_homepage.jpg" alt=""/>
+                                src="/public/trainer_homepage3.jpg" alt=""/>
                         </div>
                         <div className="shape-1 absolute z-[-1] left-0 top-10">
                             <img src="/public/shape-1.png" alt="shape_1"/>
