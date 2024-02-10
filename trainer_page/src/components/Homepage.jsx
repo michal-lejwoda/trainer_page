@@ -12,8 +12,8 @@ function Homepage() {
     return (
         <div className="homepage">
             <div className="homepage__description">
-                <div className=" items-center justify-center mb-5 ">
-                    <img className="inline-block object-cover w-full" src="/trainer_homepage2.jpg" alt=""/>
+                <div className="max-h-[800px] items-center justify-center mb-5 ">
+                    <img className="max-h-[800px] inline-block object-cover w-full" src="/trainer_homepage2.jpg" alt=""/>
                 </div>
                 <div className="px-4">
                     <div>
