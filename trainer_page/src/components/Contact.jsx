@@ -9,14 +9,15 @@ import {postMessageFromUser, postSendResetPassword} from "./auth/api.jsx";
 
 
 function Contact() {
+    const recaptchaRef = React.createRef();
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
     const [resetmessage, setResetMessage] = useState('')
-    const {values,setFieldValue, handleSubmit, handleChange, errors} = useFormik({
+    const [captchaError, setCaptchaError] = useState(false)
+    const {values, handleSubmit, handleChange, errors} = useFormik({
         initialValues: {
             name: '',
             email: '',
             message: '',
-            captcha: false,
             toggle: false,
 
         },
@@ -24,7 +25,13 @@ function Contact() {
         validateOnChange: false,
         validationOnBlue: false,
         onSubmit: values => {
-            handleSendMessageFromUser(values)
+            if (recaptchaRef.current.getValue().length !== 0) {
+                handleSendMessageFromUser(values)
+                setCaptchaError(false)
+            }else{
+                setCaptchaError(true)
+            }
+
         },
 
     });
@@ -36,10 +43,6 @@ function Contact() {
         form.append('message', values.message)
         await postMessageFromUser(form)
         setResetMessage('Wiadomość została wysłana')
-    }
-
-    const handleRecaptchaChange = () => {
-        setFieldValue('captcha', true)
     }
 
     const position = [50.019581842782905, 22.01792718408926]
@@ -124,17 +127,20 @@ function Contact() {
 
                                     <div className="recaptcha my-5">
                                         <ReCAPTCHA
+                                            ref={recaptchaRef}
                                             sitekey={CAPTCHA_SITE_KEY}
-                                            onChange={handleRecaptchaChange}
                                         />
-                                        {errors.captcha && <p className="mt-3 text-red-800">{errors.captcha}</p>}
+                                        {captchaError && <p className="mt-3 text-red-800">Uzupełnij Captche</p>}
                                     </div>
                                     <div className="my-5">
                                         <input type="checkbox" name="toggle" onChange={handleChange}/><span> Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
                                         {errors.toggle && <p className="mt-3 text-red-800">{errors.toggle}</p>}
                                     </div>
                                     <div className="flex justify-center">
-                                        <button type="submit" className="border-solid border-1 rounded-lg border-white mr-4" onClick={handleSubmit}>Wyślij wiadomość</button>
+                                        <button type="submit"
+                                                className="border-solid border-1 rounded-lg border-white mr-4"
+                                                onClick={handleSubmit}>Wyślij wiadomość
+                                        </button>
                                     </div>
                                     <p className="mt-4">{resetmessage}</p>
                                 </div>

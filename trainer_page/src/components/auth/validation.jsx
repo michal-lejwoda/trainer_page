@@ -59,10 +59,9 @@ export const validateLogin = yup.object().shape({
 })
 
 export const validateContact = yup.object().shape({
-    name: yup.string().min(2, "Imię jest za krótkie").max(80, "Imię jest za długie"),
+    name: yup.string().min(2, "Imię jest za krótkie").max(80, "Imię jest za długie").required("Imię jest wymagane"),
     email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
     message: yup.string().min(2, "Wiadomość jest za krótka").max(1000, "Wiadomość jest za długa"),
-    captcha: yup.boolean().oneOf([true], 'Przejdź weryfikację captcha'),
     toggle: yup.boolean().oneOf([true], 'Aby wysłać wiadomość musisz zaakceptować zgodę'),
 });
 
