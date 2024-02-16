@@ -1,0 +1,29 @@
+name: True Effects
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copy Deployment Files to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            cd true-effects
+            git pull
+            docker kill $(docker ps -q -a)
+            source ~/.nvm/nvm.sh
+            nvm use 18
+            cd trueeffectsfrontend
+            npm run build
+            cd ..
+            docker-compose -f production.yml build
+            docker-compose -f production.yml up -d
