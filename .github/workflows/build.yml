@@ -1,5 +1,4 @@
-name: True Effects
-
+name: Trainer
 on:
   push:
     branches:
@@ -17,12 +16,12 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            cd true-effects
+            cd trainer_page
             git pull
             docker kill $(docker ps -q -a)
             source ~/.nvm/nvm.sh
             nvm use 18
-            cd trueeffectsfrontend
+            cd trainer_page
             npm run build
             cd ..
             docker-compose -f production.yml build
