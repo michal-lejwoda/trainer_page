@@ -1,11 +1,20 @@
-import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css'
 import ReCAPTCHA from "react-google-recaptcha";
 import {useFormik} from "formik";
-import {validateContact, validateLogin} from "./auth/validation.jsx";
+import {validateContact} from "./auth/validation.jsx";
 import React, {useState} from "react";
-import {postMessageFromUser, postSendResetPassword} from "./auth/api.jsx";
+import {postMessageFromUser} from "./auth/api.jsx";
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
 
 
 function Contact() {
@@ -28,7 +37,7 @@ function Contact() {
             if (recaptchaRef.current.getValue().length !== 0) {
                 handleSendMessageFromUser(values)
                 setCaptchaError(false)
-            }else{
+            } else {
                 setCaptchaError(true)
             }
 
