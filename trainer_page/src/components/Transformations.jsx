@@ -4,7 +4,6 @@ import "aos/dist/aos.css";
 import {transformations} from "./transformations_store.jsx";
 
 function Transformations() {
-    const transformation_array = []
     useEffect(() => {
         Aos.init({duration: 2000})
     }, []);
@@ -29,7 +28,7 @@ function Transformations() {
                 </div>
                 <div
                     className="homepage__transformations__container flex flex-col sm:flex-row sm:flex-wrap justify-center">
-                    {transformations.map((el,key) => {
+                    {transformations.map((el, key) => {
                         return (
                             <div key={key} data-aos={el.fade}
                                  className="my-10 sm:w-2/5 xl:w-1/5 lg: mx-4 bg-container-grey min-w-96">

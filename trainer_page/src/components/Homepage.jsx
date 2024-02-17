@@ -1,8 +1,8 @@
+import "aos/dist/aos.css";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {useEffect} from "react";
 import Aos from "aos";
-import "aos/dist/aos.css";
 import {NavLink} from "react-router-dom";
 
 function Homepage() {
