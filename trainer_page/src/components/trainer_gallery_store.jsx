@@ -1,8 +1,8 @@
 export const trainer_gallery_store =  [
-    "/Wojciech.jpg",
-    "/Bartosz.jpg",
-    "/Ewa_gnaslogo.png",
-    "/Tomasz2.jpg",
-    "/Wojciech.jpg",
-    "/Bartosz.jpg"
+    "/trener1.jpg",
+    "/trener2.jpg",
+    "/trener3.jpg",
+    "/trener4.jpg",
+    "/trener5.jpg",
+    "/trener6.jpg"
 ]

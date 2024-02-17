@@ -220,6 +220,12 @@ function Homepage() {
                                 <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Tomasz2.jpg"
                                      alt=""/>
                             </div>
+                            <div className="flex flex-col items-center ">
+                                <NavLink to="/transformations" className="text-white">
+                                    <button className="mt-10  text-lg text-white no-underline">Więcej transformacji
+                                    </button>
+                                </NavLink>
+                            </div>
                             <div className="w-full flex justify-center my-10">
                                 <div className="w-3/4 xl:hidden">
                                     <Carousel showThumbs={false} autoPlay infiniteLoop centerMode interval={3000}>
