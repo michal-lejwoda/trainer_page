@@ -13,7 +13,8 @@ function Homepage() {
         <div className="homepage">
             <div className="homepage__description">
                 <div className="max-h-[800px] items-center justify-center mb-5 ">
-                    <img className="max-h-[800px] inline-block object-cover w-full" src="/trainer_homepage2.jpg" alt=""/>
+                    <img className="max-h-[800px] inline-block object-cover w-full" src="/trainer_homepage2.jpg"
+                         alt=""/>
                 </div>
                 <div className="px-4">
                     <div>
@@ -28,11 +29,9 @@ function Homepage() {
                             obierzemy go razem i dojdziemy do końcowego rezultatu!</p>
 
                         <div className="flex flex-col items-center ">
-
-                            <button className="mt-10  text-lg text-white no-underline">
-                                <NavLink to="/reservation">Zarezerwuj wizytę</NavLink>
-                            </button>
-
+                            <NavLink to="/reservation" className="text-white">
+                                <button className="mt-10  text-lg text-white no-underline">Zarezerwuj wizytę</button>
+                            </NavLink>
                         </div>
                     </div>
                     <div data-aos="fade-left"
@@ -125,7 +124,8 @@ function Homepage() {
                     </div>
                     <div className="homepage__offer flex-col sm:flex-row  sm:flex sm:flex-wrap sm:justify-center">
 
-                        <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
+                        <div data-aos="fade-right"
+                             className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
                                 <img className="inline-block" src="/icons-3-05_1_orig.png" alt=""/>
                             </div>
@@ -134,7 +134,8 @@ function Homepage() {
                                 sylwetkę bez
                                 uczucia głodu.</p>
                         </div>
-                        <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
+                        <div data-aos="fade-right"
+                             className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
                                 <img className="inline-block" src="/personheart_orig.png" alt=""/>
                             </div>
@@ -144,7 +145,8 @@ function Homepage() {
                                 czuć
                                 się niesamowicie wewnątrz i wyglądać świetnie na zewnątrz.</p>
                         </div>
-                        <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
+                        <div data-aos="fade-left"
+                             className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
                                 <img className="inline-block" src="/imageedit-73-3552888680_orig.png" alt=""/>
                             </div>
@@ -154,7 +156,8 @@ function Homepage() {
                                 -
                                 staniesz się lepszą wersją siebie.</p>
                         </div>
-                        <div className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
+                        <div data-aos="fade-left"
+                             className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
                                 <img className="inline-block" src="/imageedit-5-5594810482_orig.png" alt=""/>
                             </div>
@@ -192,10 +195,11 @@ function Homepage() {
                         <p className="my-3 text-lg">✓ Liczenia kalorii lub ważenia żywności!</p>
                         <p className="my-3 text-lg">✓ Rezygnowania z produktów, które lubisz</p>
                         <div className="flex justify-center">
-
+                            <NavLink to="/about-me" className="text-white">
                                 <button className="mt-7">
-                                    <NavLink to="/about-me">O mnie</NavLink></button>
-
+                                    O mnie
+                                </button>
+                            </NavLink>
                         </div>
                     </div>
                     <div className="homepage__transformations">

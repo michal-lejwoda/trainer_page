@@ -24,63 +24,63 @@ export const transformations= [
         "name": "Natalia",
         "description": "Z Natalią współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Ewa_gnaslogo.png",
+        "image": "/Natalia.jpg",
         "fade": "fade-left"
     },
     {
         "name": "Piotr",
         "description": "Z Piotrem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Wojciech.jpg",
+        "image": "/Piotr.jpg",
         "fade": "fade-right"
     },
     {
         "name": "Kazimierz",
         "description": "Z Kazimierzem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Bartosz.jpg",
+        "image": "/Kazimierz.png",
         "fade": "fade-right"
     },
     {
         "name": "Julia",
         "description": "Z Julią współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Ewa_gnaslogo.png",
+        "image": "/Julia.png",
         "fade": "fade-left"
     },
     {
         "name": "Konrad",
         "description": "Z Konradem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Tomasz2.jpg",
+        "image": "/Konrad.png",
         "fade": "fade-left"
     },
     {
         "name": "Oskar",
         "description": "Z Oskarem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Wojciech.jpg",
+        "image": "/Oskar.jpg",
         "fade": "fade-right"
     },
     {
         "name": "Tomasz",
         "description": "Z Tomaszem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Tomasz2.jpg",
+        "image": "/Tomasz.jpg",
         "fade": "fade-right"
     },
     {
         "name": "Maja",
         "description": "Z Mają współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Ewa_gnaslogo.png",
+        "image": "/Maja.png",
         "fade": "fade-left"
     },
     {
         "name": "Mateusz",
         "description": "Z Mateuszem współpraca online trwała niespełna 5 miesięcy. Celem było spalenie zbędnego tłuszczu oraz uzyskanie atletycznej sylwetki.",
         "realization": "Realizacja 100%",
-        "image": "/Tomasz2.jpg",
+        "image": "/Mateusz.jpg",
         "fade": "fade-left"
     },
 
