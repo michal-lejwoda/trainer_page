@@ -1,9 +1,8 @@
-import os
-
-from dotenv import load_dotenv
 import datetime
+import os
 from typing import List, Any, Annotated
 
+from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -12,23 +11,18 @@ from starlette.background import BackgroundTasks
 
 from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
-from app.reservations.models import WorkHours, SmallBreak, TrainerHoliday, WorkingHour, Address, Plan, Trainer, \
+from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
     Reservation
 from app.reservations.schemas import TimeDiff, TrainerBase, \
-    WorkingHourBase, TrainerHolidayBase, SmallBreakBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
-    GetWorkHours, TrainerId, TrainerPlans, AssignReservation
+    WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
+    GetWorkHours, TrainerId, TrainerPlans
 from app.send_email import send_email_async, send_email_background, send_email, send_mail_to_admin
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
 load_dotenv()
-
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
-router = APIRouter(
-    tags=["reservation"],
-    prefix="/api"
-)
-
+router = APIRouter(tags=["reservation"], prefix="/api")
 
 @router.post("/reservation")
 def create_reservation(title: Annotated[str, Form()], user_id: Annotated[str, Form()],
@@ -55,14 +49,7 @@ def list_reservations(db: Session = Depends(get_db)):
     return db.query(Reservation).all()
 
 
-@router.get("/")
-def read_api(db: Session = Depends(get_db)):
-    return "Hello World"
-
-
-@router.get("/trainers",
-            response_model=None
-            )
+@router.get("/trainers", response_model=None)
 def list_trainers(db: Session = Depends(get_db)) -> Any:
     return db.query(Trainer).all()
 
@@ -95,49 +82,49 @@ def delete_working_hour(id: int, db: Session = Depends(get_db)):
     db.commit()
 
 
-@router.get('/get_all_trainer_holidays')
-def get_all_trainer_holidays(db: Session = Depends(get_db)):
-    return db.query(TrainerHoliday).all()
+# @router.get('/get_all_trainer_holidays')
+# def get_all_trainer_holidays(db: Session = Depends(get_db)):
+#     return db.query(TrainerHoliday).all()
 
 
-@router.get('/get_trainer_holidays')
-def get_trainer_holidays(trainer_id: int, db: Session = Depends(get_db)):
-    return db.query(TrainerHoliday).filter_by(trainer_id=trainer_id).all()
+# @router.get('/get_trainer_holidays')
+# def get_trainer_holidays(trainer_id: int, db: Session = Depends(get_db)):
+#     return db.query(TrainerHoliday).filter_by(trainer_id=trainer_id).all()
 
 
-@router.post('/create_trainer_holiday')
-def create_trainer_holiday(trainer_holiday: TrainerHolidayBase, db: Session = Depends(get_db)):
-    trainer_holiday_model = TrainerHoliday()
-    trainer_holiday_model.start_holidays = trainer_holiday.start_holidays
-    trainer_holiday_model.end_holidays = trainer_holiday.end_holidays
-    trainer_holiday_model.is_active = trainer_holiday.is_active
-    trainer_holiday_model.trainer_id = trainer_holiday.trainer_id
-    db.add(trainer_holiday_model)
-    db.commit()
-    return trainer_holiday_model
+# @router.post('/create_trainer_holiday')
+# def create_trainer_holiday(trainer_holiday: TrainerHolidayBase, db: Session = Depends(get_db)):
+#     trainer_holiday_model = TrainerHoliday()
+#     trainer_holiday_model.start_holidays = trainer_holiday.start_holidays
+#     trainer_holiday_model.end_holidays = trainer_holiday.end_holidays
+#     trainer_holiday_model.is_active = trainer_holiday.is_active
+#     trainer_holiday_model.trainer_id = trainer_holiday.trainer_id
+#     db.add(trainer_holiday_model)
+#     db.commit()
+#     return trainer_holiday_model
 
 
-@router.get('/get_all_small_breaks')
-def get_all_small_breaks(db: Session = Depends(get_db)):
-    return db.query(SmallBreak).all()
+# @router.get('/get_all_small_breaks')
+# def get_all_small_breaks(db: Session = Depends(get_db)):
+#     return db.query(SmallBreak).all()
+#
+#
+# @router.get('/get_trainer_small_break')
+# def get_trainer_small_break(trainer_id: int, db: Session = Depends(get_db)):
+#     return db.query(SmallBreak).filter_by(trainer_id=trainer_id).all()
 
 
-@router.get('/get_trainer_small_break')
-def get_trainer_small_break(trainer_id: int, db: Session = Depends(get_db)):
-    return db.query(SmallBreak).filter_by(trainer_id=trainer_id).all()
-
-
-@router.post('/create_small_break')
-def create_small_break(small_break: SmallBreakBase, db: Session = Depends(get_db)):
-    small_break_model = SmallBreak()
-    small_break_model.start_break = small_break.start_break
-    small_break_model.date = small_break.date
-    small_break_model.end_break = small_break.end_break
-    small_break_model.is_active = small_break.is_active
-    small_break_model.trainer_id = small_break.trainer_id
-    db.add(small_break_model)
-    db.commit()
-    return small_break_model
+# @router.post('/create_small_break')
+# def create_small_break(small_break: SmallBreakBase, db: Session = Depends(get_db)):
+#     small_break_model = SmallBreak()
+#     small_break_model.start_break = small_break.start_break
+#     small_break_model.date = small_break.date
+#     small_break_model.end_break = small_break.end_break
+#     small_break_model.is_active = small_break.is_active
+#     small_break_model.trainer_id = small_break.trainer_id
+#     db.add(small_break_model)
+#     db.commit()
+#     return small_break_model
 
 
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
@@ -145,7 +132,6 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     db_work_hour = WorkHours(**dumped_hour_model)
     db.add(db_work_hour)
     db.commit()
-    # db.refresh(db_work_hour)
     return db_work_hour
 
 
@@ -187,7 +173,6 @@ def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
             work_hours_model.end_time = created_end_time
             work_hours_model.trainer_id = timediff.trainer_id
             work_hours_model.is_active = True
-
             db.add(work_hours_model)
             db.commit()
 
@@ -208,16 +193,16 @@ def get_all_work_hours(db: Session = Depends(get_db)):
     return db.query(WorkHours).all()
 
 
-@router.get('/get_reservation_hours')
-def get_reservation_hours(trainer_id: int, date_of_break: datetime.date, hours: int, db: Session = Depends(get_db)):
-    small_breaks = db.query(SmallBreak).filter(SmallBreak.date == date_of_break, SmallBreak.trainer_id == trainer_id,
-                                               SmallBreak.is_active == True).all()
-    #     # trainer_holidays = db.query(TrainerHoliday).filter_by(trainer_id=trainer_id, is_active=True, start_holidays>date ).all()
-    trainer_holidays = db.query(TrainerHoliday).filter(TrainerHoliday.trainer_id == trainer_id,
-                                                       TrainerHoliday.start_holidays <= date_of_break,
-                                                       TrainerHoliday.end_holidays >= date_of_break,
-                                                       TrainerHoliday.is_active == True).all()
-    return small_breaks
+# @router.get('/get_reservation_hours')
+# def get_reservation_hours(trainer_id: int, date_of_break: datetime.date, hours: int, db: Session = Depends(get_db)):
+#     small_breaks = db.query(SmallBreak).filter(SmallBreak.date == date_of_break, SmallBreak.trainer_id == trainer_id,
+#                                                SmallBreak.is_active == True).all()
+#     #     # trainer_holidays = db.query(TrainerHoliday).filter_by(trainer_id=trainer_id, is_active=True, start_holidays>date ).all()
+#     trainer_holidays = db.query(TrainerHoliday).filter(TrainerHoliday.trainer_id == trainer_id,
+#                                                        TrainerHoliday.start_holidays <= date_of_break,
+#                                                        TrainerHoliday.end_holidays >= date_of_break,
+#                                                        TrainerHoliday.is_active == True).all()
+#     return small_breaks
 
 
 @router.get("/address")
@@ -237,11 +222,6 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
     trainer_model.address_id = address_model.id
     db.add(trainer_model)
     db.commit()
-
-
-@router.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
 
 
 @router.post("/get_day_work_hours", response_model=List[GetWorkHours])
@@ -278,17 +258,16 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     return trainer
 
 
-@router.post("/assign_reservation", response_model=None)
-def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == assign_reservation.user_id).first()
-    # reservation = db.query(Re).filter(User.id == assign_reservation.user_id).first()
+# @router.post("/assign_reservation", response_model=None)
+# def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
+#     user = db.query(User).filter(User.id == assign_reservation.user_id).first()
+#     # reservation = db.query(Re).filter(User.id == assign_reservation.user_id).first()
 
 
 @router.get('/send-email/asynchronous')
 async def send_email_asynchronous():
     await send_email_async('Hello World', 'saxatachi@gmail.com',
                            {'title': 'Hello World', 'name': 'John Doe'})
-    # return 'Success' @ router.get('/send-email/backgroundtasks')
     return "Success"
 
 

@@ -69,7 +69,7 @@ services:
       - .env.development
 #    command: /start_trainer_backend
     volumes:
-      - ".:/code:z"
+      - ".:/code"
     links:
       - "trainer_db:trainer_db"
     networks:

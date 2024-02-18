@@ -1,9 +1,10 @@
 import enum
 
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, Date, Float, Time
-from app.database import Base
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time
 from sqlalchemy.orm import relationship
 
+from app.database import Base
+#TODO IMportant dont remove that one
 from app.user.models import User
 
 
@@ -27,7 +28,6 @@ class WorkHours(Base):
     end_time = Column(Time)
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
     is_active = Column(Boolean, default=True)
-
     reservation = relationship("Reservation", back_populates="work_hours")
 
 
@@ -52,8 +52,8 @@ class Trainer(Base):
     address_id = Column(Integer, ForeignKey("address.id"), nullable=True)
     address = relationship("Address", back_populates="trainer_address")
     working_hour = relationship("WorkingHour", back_populates="trainer_working_hour")
-    holidays = relationship("TrainerHoliday", back_populates="trainer_holiday")
-    small_break = relationship("SmallBreak", back_populates="trainer_small_break")
+    # holidays = relationship("TrainerHoliday", back_populates="trainer_holiday")
+    # small_break = relationship("SmallBreak", back_populates="trainer_small_break")
 
 
 class Address(Base):
@@ -74,26 +74,26 @@ class WorkingHour(Base):
     trainer_working_hour = relationship("Trainer", back_populates="working_hour")
 
 
-class TrainerHoliday(Base):
-    __tablename__ = "trainer_holidays"
-    id = Column(Integer, primary_key=True, index=True, nullable=False)
-    start_holidays = Column(Date)
-    end_holidays = Column(Date)
-    is_active = Column(Boolean, default=True)
-    trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
-    trainer_holiday = relationship("Trainer", back_populates="holidays")
+# class TrainerHoliday(Base):
+#     __tablename__ = "trainer_holidays"
+#     id = Column(Integer, primary_key=True, index=True, nullable=False)
+#     start_holidays = Column(Date)
+#     end_holidays = Column(Date)
+#     is_active = Column(Boolean, default=True)
+#     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
+#     trainer_holiday = relationship("Trainer", back_populates="holidays")
 
 
-class SmallBreak(Base):
-    __tablename__ = "small_breaks"
-    id = Column(Integer, nullable=False, primary_key=True, index=True)
-    start_break = Column(DateTime(timezone=True))
-    end_break = Column(DateTime(timezone=True))
-    date = Column(Date())
-    is_active = Column(Boolean, default=True)
-    trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
-    trainer_small_break = relationship("Trainer", back_populates="small_break")
-
+# class SmallBreak(Base):
+#     __tablename__ = "small_breaks"
+#     id = Column(Integer, nullable=False, primary_key=True, index=True)
+#     start_break = Column(DateTime(timezone=True))
+#     end_break = Column(DateTime(timezone=True))
+#     date = Column(Date())
+#     is_active = Column(Boolean, default=True)
+#     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
+#     trainer_small_break = relationship("Trainer", back_populates="small_break")
+#
 
 class Plan(Base):
     __tablename__ = "plans"

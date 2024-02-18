@@ -96,25 +96,25 @@ class WorkHourGet(BaseModel):
         from_attributes = True
 
 
-class TrainerHolidayBase(BaseModel):
-    start_holidays: datetime.date
-    end_holidays: datetime.date
-    is_active: bool
-    trainer_id: int
+# class TrainerHolidayBase(BaseModel):
+#     start_holidays: datetime.date
+#     end_holidays: datetime.date
+#     is_active: bool
+#     trainer_id: int
+#
+#     class Config:
+#         from_attributes = True
 
-    class Config:
-        from_attributes = True
 
-
-class SmallBreakBase(BaseModel):
-    start_break: datetime.datetime
-    end_break: datetime.datetime
-    date: datetime.date
-    is_active: bool
-    trainer_id: int
-
-    class Config:
-        from_attributes = True
+# class SmallBreakBase(BaseModel):
+#     start_break: datetime.datetime
+#     end_break: datetime.datetime
+#     date: datetime.date
+#     is_active: bool
+#     trainer_id: int
+#
+#     class Config:
+#         from_attributes = True
 
 
 class TimeDiff(BaseModel):
@@ -156,8 +156,3 @@ class GetWorkHours(BaseModel):
     @field_validator('end_time')
     def parse_end_time(cls, v):
         return v.strftime('%H:%M')
-
-
-class AssignReservation(BaseModel):
-    user_id: int
-    reservation_id: int
