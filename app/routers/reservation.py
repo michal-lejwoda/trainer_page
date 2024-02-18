@@ -58,13 +58,10 @@ def list_reservations(db: Session = Depends(get_db)):
 @router.get("/")
 def read_api(db: Session = Depends(get_db)):
     return "Hello World"
-    # return db.query(Trainer).all()
 
 
-# @router.get("/trainers", response_model=List[Trainer])
 @router.get("/trainers",
             response_model=None
-            # , response_model=List[TrainerBase]
             )
 def list_trainers(db: Session = Depends(get_db)) -> Any:
     return db.query(Trainer).all()
