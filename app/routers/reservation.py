@@ -192,19 +192,6 @@ def get_test_work_hours(db: Session = Depends(get_db)):
 def get_all_work_hours(db: Session = Depends(get_db)):
     return db.query(WorkHours).all()
 
-
-# @router.get('/get_reservation_hours')
-# def get_reservation_hours(trainer_id: int, date_of_break: datetime.date, hours: int, db: Session = Depends(get_db)):
-#     small_breaks = db.query(SmallBreak).filter(SmallBreak.date == date_of_break, SmallBreak.trainer_id == trainer_id,
-#                                                SmallBreak.is_active == True).all()
-#     #     # trainer_holidays = db.query(TrainerHoliday).filter_by(trainer_id=trainer_id, is_active=True, start_holidays>date ).all()
-#     trainer_holidays = db.query(TrainerHoliday).filter(TrainerHoliday.trainer_id == trainer_id,
-#                                                        TrainerHoliday.start_holidays <= date_of_break,
-#                                                        TrainerHoliday.end_holidays >= date_of_break,
-#                                                        TrainerHoliday.is_active == True).all()
-#     return small_breaks
-
-
 @router.get("/address")
 async def get_address(db: Session = Depends(get_db)):
     return db.query(Address).all()
@@ -256,12 +243,6 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     db.add(trainer_model)
     db.commit()
     return trainer
-
-
-# @router.post("/assign_reservation", response_model=None)
-# def assign_reservation_to_user(assign_reservation: AssignReservation, db: Session = Depends(get_db)):
-#     user = db.query(User).filter(User.id == assign_reservation.user_id).first()
-#     # reservation = db.query(Re).filter(User.id == assign_reservation.user_id).first()
 
 
 @router.get('/send-email/asynchronous')

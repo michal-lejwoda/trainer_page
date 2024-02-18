@@ -28,35 +28,36 @@ const BookingConfirmation = (props) => {
 
 
     return (
-        <div>
-            <h1>Booking Confirmation</h1>
-            <div className="sm:flex sm:items-start">
-                <div
-                    className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                </div>
-                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    Twoje zamówienie
-                    <div className="mt-2">
-
-                        <p className="text-sm text-gray-500">
-                            Tytuł: {props.selectedPlanHour.plan.title}
+        <div className="flex items-center flex-col">
+            <h1 className="py-4 ">Potwierdzenie zamówienia</h1>
+            <div className="sm:flex sm:items-start mb-5">
+                <div className="my-3 text-center sm:ml-4 sm:mt-0 sm:text-left text-4xl">
+                    <div className="mt-2 p-10 bg-even-more-darky-grey rounded-lg">
+                        <p className="text-gray-500 text-white text-center text-4xl font-semibold pb-4">
+                            Twoje zamówienie
                         </p>
-                        <p className="text-sm text-gray-500">
-                            Cena: {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span className="font-semibold">Tytuł:</span> {props.selectedPlanHour.plan.title}
                         </p>
-                        <p className="text-sm text-gray-500">
-                            Godzina rozpoczęcia: {props.selectedPlanHour.time_data.start_time}
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span className="font-semibold">Cena:</span> {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
                         </p>
-                        <p className="text-sm text-gray-500">
-                            Godzina zakończenia: {props.selectedPlanHour.time_data.end_time}
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span className="font-semibold">Godzina rozpoczęcia:</span> {props.selectedPlanHour.time_data.start_time}
                         </p>
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span className="font-semibold">Godzina zakończenia:</span> {props.selectedPlanHour.time_data.end_time}
+                        </p>
+                        <div className="py-4">
+                            <ReCAPTCHA
+                                sitekey={CAPTCHA_SITE_KEY}
+                            />
+                        </div>
+                        <button className="text-2xl" onClick={handleReservation}>Potwierdź rezerwację</button>
                     </div>
                 </div>
             </div>
-            <ReCAPTCHA
-                sitekey={CAPTCHA_SITE_KEY}
-            />
-            <button onClick={handleReservation}>Potwierdź rezerwację</button>
+
         </div>
 
     );
