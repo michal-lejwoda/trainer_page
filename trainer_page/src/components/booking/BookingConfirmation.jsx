@@ -1,19 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import {useAuth} from "../auth/AuthContext.jsx";
 import {postReservation} from "../api.jsx";
+import { useNavigate } from 'react-router-dom';
 
 const BookingConfirmation = (props) => {
+    const navigate = useNavigate();
+    const recaptchaRef = React.createRef();
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const [captchaError, setCaptchaError] = useState(false)
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
-
-    const handleReservation = async () => {
+    const handleReservation = () => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
         try {
-            await postReservation(form)
+            if (recaptchaRef.current.getValue().length !== 0) {
+                postReservation(form).then(()=>{
+                    alert("Trening został zarezerwowany. Potwierdzenie zostało wysłane na maila")
+                    navigate('/');
+                })
+                setCaptchaError(false)
+            } else {
+                setCaptchaError(true)
+            }
+
         } catch (err) {
             return err.response
         }
@@ -40,24 +52,31 @@ const BookingConfirmation = (props) => {
                             <span className="font-semibold">Tytuł:</span> {props.selectedPlanHour.plan.title}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">Cena:</span> {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
+                            <span
+                                className="font-semibold">Cena:</span> {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">Godzina rozpoczęcia:</span> {props.selectedPlanHour.time_data.start_time}
+                            <span className="font-semibold">Data:</span> {props.selectedPlanHour.time_data.day}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">Godzina zakończenia:</span> {props.selectedPlanHour.time_data.end_time}
+                            <span
+                                className="font-semibold">Godzina rozpoczęcia:</span> {props.selectedPlanHour.time_data.start_time}
+                        </p>
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span
+                                className="font-semibold">Godzina zakończenia:</span> {props.selectedPlanHour.time_data.end_time}
                         </p>
                         <div className="py-4">
                             <ReCAPTCHA
+                                ref={recaptchaRef}
                                 sitekey={CAPTCHA_SITE_KEY}
                             />
+                            {captchaError && <p className="mt-3 text-red-800">Uzupełnij Captche</p>}
                         </div>
                         <button className="text-2xl" onClick={handleReservation}>Potwierdź rezerwację</button>
                     </div>
                 </div>
             </div>
-
         </div>
 
     );
