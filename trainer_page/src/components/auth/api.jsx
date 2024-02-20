@@ -5,7 +5,7 @@ const DOMAIN = import.meta.env.VITE_DOMAIN
 
 
 export async function checkIfUserLogged() {
-    const response = await instance.get(`${DOMAIN}/api/users/me/`, {
+    const response = await instance.get(`${DOMAIN}/api/users/me`, {
         withCredentials: true
     });
     return response.data
