@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {useFormik} from 'formik';
 import {validateRegistration} from "./validation.jsx";
@@ -9,6 +9,7 @@ import {useAuth} from "./AuthContext.jsx";
 
 const RegisterForm = () => {
     const [, setCookie] = useCookies(['jwt_trainer_auth']);
+    const [errorregister, setErrorRegister] = useState(null)
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const handleRegister = async (values) => {
         let form = new FormData()
