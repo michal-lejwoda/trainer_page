@@ -16,7 +16,6 @@ const BookingConfirmation = (props) => {
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
-
         try {
             if (recaptchaRef.current.getValue().length !== 0) {
                 postReservation(form).then(() => {

@@ -70,7 +70,7 @@ const RegisterForm = () => {
                                 placeholder="Imię"
                                 className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
-                            {errors.name && <p>{errors.name}</p>}
+                            {errors.name && <p className="text-red-400 mb-4">{errors.name}</p>}
                         </div>
                         <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                             <label className="mb-4 text-lg">Nazwisko</label>
@@ -84,7 +84,7 @@ const RegisterForm = () => {
                                 placeholder="Nazwisko"
                                 className="text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
-                            {errors.last_name && <p>{errors.last_name}</p>}
+                            {errors.last_name && <p className="text-red-400 mb-4">{errors.last_name}</p>}
                         </div>
                     </div>
                     <div className="w-full flex flex-col md:flex-row md:justify-between">
@@ -101,7 +101,7 @@ const RegisterForm = () => {
                                 className={errors.email ? "input-error text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Adres E-mail"
                             />
-                            {errors.email && <p>{errors.email}</p>}
+                            {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
                         </div>
                         <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                             <label className="mb-4 text-lg">Numer telefonu</label>
@@ -115,7 +115,7 @@ const RegisterForm = () => {
                                 placeholder="Numer telefonu"
                                 className={errors.phone_number ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                             />
-                            {errors.phone_number && <p>{errors.phone_number}</p>}
+                            {errors.phone_number && <p className="text-red-400 mb-4">{errors.phone_number}</p>}
                         </div>
                     </div>
                     <div className="w-full flex flex-col md:flex-row md:justify-between">
@@ -132,7 +132,7 @@ const RegisterForm = () => {
                                 className={errors.password ? "input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Hasło"
                             />
-                            {errors.password && <p>{errors.password}</p>}
+                            {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
                         </div>
                         <div className="w-full md:w-1/2 flex flex-col md:ml-3">
                             <label className="mb-4 text-lg">Powtórz hasło</label>
@@ -147,7 +147,7 @@ const RegisterForm = () => {
                                 className={errors.repeat_password ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Powtórz hasło"
                             />
-                            {errors.repeat_password && <p>{errors.repeat_password}</p>}
+                            {errors.repeat_password && <p className="text-red-400 mb-4">{errors.repeat_password}</p>}
                         </div>
                     </div>
                     <div className="booking__login__button w-full flex flex-col items-end mt-2">
