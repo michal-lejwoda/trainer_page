@@ -156,3 +156,8 @@ class GetWorkHours(BaseModel):
     @field_validator('end_time')
     def parse_end_time(cls, v):
         return v.strftime('%H:%M')
+
+
+class EmailBody(BaseModel):
+    email: str
+    body: dict

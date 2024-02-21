@@ -15,7 +15,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
     Reservation
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
-    GetWorkHours, TrainerId, TrainerPlans
+    GetWorkHours, TrainerId, TrainerPlans, EmailBody
 from app.send_email import send_email_async, send_email_background, send_email, send_mail_to_admin
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
@@ -252,12 +252,16 @@ async def send_email_asynchronous():
     return "Success"
 
 
-@router.get("/send-email/background_task")
-def send_email_backgroundtasks(background_tasks: BackgroundTasks):
-    send_email_background(background_tasks, 'Hello World',
-                          'saxatachi@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
+@router.post("/send-email/background_task")
+def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: EmailBody):
+    send_email_background(background_tasks, 'Potwierdzenie rezerwacji',
+                          email_body.email, email_body.body)
     return 'Success'
 
+# def send_email_backgroundtasks(background_tasks: BackgroundTasks, email: str, body: dict):
+#     send_email_background(background_tasks, 'Hello World',
+#                           'saxatachi@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
+#     return 'Success'
 
 @router.post("/send_reset_password_on_email")
 def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks,

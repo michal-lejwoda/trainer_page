@@ -45,3 +45,8 @@ export async function postReservation(data) {
     const response = await instance.post(`${DOMAIN}/api/reservation`, data, {withCredentials: true})
     return response.data
 }
+
+export async function sendConfirmationEmail(data){
+    const response = await instance.post(`/api/send-email/background_task`, data, {withCredentials: true})
+    return response.data
+}

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import {useAuth} from "../auth/AuthContext.jsx";
-import {postReservation} from "../api.jsx";
-import { useNavigate } from 'react-router-dom';
+import {postReservation, sendConfirmationEmail} from "../api.jsx";
+import {useNavigate} from 'react-router-dom';
 
 const BookingConfirmation = (props) => {
     const navigate = useNavigate();
@@ -10,14 +10,29 @@ const BookingConfirmation = (props) => {
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const [captchaError, setCaptchaError] = useState(false)
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
+
     const handleReservation = () => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
+
         try {
             if (recaptchaRef.current.getValue().length !== 0) {
-                postReservation(form).then(()=>{
+                postReservation(form).then(() => {
+                    const data = {
+                        email: authUser.email,
+                        body: {
+                            "title": props.selectedPlanHour.plan.title,
+                            "trainer": props.selectedPlanHour.trainer.label,
+                            "price": props.selectedPlanHour.plan.price,
+                            "currency": props.selectedPlanHour.plan.currency,
+                            "date": props.selectedPlanHour.time_data.day,
+                            "start_time": props.selectedPlanHour.time_data.start_time,
+                            "end_time": props.selectedPlanHour.time_data.end_time
+                        }
+                    }
+                    sendConfirmationEmail(data)
                     alert("Trening został zarezerwowany. Potwierdzenie zostało wysłane na maila")
                     navigate('/');
                 })
@@ -50,6 +65,10 @@ const BookingConfirmation = (props) => {
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span className="font-semibold">Tytuł:</span> {props.selectedPlanHour.plan.title}
+                        </p>
+                        <p className="text-gray-500 text-white text-xl py-2">
+                            <span
+                                className="font-semibold">Trener:</span> {props.selectedPlanHour.trainer.label}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
