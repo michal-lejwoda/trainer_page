@@ -69,7 +69,6 @@ const LoginForm = () => {
                                 placeholder="Adres email"
                                 className={errors.email ? "text-lg md:mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg md:mr-3 border-2 rounded-lg border-white"}
                             />
-                            {/*{errors.email && <p>{errors.email}</p>}*/}
                         </div>
                         <div className="w-full md:w-1/2 flex flex-col md:ml-3">
                             <label className="mb-4 text-lg mt-4 md:mt-0">Hasło</label>
@@ -85,8 +84,6 @@ const LoginForm = () => {
                                 className={errors.password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
                             />
                         </div>
-                        {/*{errors.password && <p>{errors.password}</p>}*/}
-                        {/*{errorlogin && <p>{errorlogin}</p>}*/}
                     </div>
                     {errors.email && <p className="text-red-400">{errors.email}</p>}
                     {errors.password && <p className="text-red-400">{errors.password}</p>}
