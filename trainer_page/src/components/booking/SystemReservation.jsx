@@ -13,7 +13,26 @@ function SystemReservation(props) {
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
+    const {
+        data: trainersData,
+        mutate: mutateTrainersData,
+    } = useGetTrainers()
+
+
+    const {
+        data: trainerPlanData,
+        mutate: mutatePlanData
+    } = useGetTrainerPlan()
+
+
+    const {
+        data: dayWorkHoursData,
+        mutate: mutateWorkHoursData
+    } = useGetDayWorkHours()
+
+
     const handleCalendarDateChange = (date) => {
+        date.setHours(12)
         props.setSelectedPlanHour(null)
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
@@ -71,23 +90,6 @@ function SystemReservation(props) {
         })
     }, [])
 
-
-    const {
-        data: trainersData,
-        mutate: mutateTrainersData,
-    } = useGetTrainers()
-
-
-    const {
-        data: trainerPlanData,
-        mutate: mutatePlanData
-    } = useGetTrainerPlan()
-
-
-    const {
-        data: dayWorkHoursData,
-        mutate: mutateWorkHoursData
-    } = useGetDayWorkHours()
 
     const selectHour = (e, data) => {
         let selected_hour_dict = {"plan": props.trainerPlan, "time_data": data, "trainer": props.trainer}
