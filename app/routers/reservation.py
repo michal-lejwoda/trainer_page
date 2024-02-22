@@ -81,52 +81,6 @@ def delete_working_hour(id: int, db: Session = Depends(get_db)):
     db.query(WorkingHour).filter(WorkingHour.id == id).delete()
     db.commit()
 
-
-# @router.get('/get_all_trainer_holidays')
-# def get_all_trainer_holidays(db: Session = Depends(get_db)):
-#     return db.query(TrainerHoliday).all()
-
-
-# @router.get('/get_trainer_holidays')
-# def get_trainer_holidays(trainer_id: int, db: Session = Depends(get_db)):
-#     return db.query(TrainerHoliday).filter_by(trainer_id=trainer_id).all()
-
-
-# @router.post('/create_trainer_holiday')
-# def create_trainer_holiday(trainer_holiday: TrainerHolidayBase, db: Session = Depends(get_db)):
-#     trainer_holiday_model = TrainerHoliday()
-#     trainer_holiday_model.start_holidays = trainer_holiday.start_holidays
-#     trainer_holiday_model.end_holidays = trainer_holiday.end_holidays
-#     trainer_holiday_model.is_active = trainer_holiday.is_active
-#     trainer_holiday_model.trainer_id = trainer_holiday.trainer_id
-#     db.add(trainer_holiday_model)
-#     db.commit()
-#     return trainer_holiday_model
-
-
-# @router.get('/get_all_small_breaks')
-# def get_all_small_breaks(db: Session = Depends(get_db)):
-#     return db.query(SmallBreak).all()
-#
-#
-# @router.get('/get_trainer_small_break')
-# def get_trainer_small_break(trainer_id: int, db: Session = Depends(get_db)):
-#     return db.query(SmallBreak).filter_by(trainer_id=trainer_id).all()
-
-
-# @router.post('/create_small_break')
-# def create_small_break(small_break: SmallBreakBase, db: Session = Depends(get_db)):
-#     small_break_model = SmallBreak()
-#     small_break_model.start_break = small_break.start_break
-#     small_break_model.date = small_break.date
-#     small_break_model.end_break = small_break.end_break
-#     small_break_model.is_active = small_break.is_active
-#     small_break_model.trainer_id = small_break.trainer_id
-#     db.add(small_break_model)
-#     db.commit()
-#     return small_break_model
-
-
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
     dumped_hour_model = hour_data.model_dump()
     db_work_hour = WorkHours(**dumped_hour_model)
