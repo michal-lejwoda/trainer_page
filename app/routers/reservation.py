@@ -199,23 +199,11 @@ def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
     return trainer
 
 
-@router.get('/send-email/asynchronous')
-async def send_email_asynchronous():
-    await send_email_async('Hello World', 'saxatachi@gmail.com',
-                           {'title': 'Hello World', 'name': 'John Doe'})
-    return "Success"
-
-
 @router.post("/send-email/background_task")
 def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: EmailBody):
     send_email_background(background_tasks, 'Potwierdzenie rezerwacji',
                           email_body.email, email_body.body)
     return 'Success'
-
-# def send_email_backgroundtasks(background_tasks: BackgroundTasks, email: str, body: dict):
-#     send_email_background(background_tasks, 'Hello World',
-#                           'saxatachi@gmail.com', {'title': 'Hello World', 'name': 'John Doe'})
-#     return 'Success'
 
 @router.post("/send_reset_password_on_email")
 def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks,

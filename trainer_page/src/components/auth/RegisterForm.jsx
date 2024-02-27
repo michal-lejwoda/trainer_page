@@ -102,6 +102,7 @@ const RegisterForm = () => {
                                 placeholder="Adres E-mail"
                             />
                             {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
+                            {errorregister && <p className="text-red-400 mb-4">{errorregister}</p>}
                         </div>
                         <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                             <label className="mb-4 text-lg">Numer telefonu</label>

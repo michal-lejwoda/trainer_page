@@ -70,7 +70,7 @@ const BookingAuthorizationRegister = (props) => {
                             placeholder="Imię"
                             className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                         />
-                        {errors.name && <p>{errors.name}</p>}
+                        {errors.name && <p className="text-red-400 mb-4">{errors.name}</p>}
                     </div>
                     <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                         <label className="mb-4 text-lg">Nazwisko</label>
@@ -85,7 +85,7 @@ const BookingAuthorizationRegister = (props) => {
                             className="text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors.last_name && <p>{errors.last_name}</p>}
+                        {errors.last_name && <p className="text-red-400 mb-4">{errors.last_name}</p>}
                     </div>
                 </div>
                 <div className="w-full flex flex-col md:flex-row justify-between">
@@ -102,7 +102,8 @@ const BookingAuthorizationRegister = (props) => {
                             className={errors.email ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Adres E-mail"
                         />
-                        {errors.email && <p>{errors.email}</p>}
+                        {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
+                        {errorregister && <p className="text-red-400 mb-4">{errorregister}</p>}
                     </div>
                     <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
                         <label className="mb-4 text-lg">Numer telefonu</label>
@@ -116,7 +117,7 @@ const BookingAuthorizationRegister = (props) => {
                             placeholder="Numer telefonu"
                             className={errors.phone_number ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                         />
-                        {errors.phone_number && <p>{errors.phone_number}</p>}
+                        {errors.phone_number && <p className="text-red-400 mb-4">{errors.phone_number}</p>}
                     </div>
                 </div>
                 <div className="w-full flex flex-col md:flex-row justify-between">
@@ -134,7 +135,7 @@ const BookingAuthorizationRegister = (props) => {
                             placeholder="Hasło"
                             // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors.password && <p>{errors.password}</p>}
+                        {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
                     </div>
                     <div className="w-full md:w-1/2 flex flex-col">
                         <label className="mb-4 text-lg">Powtórz hasło</label>
@@ -150,7 +151,7 @@ const BookingAuthorizationRegister = (props) => {
                             placeholder="Powtórz hasło"
                             // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors.repeat_password && <p>{errors.repeat_password}</p>}
+                        {errors.repeat_password && <p className="text-red-400 mb-4">{errors.repeat_password}</p>}
                     </div>
                 </div>
                 <div className="booking__login__button w-full flex justify-end mt-2">

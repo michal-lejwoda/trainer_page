@@ -30,7 +30,6 @@ conf = ConnectionConfig(
 
 
 async def send_email_async(subject: str, email_to: str, body: dict):
-    body = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
     message = MessageSchema(
         subject=subject,
         recipients=[email_to],
