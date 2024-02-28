@@ -65,7 +65,7 @@ const BookingAuthorizationLogin = (props) => {
                         placeholder="Adres email"
                         className={errors.email ? "text-lg md:mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg md:mr-3 border-2 rounded-lg border-white"}
                     />
-                    {errors.email && <p>{errors.email}</p>}
+
                 </div>
                 <div className="w-full md:w-1/2 flex flex-col md:ml-3">
                     <label className="mb-4 text-lg mt-4 md:mt-0">Hasło</label>
@@ -82,9 +82,10 @@ const BookingAuthorizationLogin = (props) => {
                         // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                 </div>
-                {errors.password && <p>{errors.password}</p>}
-                {errorlogin && <p>{errorlogin}</p>}
             </div>
+            {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
+            {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
+            {errorlogin && <p className="text-red-400 mb-4">{errorlogin}</p>}
             <div className="booking__login__button w-full flex justify-end">
                 <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zaloguj się
                 </button>
