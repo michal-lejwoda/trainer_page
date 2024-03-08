@@ -1,8 +1,8 @@
 version: '3.3'
 
 volumes:
-  local_postgres_data: { }
-  local_postgres_data_backups: { }
+  production_postgres_data: { }
+  production_postgres_data_backups: { }
 
 services:
   production_trainer_nginx:
@@ -33,8 +33,8 @@ services:
     networks:
       - production_backend
     volumes:
-      - local_postgres_data:/var/lib/postgresql/data:Z
-      - local_postgres_data_backups:/backups:z
+      - production_postgres_data:/var/lib/postgresql/data:Z
+      - production_postgres_data_backups:/backups:z
     ports:
       - "5432:5432"
 
@@ -45,16 +45,12 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/trainer_backend/Dockerfile
-#    command: /start_trainer_backend
     volumes:
       - ".:/code"
-#    links:
-#      - "trainer_db:trainer_db"
     networks:
       - production_backend
     ports:
       - "8000:8000"
-      #HOST:CONTAINER
 
 networks:
   production_backend:

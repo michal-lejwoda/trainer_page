@@ -11,8 +11,6 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/nginx/Dockerfile
-#    env_file:
-#      - .env.local
     ports:
       - "80:80"
       - "443:443"
@@ -47,8 +45,6 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/trainer_frontend/Dockerfile
-    links:
-      - "trainer_db:trainer_db"
     depends_on:
       - trainer_db
     networks:
@@ -67,16 +63,12 @@ services:
       dockerfile: ./compose/local/trainer_backend/Dockerfile
     env_file:
       - .env.development
-#    command: /start_trainer_backend
     volumes:
       - ".:/code"
-    links:
-      - "trainer_db:trainer_db"
     networks:
       - backend
     ports:
       - "8000:8000"
-      #HOST:CONTAINER
 
 networks:
   backend:
