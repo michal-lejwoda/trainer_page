@@ -9,7 +9,7 @@ app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
-origins = ['https://trener-personalny-michal.pl']
+origins = 'https://trener-personalny-michal.pl'
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
