@@ -45,16 +45,12 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/trainer_backend/Dockerfile
-#    command: /start_trainer_backend
     volumes:
       - ".:/code"
-#    links:
-#      - "trainer_db:trainer_db"
     networks:
       - production_backend
     ports:
       - "8000:8000"
-      #HOST:CONTAINER
 
 networks:
   production_backend:

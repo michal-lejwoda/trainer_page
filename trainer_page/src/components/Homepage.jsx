@@ -13,7 +13,11 @@ function Homepage() {
         <div className="homepage">
             <div className="homepage__description">
                 <div className="max-h-[800px] items-center justify-center mb-5 ">
-                    <img className="max-h-[800px] inline-block object-cover w-full" src="/trainer_homepage2.jpg"
+                    <img loading="lazy"
+                         height="800"
+                         width="800"
+                         className="max-h-[800px] inline-block object-cover w-full"
+                         src="/trainer_homepage2.jpg"
                          alt=""/>
                 </div>
                 <div className="px-4">
@@ -45,14 +49,14 @@ function Homepage() {
                                     <span className="text-5xl text-lighter-grey my-5">PARĘ SŁÓW</span>
 
                                     <br/>
-                                    <span className="text-6xl mb-5">O MNIE</span>
+                                    <span className="text-6xl mb-5 text-white">O MNIE</span>
                                 </strong>
                             </div>
                             <div className="shape-1 absolute z-[-1] right-0 top-20">
-                                <img src="/shape-1.png" alt="shape_1"/>
+                                <img loading="lazy" src="/shape-1.png" alt="shape_1"/>
                             </div>
                             <div className="shape-2 absolute z-[-1] bottom-0 left-0">
-                                <img src="/shape-2.png" alt="shape_2"/>
+                                <img loading="lazy" src="/shape-2.png" alt="shape_2"/>
                             </div>
                             <p className="my-5">Hej! Mam na imię Michał, jestem trenerem personalnym z certyfikatem EFA.
                                 Jestem absolwentem wychowania fizycznego na kierunku
@@ -116,10 +120,10 @@ function Homepage() {
                                 src="/trainer_homepage3.jpg" alt=""/>
                         </div>
                         <div className="shape-1 absolute z-[-1] left-0 top-10">
-                            <img src="/shape-1.png" alt="shape_1"/>
+                            <img loading="lazy" src="/shape-1.png" alt="shape_1"/>
                         </div>
                         <div className="shape-2 absolute z-[-1] left-0 bottom-0">
-                            <img src="/shape-2.png" alt="shape_2"/>
+                            <img loading="lazy" src="/shape-2.png" alt="shape_2"/>
                         </div>
                     </div>
                     <div className="homepage__offer flex-col sm:flex-row  sm:flex sm:flex-wrap sm:justify-center">
@@ -127,7 +131,7 @@ function Homepage() {
                         <div data-aos="fade-right"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/icons-3-05_1_orig.png" alt=""/>
+                                <img loading="lazy" className="inline-block" src="/icons-3-05_1_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Odżywanie</div>
                             <p className="mt-3 text-center">Poznaj i zastosuj strategie żywieniowe, które odmienią Twoją
@@ -137,7 +141,7 @@ function Homepage() {
                         <div data-aos="fade-right"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/personheart_orig.png" alt=""/>
+                                <img loading="lazy" className="inline-block" src="/personheart_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Styl życia</div>
                             <p className="mt-3 text-center">Poznaj i wprowadź w życie ważne nawyki dotyczące stylu
@@ -148,7 +152,7 @@ function Homepage() {
                         <div data-aos="fade-left"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/imageedit-73-3552888680_orig.png" alt=""/>
+                                <img loading="lazy" className="inline-block" src="/imageedit-73-3552888680_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Mindset</div>
                             <p className="mt-3 text-center">Stosując zasady nastawienia do palącego pragnienia
@@ -159,7 +163,7 @@ function Homepage() {
                         <div data-aos="fade-left"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
-                                <img className="inline-block" src="/imageedit-5-5594810482_orig.png" alt=""/>
+                                <img loading="lazy" className="inline-block" src="/imageedit-5-5594810482_orig.png" alt=""/>
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">Ćwiczenia</div>
                             <p className="mt-3 text-center">Dopasowany, ustrukturyzowany, efektywny czasowo i
@@ -211,13 +215,13 @@ function Homepage() {
                             </strong>
                             <div
                                 className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center hidden xl:flex ">
-                                <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Wojciech.jpg"
+                                <img loading="lazy" className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Wojciech.jpg"
                                      alt=""/>
-                                <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Bartosz.jpg"
+                                <img loading="lazy" className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Bartosz.jpg"
                                      alt=""/>
-                                <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Ewa_gnaslogo.png"
+                                <img loading="lazy" className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Ewa_gnaslogo.png"
                                      alt=""/>
-                                <img className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Tomasz2.jpg"
+                                <img loading="lazy" className="rounded-2xl my-10 sm:w-2/5 lg:w-1/5 lg: mx-4" src="/Tomasz2.jpg"
                                      alt=""/>
                             </div>
                             <div className="flex flex-col items-center ">
