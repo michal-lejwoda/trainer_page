@@ -4,7 +4,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import {CookieConsent} from "react-cookie-consent";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
-import {ThreeDots, Triangle} from 'react-loader-spinner';
+import {Triangle} from 'react-loader-spinner';
 
 
 import './index.css'
