@@ -32,7 +32,7 @@ function Transformations() {
                         return (
                             <div key={key} data-aos={el.fade}
                                  className="my-10 sm:w-2/5 xl:w-1/5 lg: mx-4 bg-container-grey min-w-96">
-                                <img className="rounded-2xl h-96 min-w-96 w-full"
+                                <img loading="lazy" className="rounded-2xl h-96 min-w-96 w-full"
                                      src={el.image} alt=""/>
                                 <div className="transformation__image__description p-4">
                                     <p className="flex justify-center my-3 font-semibold text-center">{el.name}</p>

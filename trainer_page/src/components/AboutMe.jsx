@@ -1,6 +1,6 @@
 import {trainer_gallery_store} from "./trainer_gallery_store.jsx";
 
-function AboutMe() {
+const AboutMe = () => {
     return (
         <div className="px-4">
             <div className="about_me--title text-center my-8">
@@ -103,7 +103,7 @@ function AboutMe() {
             <div className="about_me__gallery__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
                 {trainer_gallery_store.map((image, key)=>{
                     return (
-                        <img key={key} className="rounded-2xl h-96 my-10 sm:w-2/4 xl:w-1/4 lg: mx-4" src={image} alt=""/>
+                        <img loading="lazy" key={key} className="rounded-2xl h-96 my-10 sm:w-2/4 xl:w-1/4 lg: mx-4" src={image} alt=""/>
                     )
                 })}
             </div>
