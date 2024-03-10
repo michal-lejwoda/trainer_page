@@ -45,23 +45,25 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         />
                     </div>}>
                     <BrowserRouter>
-                        <Navbar/>
-                        <ScrollToTop/>
-                        <Routes>
-                            <Route path="/" element={<Homepage/>}/>
-                            <Route path="login" element={<LoginForm/>}/>
-                            <Route path="register" element={<RegisterForm/>}/>
-                            <Route path="contact" element={<Contact/>}/>
-                            <Route path="reservation" element={<Booking/>}/>
-                            <Route path="about-me" element={<AboutMe/>}/>
-                            <Route path="transformations" element={<Transformations/>}/>
-                            <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
-                            <Route path="cookies-policy" element={<CookiesPolicy/>}/>
-                            <Route path="private-policy" element={<PrivatePolicy/>}/>
-                            <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
-                            <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
-                        </Routes>
-                        <Footer/>
+                        <div className="min-h-screen">
+                            <Navbar/>
+                            <ScrollToTop/>
+                            <Routes>
+                                <Route path="/" element={<Homepage/>}/>
+                                <Route path="login" element={<LoginForm/>}/>
+                                <Route path="register" element={<RegisterForm/>}/>
+                                <Route path="contact" element={<Contact/>}/>
+                                <Route path="reservation" element={<Booking/>}/>
+                                <Route path="about-me" element={<AboutMe/>}/>
+                                <Route path="transformations" element={<Transformations/>}/>
+                                <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
+                                <Route path="cookies-policy" element={<CookiesPolicy/>}/>
+                                <Route path="private-policy" element={<PrivatePolicy/>}/>
+                                <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
+                                <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
+                            </Routes>
+                            <Footer/>
+                        </div>
                         <CookieConsent
                             location="bottom"
                             buttonText="Akceptuję"

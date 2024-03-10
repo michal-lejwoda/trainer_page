@@ -121,7 +121,7 @@ function SystemReservation(props) {
 
     return (
         <>
-            <div className="px-4 text-white min-h-screen">
+            <div className="px-4 text-white">
                 <div className="reservation--title my-5 text-center">
                     <h1 className="text-white">Rezerwacja treningu</h1>
                 </div>
