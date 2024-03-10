@@ -10,7 +10,7 @@ function Homepage() {
         Aos.init({duration: 2000})
     }, []);
     return (
-        <div className="homepage">
+        <div className="homepage overflow-x-hidden">
             <div className="homepage__description">
                 <div className="max-h-[800px] items-center justify-center mb-5 ">
                     <img loading="lazy"

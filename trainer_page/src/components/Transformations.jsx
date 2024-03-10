@@ -9,7 +9,7 @@ function Transformations() {
     }, []);
     return (
         <>
-            <div className="transformations px-4 text-white">
+            <div className="transformations px-4 text-white overflow-x-hidden">
                 <div className="transformations--title my-8 text-center">
                     <strong>
                         <span className="text-4xl text-center text-lighter-grey my-5">TRANSFORMACJE</span>
