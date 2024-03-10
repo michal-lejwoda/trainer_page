@@ -121,13 +121,13 @@ function SystemReservation(props) {
 
     return (
         <>
-            <div className="px-4 test">
+            <div className="px-4 text-white">
                 <div className="reservation--title my-5 text-center">
-                    <h1>Rezerwacja treningu</h1>
+                    <h1 className="text-white">Rezerwacja treningu</h1>
                 </div>
                 <div className="reservation__container mx-5">
                     <label htmlFor="trainers"
-                           className="block mb-4 text-xl font-semibold text-gray-900 dark:text-white">Wybierz
+                           className="block mb-4 text-xl font-semibold text-gray-900 dark:text-white text-white">Wybierz
                         Trenera</label>
                     {trainersData &&
                         <div>
@@ -145,7 +145,7 @@ function SystemReservation(props) {
                         </div>
                     }
                     <label htmlFor="trainers"
-                           className="block my-4 text-xl font-semibold text-gray-900 dark:text-white">Wybierz
+                           className="block my-4 text-xl font-semibold text-gray-900 dark:text-white text-white">Wybierz
                         Plan</label>
                     {trainerPlanData &&
                         <Select
@@ -168,13 +168,13 @@ function SystemReservation(props) {
                               maxDetail="month"
                     />
                     <div className="mt-5 mb-5 text-lg font-semibold">
-                        <h2 className="text-center">Dostępne Terminy:</h2>
+                        <h2 className="text-center text-white">Dostępne Terminy:</h2>
                     </div>
                     <div className="term__container w-full text-center">
                         {dayWorkHoursData && dayWorkHoursData.map(element => {
                             return (
                                 <button key={element.id} onClick={(e) => selectHour(e, element)}
-                                        className="bg-transparent hover:bg-blue-300 text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg">
+                                        className="bg-transparent hover:bg-blue-300 text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg text-white">
                                     {element.start_time} - {element.end_time}
                                 </button>)
                         })}

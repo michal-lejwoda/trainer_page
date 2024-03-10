@@ -56,7 +56,7 @@ function Contact() {
 
     const position = [50.019581842782905, 22.01792718408926]
     return (
-        <div className="contact">
+        <div className="contact text-white">
             <div className="md:flex md:flex-row justify-stretch">
                 <div className="contact--image  items-stretch md:basis-2/5">
                     <img

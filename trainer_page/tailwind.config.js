@@ -17,6 +17,7 @@ export default {
         'background-black-color': '#242424',
         'container-grey': 'rgba(44,44,44,1)',
         'purple-text': '#646cff',
+        'button-grey': '#1a1a1a',
       },
     },
   },

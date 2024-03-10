@@ -7,10 +7,10 @@ const AboutMe = () => {
                 <strong>
                     <span className="text-5xl text-lighter-grey my-5">PARĘ SŁÓW</span>
                     <br/>
-                    <span className="text-6xl mb-5">O MNIE</span>
+                    <span className="text-6xl mb-5 text-white">O MNIE</span>
                 </strong>
             </div>
-            <div className="text-center">
+            <div className="text-center text-white">
                 <p className="mb-4 text-lg ">
                     Cześć, jestem Michał, ze sportem mam kontakt od najmłodszych lat, w moim życiu zawsze była duża, a
                     nawet
@@ -57,10 +57,10 @@ const AboutMe = () => {
                 <strong>
                     <span className="text-5xl text-lighter-grey my-5">KURSY</span>
                     <br/>
-                    <span className="text-6xl mb-5">SZKOLENIA</span>
+                    <span className="text-6xl mb-5 text-white">SZKOLENIA</span>
                 </strong>
             </div>
-            <ul className="text-center">
+            <ul className="text-center text-white">
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
                     Kurs na Trenara Personalnego w Centum Szkoleniowym Strefa Sportu u Radka Słodkiewicza 2016
                 </li>
@@ -97,7 +97,7 @@ const AboutMe = () => {
                 <strong>
                     <span className="text-5xl text-lighter-grey my-5">GALERIA</span>
                     <br/>
-                    <span className="text-6xl mb-5">ZDJĘĆ</span>
+                    <span className="text-6xl mb-5 text-white">ZDJĘĆ</span>
                 </strong>
             </div>
             <div className="about_me__gallery__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
