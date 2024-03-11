@@ -52,7 +52,7 @@ const LoginForm = () => {
 
     });
     return (
-        <div className="booking__login bg-container-grey p-10 rounded-2xl">
+        <div className="booking__login bg-container-grey p-10 rounded-2xl text-white">
             <p className="text-4xl mb-4">Logowanie</p>
             <div>
                 <form onSubmit={handleSubmit} className="w-full mt-5 ">
@@ -67,7 +67,7 @@ const LoginForm = () => {
                                 type="email"
                                 required
                                 placeholder="Adres email"
-                                className={errors.email ? "text-lg md:mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg md:mr-3 border-2 rounded-lg border-white"}
+                                className={errors.email ? "bg-background-black-color text-lg md:mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color py-2 px-3 rounded-lg text-lg md:mr-3 border-2 rounded-lg border-white"}
                             />
                         </div>
                         <div className="w-full md:w-1/2 flex flex-col md:ml-3">
@@ -81,7 +81,7 @@ const LoginForm = () => {
                                 autoComplete="current-password"
                                 required
                                 placeholder="Hasło"
-                                className={errors.password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
+                                className={errors.password ? "bg-background-black-color text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
                             />
                         </div>
                     </div>
@@ -91,7 +91,7 @@ const LoginForm = () => {
                     <div className="booking__login__button w-full flex flex-col items-end">
                         <a className="mb-4 cursor-pointer mr-4" href="/password_reminder">Przypomnij hasło</a>
                         <a className="mb-4 cursor-pointer mr-4" href="/register">Jeśli nie posiadasz konta. Zarejestruj się</a>
-                        <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zaloguj się
+                        <button className="border-solid border-1 rounded-lg border-white mr-4 text-white" type="submit">Zaloguj się
                         </button>
                     </div>
                 </form>

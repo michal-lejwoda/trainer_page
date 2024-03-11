@@ -54,7 +54,7 @@ const BookingConfirmation = (props) => {
 
 
     return (
-        <div className="flex items-center flex-col">
+        <div className="flex items-center flex-col text-white">
             <h1 className="py-4 ">Potwierdzenie zamówienia</h1>
             <div className="sm:flex sm:items-start mb-5">
                 <div className="my-3 text-center sm:ml-4 sm:mt-0 sm:text-left text-4xl">
@@ -91,7 +91,7 @@ const BookingConfirmation = (props) => {
                             />
                             {captchaError && <p className="mt-3 text-red-800">Uzupełnij Captche</p>}
                         </div>
-                        <button className="text-2xl" onClick={handleReservation}>Potwierdź rezerwację</button>
+                        <button className="text-2xl bg-button-grey" onClick={handleReservation}>Potwierdź rezerwację</button>
                     </div>
                 </div>
             </div>

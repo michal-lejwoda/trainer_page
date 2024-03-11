@@ -35,7 +35,7 @@ const ResetPasswordBasedonEmail = () => {
     }
 
     return (
-        <div className="booking__login bg-container-grey p-10 rounded-2xl">
+        <div className="booking__login bg-container-grey p-10 rounded-2xl text-white">
             <div className="w-full md:w-1/2 ">
                 <p className="text-4xl mb-4">Przypomnienie hasła</p>
                 <div>
@@ -51,7 +51,7 @@ const ResetPasswordBasedonEmail = () => {
                                     type="email"
                                     required
                                     placeholder="Adres email"
-                                    className={errors.email ? "text-lg mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg mr-3 border-2 rounded-lg border-white"}
+                                    className={errors.email ? "bg-background-black-color text-lg mr-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color py-2 px-3 rounded-lg text-lg mr-3 border-2 rounded-lg border-white"}
                                 />
                                 {errors.email && <p>{errors.email}</p>}
                                 <p className="mt-4">{resetmessage}</p>
