@@ -89,7 +89,7 @@ function Contact() {
                                                 autoComplete="given-name"
                                                 value={values.name}
                                                 onChange={handleChange}
-                                                className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
+                                                className="bg-background-black-color block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
                                             {errors.name && <p className="mt-3 text-red-800">{errors.name}</p>}
                                         </div>
@@ -110,7 +110,7 @@ function Contact() {
                                                 autoComplete="email"
                                                 value={values.email}
                                                 onChange={handleChange}
-                                                className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
+                                                className="bg-background-black-color block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                             />
                                             {errors.email && <p className="mt-3 text-red-800">{errors.email}</p>}
                                         </div>
@@ -128,7 +128,7 @@ function Contact() {
                                         placeholder="Treść Wiadomości*"
                                         value={values.message}
                                         onChange={handleChange}
-                                        className="block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
+                                        className="bg-background-black-color block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
                                     />
                                             {errors.message && <p className="mt-3 text-red-800">{errors.message}</p>}
                                         </div>

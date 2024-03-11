@@ -4,7 +4,7 @@ import BookingAuthorizationLogin from "./BookingAuthorizationLogin.jsx";
 
 const BookingAuthorization = props => {
     return (
-        <div className="booking w-full flex justify-center flex-col items-center">
+        <div className="booking w-full flex justify-center flex-col items-center text-white">
             <div className="booking__container w-11/12 md:w-7/12 py-10 ">
                 <div className="booking__login bg-container-grey p-10 mb-10 rounded-2xl">
                     <p className="text-4xl mb-4">Zarezerwuj wizytę</p>

@@ -55,7 +55,7 @@ const BookingAuthorizationRegister = (props) => {
 
     });
     return (
-        <div className="booking__register__inputs ">
+        <div className="booking__register__inputs text-white">
             <form className="flex flex-wrap " onSubmit={handleSubmit}>
                 <div className="w-full flex flex-col md:flex-row justify-between">
                     <div className="w-full md:w-1/2 flex flex-col">
@@ -68,7 +68,7 @@ const BookingAuthorizationRegister = (props) => {
                             type="text"
                             required
                             placeholder="Imię"
-                            className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
+                            className="bg-background-black-color text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                         />
                         {errors.name && <p className="text-red-400 mb-4">{errors.name}</p>}
                     </div>
@@ -82,8 +82,7 @@ const BookingAuthorizationRegister = (props) => {
                             type="text"
                             required
                             placeholder="Nazwisko"
-                            className="text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
-                            // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                         />
                         {errors.last_name && <p className="text-red-400 mb-4">{errors.last_name}</p>}
                     </div>
@@ -99,7 +98,7 @@ const BookingAuthorizationRegister = (props) => {
                             type="email"
                             required
 
-                            className={errors.email ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.email ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Adres E-mail"
                         />
                         {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
@@ -115,7 +114,7 @@ const BookingAuthorizationRegister = (props) => {
                             type="text"
                             required
                             placeholder="Numer telefonu"
-                            className={errors.phone_number ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.phone_number ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                         />
                         {errors.phone_number && <p className="text-red-400 mb-4">{errors.phone_number}</p>}
                     </div>
@@ -131,9 +130,8 @@ const BookingAuthorizationRegister = (props) => {
                             type="password"
                             autoComplete="current-password"
                             required
-                            className={errors.password ? "input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.password ? "bg-background-black-color input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Hasło"
-                            // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                         {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
                     </div>
@@ -147,9 +145,8 @@ const BookingAuthorizationRegister = (props) => {
                             type="password"
                             autoComplete="repeat_current-password"
                             required
-                            className={errors.repeat_password ? "input-error text-lg py-2 px-3 md:ml-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:ml-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                            className={errors.repeat_password ? "bg-background-black-color input-error text-lg py-2 px-3 md:ml-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:ml-3 rounded-lg input-error border-2 rounded-lg border-white"}
                             placeholder="Powtórz hasło"
-                            // className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                         {errors.repeat_password && <p className="text-red-400 mb-4">{errors.repeat_password}</p>}
                     </div>

@@ -53,7 +53,7 @@ const RegisterForm = () => {
             handleRegister(values)
         },
     });
-    return (<div className="booking__login bg-container-grey p-10 rounded-2xl">
+    return (<div className="booking__login bg-container-grey p-10 rounded-2xl text-white">
             <p className="text-4xl mb-4">Rejestracja</p>
             <div className="booking__register__inputs ">
                 <form className="flex flex-wrap " onSubmit={handleSubmit}>
@@ -68,7 +68,7 @@ const RegisterForm = () => {
                                 type="text"
                                 required
                                 placeholder="Imię"
-                                className=" text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
+                                className="bg-background-black-color text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
                             {errors.name && <p className="text-red-400 mb-4">{errors.name}</p>}
                         </div>
@@ -82,7 +82,7 @@ const RegisterForm = () => {
                                 type="text"
                                 required
                                 placeholder="Nazwisko"
-                                className="text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
+                                className="bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
                             {errors.last_name && <p className="text-red-400 mb-4">{errors.last_name}</p>}
                         </div>
@@ -98,7 +98,7 @@ const RegisterForm = () => {
                                 type="email"
                                 required
 
-                                className={errors.email ? "input-error text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.email ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Adres E-mail"
                             />
                             {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
@@ -114,7 +114,7 @@ const RegisterForm = () => {
                                 type="text"
                                 required
                                 placeholder="Numer telefonu"
-                                className={errors.phone_number ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.phone_number ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                             />
                             {errors.phone_number && <p className="text-red-400 mb-4">{errors.phone_number}</p>}
                         </div>
@@ -130,7 +130,7 @@ const RegisterForm = () => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                className={errors.password ? "input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.password ? "bg-background-black-color input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Hasło"
                             />
                             {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
@@ -145,7 +145,7 @@ const RegisterForm = () => {
                                 type="password"
                                 autoComplete="repeat_current-password"
                                 required
-                                className={errors.repeat_password ? "input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
+                                className={errors.repeat_password ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                                 placeholder="Powtórz hasło"
                             />
                             {errors.repeat_password && <p className="text-red-400 mb-4">{errors.repeat_password}</p>}

@@ -1,6 +1,6 @@
 function TermsAndConditions() {
     return (
-        <div className="px-4">
+        <div className="px-4 text-white">
             <strong className="mb-5">
             <p className="text-4xl text-center text-lighter-grey my-2">Regulamin</p>
 

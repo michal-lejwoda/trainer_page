@@ -178,21 +178,53 @@ export default function Navbar() {
                     </div>
 
                     <Disclosure.Panel className="sm:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2">
-                            {navigation.map((item) => (
-                                <NavLink
-                                    key={item.name}
-                                    to={item.href}
-                                    className={({isActive}) => classNames(
-                                        isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    {item.name}
-                                </NavLink>
-                            ))}
-                        </div>
+                        {({close}) => (
+                            <div className="space-y-1 px-2 pb-3 pt-2">
+                                {navigation.map((item) => (
+                                    <NavLink
+                                        key={item.name}
+                                        to={item.href}
+                                        onClick={() => {
+                                            close();
+                                        }}
+                                        className={({isActive}) => classNames(
+                                            isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            'block rounded-md px-3 py-2 text-base font-medium'
+                                        )}
+                                        aria-current={item.current ? 'page' : undefined}
+                                    >
+                                        {item.name}
+                                    </NavLink>
+
+                                ))}
+                                {authUser &&
+                                    <NavLink
+                                        className="text-gray-300 cursor-default hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium"
+                                    >
+                                        Witaj {authUser.name}
+                                    </NavLink>
+                                }
+                                {authUser ?
+                                    <NavLink
+                                        onClick={handleLogout}
+                                        className={({isActive}) => classNames(
+                                            isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            'block rounded-md px-3 py-2 text-base font-medium'
+                                        )}
+                                    >
+                                        Wyloguj się
+                                    </NavLink> :
+                                    <NavLink
+                                        to="/login"
+                                        className={({isActive}) => classNames(
+                                            isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            'block rounded-md px-3 py-2 text-base font-medium'
+                                        )}
+                                    >
+                                        Zaloguj się
+                                    </NavLink>}
+                            </div>
+                        )}
                     </Disclosure.Panel>
                     <hr/>
                 </>
