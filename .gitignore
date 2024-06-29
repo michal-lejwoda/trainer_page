@@ -26,6 +26,7 @@ archive.zip
 .env.production
 .env.local
 .env_local
+.production/.postgres
 # vim temporary files
 *~
 .*.sw?
