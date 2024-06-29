@@ -25,7 +25,7 @@ archive.zip
 .env.development
 .env.production
 .env.local
-
+.env_local
 # vim temporary files
 *~
 .*.sw?
