@@ -1,0 +1,7 @@
+POSTGRES_URL=postgresql://postgres:example@trainer_db:5432/postgres
+POSTGRES_PORT=5432
+POSTGRES_HOST=trainer_db
+PGPORT=5432
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=example
