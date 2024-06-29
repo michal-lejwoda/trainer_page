@@ -1,6 +1,4 @@
-volumes:
-  local_postgres_data: { }
-  local_postgres_data_backups: { }
+version: '3.8'
 
 services:
   production_trainer_nginx:
@@ -28,8 +26,6 @@ services:
       dockerfile: ./compose/production/postgres/Dockerfile
     container_name: production_trainer_db
     restart: always
-    #environment:
-    #  POSTGRES_PASSWORD: example
     networks:
       - production_backend
     env_file:
@@ -55,3 +51,7 @@ services:
 
 networks:
   production_backend:
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
