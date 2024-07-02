@@ -1,0 +1,53 @@
+services:
+  production_trainer_nginx:
+    image: nginx
+    container_name: production_trainer_nginx
+    build:
+      context: .
+      dockerfile: ./compose/production/nginx/Dockerfile
+    restart: always
+    volumes:
+      - "./trainer_page/dist:/dist"
+      - "./trainer_page/public:/public"
+    depends_on:
+      - production_trainer_backend
+      - production_trainer_db
+    networks:
+      - production_backend
+      - connector
+
+  production_trainer_db:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    container_name: production_trainer_db
+    restart: always
+    networks:
+      - production_backend
+    env_file:
+      - .envs/.production/.postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+      - ./prod_backups:/prod_backups
+
+  production_trainer_backend:
+    container_name: production_trainer_backend
+    env_file:
+      - .env.production
+    build:
+      context: .
+      dockerfile: ./compose/production/trainer_backend/Dockerfile
+    volumes:
+      - ".:/code"
+    networks:
+      - production_backend
+
+networks:
+  production_backend:
+  connector:
+    external: true
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
