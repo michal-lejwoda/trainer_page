@@ -1,20 +1,20 @@
 services:
-  production_trainer_nginx:
-    image: nginx
-    container_name: production_trainer_nginx
-    build:
-      context: .
-      dockerfile: ./compose/production/nginx/Dockerfile
-    restart: always
-    volumes:
-      - "./trainer_page/dist:/dist"
-      - "./trainer_page/public:/public"
-    depends_on:
-      - production_trainer_backend
-      - production_trainer_db
-    networks:
-      - production_backend
-      - connector
+#  production_trainer_nginx:
+#    image: nginx
+#    container_name: production_trainer_nginx
+#    build:
+#      context: .
+#      dockerfile: ./compose/production/nginx/Dockerfile
+#    restart: always
+#    volumes:
+#      - "./trainer_page/dist:/dist"
+#      - "./trainer_page/public:/public"
+#    depends_on:
+#      - production_trainer_backend
+#      - production_trainer_db
+#    networks:
+#      - production_backend
+#      - connector
 
   production_trainer_db:
     build:
