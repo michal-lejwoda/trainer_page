@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   production_trainer_nginx:
     image: nginx
@@ -8,12 +6,12 @@ services:
       context: .
       dockerfile: ./compose/production/nginx/Dockerfile
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     restart: always
     volumes:
-      - "./trainer_page/dist:/dist"
-      - "./trainer_page/public:/public"
+      - ./trainer_page/dist:/dist
+      - ./trainer_page/public:/public
     depends_on:
       - production_trainer_backend
       - production_trainer_db
@@ -43,11 +41,11 @@ services:
       context: .
       dockerfile: ./compose/production/trainer_backend/Dockerfile
     volumes:
-      - ".:/code"
+      - .:/code
     networks:
       - production_backend
     ports:
-      - "8000:8000"
+      - 8000:8000
 
 networks:
   production_backend:

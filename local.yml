@@ -10,11 +10,11 @@ services:
       context: .
       dockerfile: ./compose/local/nginx/Dockerfile
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     restart: always
     volumes:
-      - "/app/backend/local-backend-static:/app/backend/local-backend-static"
+      - /app/backend/local-backend-static:/app/backend/local-backend-static
     depends_on:
       - trainer_backend
       - trainer_frontend
@@ -49,9 +49,9 @@ services:
     networks:
       - backend
     volumes:
-      - "./trainer_page:/usr/src/frontend"
+      - ./trainer_page:/usr/src/frontend
     ports:
-      - "3000:3000"
+      - 3000:3000
     environment:
       - CHOKIDAR_USEPOLLING=true
 
@@ -63,11 +63,11 @@ services:
     env_file:
       - .env.development
     volumes:
-      - ".:/code"
+      - .:/code
     networks:
       - backend
     ports:
-      - "8000:8000"
+      - 8000:8000
 
 networks:
   backend:
