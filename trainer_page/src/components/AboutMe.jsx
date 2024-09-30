@@ -1,13 +1,15 @@
 import {trainer_gallery_store} from "./trainer_gallery_store.jsx";
+import {useTranslation} from "react-i18next";
 
 const AboutMe = () => {
+    const {t} = useTranslation()
     return (
         <div className="px-4">
             <div className="about_me--title text-center my-8">
                 <strong>
-                    <span className="text-5xl text-lighter-grey my-5">PARĘ SŁÓW</span>
+                    <span className="text-5xl text-lighter-grey my-5">{t("PARĘ SŁÓW")}</span>
                     <br/>
-                    <span className="text-6xl mb-5 text-white">O MNIE</span>
+                    <span className="text-6xl mb-5 text-white">{t("O MNIE")}</span>
                 </strong>
             </div>
             <div className="text-center text-white">

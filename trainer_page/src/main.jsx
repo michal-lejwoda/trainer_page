@@ -5,7 +5,7 @@ import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import {CookieConsent} from "react-cookie-consent";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
 import {Triangle} from 'react-loader-spinner';
-
+import "./i18n.jsx"
 
 import './index.css'
 
