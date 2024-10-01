@@ -180,8 +180,6 @@
   "Field training name is required": "Nazwa treningu jest wymagana",
   "Field date is invalid": "Data jest nieprawidłowa",
   "Field date can't be empty": "Data nie może być pusta",
-
-
   "About me": "O mnie",
   "Reservation": "Rezerwacje",
   "Transformations": "Transformacje",
@@ -216,6 +214,30 @@
   "Email address": "Adres email",
   "Message content": "Treść wiadomosci",
   "Send message": "Wyślij wiadomość",
+  "Cookies": "Polityka",
+  "Policies": "Cookies",
   "I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.": "Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną.",
-  "Complete the Captcha" : "Uzupełnij Captche"
+  "Complete the Captcha": "Uzupełnij Captche",
+  "And the Administrator, in accordance with the provisions of Article 173 and 174 of the Act of July 16, 2004, Telecommunications Law (consolidated text Journal of Laws of 2014, item 243), uses 'cookies' files, which are used to collect information about Users' use of the Administrator's website at the address trenerpersonalnymichal.pl (hereinafter referred to as the 'Service').": "Administrator, zgodnie z przepisami art. 173 oraz 174 ustawy z dnia 16 lipca 2004 roku Prawo telekomunikacyjne (tekst jednolity Dz. U. z 2014 r. poz. 243), wykorzystuje pliki typu „cookies”, które służą do zbierania informacji dotyczących korzystania przez Użytkowników ze strony internetowej Administratora pod adresem trenerpersonalnymichal.pl (dalej „Serwis”).",
+  "The Service uses Cookies. Cookies are text files stored on the User's end device and are used to browse the Service pages.": "W Serwisie wykorzystywane są pliki typu Cookies. Pliki Cookies są plikami o charakterze tekstowym, przechowywanymi w urządzeniu końcowym Użytkownika i służą do korzystania ze stron Serwisu.",
+  "The purpose of using Cookies by the Service is:": "Celem wykorzystywania plików Cookies przez Serwis jest:",
+  "a) adapting the content of the website to the individual needs and preferences of the User;": "a) przystosowanie zawartości strony do indywidualnych potrzeb i preferencji Użytkownika;",
+  "b) maintaining the User's session.": "b) utrzymanie sesji Użytkownika.",
+  "During visits to the Service, the Service's system sends at least one Cookie file to the User's computer to uniquely identify the browser.": "Podczas odwiedzin Serwisu, system Serwisu wysyła do komputera Użytkownika co najmniej jeden plik Cookies w celu jednoznacznego zidentyfikowania przeglądarki.",
+  "The information sent by the User's browser is automatically recorded on the Server.": "Informacje przesyłane przez przeglądarkę Użytkownika są automatycznie rejestrowane na Serwerze.",
+  "Each User has the option to block the reception of Cookies, allowing them to remain anonymous, however, in such a case, the Service will not be able to identify the User or their preferences.": "Każdy Użytkownik ma możliwość zablokowania odbierania plików Cookies, dzięki czemu może pozostać anonimowy, jednakże wówczas Serwis nie będzie mógł zidentyfikować Użytkownika ani jego preferencji.",
+  "Limiting the transmission of Cookies may, therefore, affect some functionalities of the Service.": "Ograniczenie przesyłania plików Cookies może tym samym wpłynąć na niektóre funkcjonalności Serwisu.",
+  "To block the reception of Cookies or receive information about each time they are placed on the User's end device, appropriate settings in the web browser should be modified.": "Aby zablokować możliwość odbierania plików Cookies lub otrzymywać informacje o ich każdorazowym umieszczeniu w urządzeniu końcowym Użytkownika, należy zmodyfikować odpowiednie ustawienia przeglądarki internetowej.",
+  "Cookies are available to the Administrator.": "Pliki Cookies są dostępne dla Administratora.",
+  "Cookies placed on the end device may also be used by the provider of the Google Analytics and Google AdWords services, in accordance with its privacy policy.": "Pliki Cookies zamieszczane w urządzeniu końcowym mogą być wykorzystane również przez dostawcę usługi Google Analytics i Google AdWords, zgodnie z jego polityką prywatności.",
+  "Cookies and the information stored in them or the ability to access them do not cause configuration changes in the device and software installed on that device.": "Pliki Cookies i przechowywana w nich informacja lub uzyskiwanie do niej dostępu nie powodują zmian konfiguracyjnych w urządzeniu i oprogramowaniu zainstalowanym w tym urządzeniu.",
+  "If the User does not change the default settings of the web browser regarding Cookies, they will be placed on their end device and used in accordance with the rules specified by the web browser provider.": "Jeżeli Użytkownik nie dokona zmiany ustawień domyślnych przeglądarki internetowej dotyczących plików Cookies, to zostaną one umieszczone w jego urządzeniu końcowym i będą wykorzystywane zgodnie z zasadami wskazanymi przez dostawcę przeglądarki internetowej.",
+  "And this, Cookies may be stored on the User's end device, and the Administrator may access the information contained in these files.": "Tym samym pliki Cookies mogą być przechowywane w urządzeniu końcowym Użytkownika, a Administrator może uzyskiwać dostęp do informacji zawartych w tych plikach.",
+  "And information on managing Cookies in individual browsers can be found on the pages dedicated to each browser:": "Informacje na temat zarządzania plikami Cookies w poszczególnych przeglądarkach można znaleźć na stronach dedykowanych poszczególnym przeglądarkom:",
+  "https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer": "http://support.mozilla.org/pl/kb/ciasteczka",
+  "https://support.microsoft.com/en-gb/topic/description-of-cookies-ad01aa7e-66c9-8ab2-7898-6652c100999d": "https://support.microsoft.com/pl-pl/topic/jak-usun%C4%85%C4%87-pliki-cookie-w-programie-internet-explorer-bca9446f-d873-78de-77ba-d42645fa52fc",
+  "https://support.google.com/chrome/answer/95647?hl=en": "https://support.google.com/chrome/answer/95647?hl=pl",
+  "https://help.opera.com/en/latest/web-preferences/#cookies": "http://help.opera.com/Linux/12.10/pl/cookies.html",
+  "https://support.apple.com/en-gb/105082": "https://support.apple.com/pl-pl/105082"
+
 }
