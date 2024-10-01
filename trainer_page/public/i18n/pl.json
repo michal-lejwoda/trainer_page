@@ -209,5 +209,13 @@
   "COURSES": "KURSY",
   "TRAINING SESSIONS": "SZKOLENIA",
   "A FEW WORDS": "KILKA SŁÓW",
-  "ABOUT ME": "O MNIE"
+  "ABOUT ME": "O MNIE",
+  "Training sessions are conducted at the gym:": "Treningi prowadzone są na siłowni:",
+  "Account number": "Numer konta",
+  "Name": "Imię",
+  "Email address": "Adres email",
+  "Message content": "Treść wiadomosci",
+  "Send message": "Wyślij wiadomość",
+  "I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.": "Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną.",
+  "Complete the Captcha" : "Uzupełnij Captche"
 }

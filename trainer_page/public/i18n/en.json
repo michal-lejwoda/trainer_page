@@ -209,5 +209,14 @@
   "COURSES": "COURSES",
   "TRAINING SESSIONS": "TRAINING SESSIONS",
   "A FEW WORDS": "A FEW WORDS",
-  "ABOUT ME": "ABOUT ME"
+  "ABOUT ME": "ABOUT ME",
+  "Training sessions are conducted at the gym:": "Training sessions are conducted at the gym:",
+  "Account number": "Account number",
+  "Name": "Name",
+  "Email address": "Email address",
+  "Message content": "Message content",
+  "Send message": "Send message",
+  "I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.": "I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.",
+  "Complete the Captcha" : "Complete the Captcha",
+  "The message has been sent": "The message has been sent"
 }

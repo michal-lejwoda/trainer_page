@@ -8,6 +8,7 @@ import React, {useState} from "react";
 import {postMessageFromUser} from "./auth/api.jsx";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import {useTranslation} from "react-i18next";
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -18,6 +19,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 
 function Contact() {
+    const {t} = useTranslation()
     const recaptchaRef = React.createRef();
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
     const [resetmessage, setResetMessage] = useState('')
@@ -51,7 +53,7 @@ function Contact() {
         form.append("email", values.email)
         form.append('message', values.message)
         await postMessageFromUser(form)
-        setResetMessage('Wiadomość została wysłana')
+        setResetMessage(t("The message has been sent"))
     }
 
     const position = [50.019581842782905, 22.01792718408926]
@@ -65,9 +67,9 @@ function Contact() {
                 </div>
                 <div className="md:basis-3/5  ">
                     <div className="contact--description px-2 flex flex-col items-center">
-                        <p className="text-xl my-5">Treningi prowadzone są na siłowni:</p>
+                        <p className="text-xl my-5">{t("Training sessions are conducted at the gym:")}</p>
                         <p className="text-xl mb-6 font-bold">Cityfit Rzeszów</p>
-                        <p className="text-xl my-5">Numer konta</p>
+                        <p className="text-xl my-5">{t("Account number")}</p>
                         <p className="text-xl mb-10 font-bold">5468 8468 4864 8946 6468 7555</p>
                     </div>
                     <hr/>
@@ -78,14 +80,14 @@ function Contact() {
                                     <div className="md:col-span-4 ">
                                         <label htmlFor="first-name"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
-                                            Imię
+                                            {t("Name")}
                                         </label>
                                         <div className="my-3">
                                             <input
                                                 type="text"
                                                 name="name"
                                                 required
-                                                placeholder="Imię*"
+                                                placeholder={`${t("Name")} *`}
                                                 autoComplete="given-name"
                                                 value={values.name}
                                                 onChange={handleChange}
@@ -98,7 +100,7 @@ function Contact() {
                                     <div className="md:col-span-4">
                                         <label htmlFor="email"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
-                                            Adres Email
+                                            {t("Email address")}
                                         </label>
                                         <div className="my-3">
                                             <input
@@ -106,7 +108,7 @@ function Contact() {
                                                 name="email"
                                                 type="email"
                                                 required
-                                                placeholder="Adres Email*"
+                                                placeholder={`${t("Email address")} *`}
                                                 autoComplete="email"
                                                 value={values.email}
                                                 onChange={handleChange}
@@ -118,14 +120,14 @@ function Contact() {
                                     <div className="md:col-span-4 ">
                                         <label htmlFor="email"
                                                className="block text-lg font-medium leading-6 text-white font-semibold mb-3">
-                                            Treść Wiadomości
+                                            {t("Message content")}
                                         </label>
                                         <div className="my-3">
                                     <textarea
                                         name="message"
                                         rows="8"
                                         required
-                                        placeholder="Treść Wiadomości*"
+                                        placeholder={`${t("Message content")} *`}
                                         value={values.message}
                                         onChange={handleChange}
                                         className="bg-background-black-color block w-full rounded-md border-0 py-1.5 px-3 text-white shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white md:text-md md:leading-6"
@@ -139,16 +141,16 @@ function Contact() {
                                             ref={recaptchaRef}
                                             sitekey={CAPTCHA_SITE_KEY}
                                         />
-                                        {captchaError && <p className="mt-3 text-red-800">Uzupełnij Captche</p>}
+                                        {captchaError && <p className="mt-3 text-red-800">{t("Complete the Captcha")}</p>}
                                     </div>
                                     <div className="my-5">
-                                        <input type="checkbox" name="toggle" onChange={handleChange}/><span> Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w celu przesyłania informacji handlowej drogą elektroniczną. </span>
+                                        <input type="checkbox" name="toggle" onChange={handleChange}/><span>{" " + t("I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.")}</span>
                                         {errors.toggle && <p className="mt-3 text-red-800">{errors.toggle}</p>}
                                     </div>
                                     <div className="flex justify-center">
                                         <button type="submit"
                                                 className="border-solid border-1 rounded-lg border-white mr-4"
-                                                onClick={handleSubmit}>Wyślij wiadomość
+                                                onClick={handleSubmit}>{t("Send message")}
                                         </button>
                                     </div>
                                     <p className="mt-4">{resetmessage}</p>
