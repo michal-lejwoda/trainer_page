@@ -7,99 +7,69 @@ const AboutMe = () => {
         <div className="px-4">
             <div className="about_me--title text-center my-8">
                 <strong>
-                    <span className="text-5xl text-lighter-grey my-5">{t("PARĘ SŁÓW")}</span>
+                    <span className="text-5xl text-lighter-grey my-5">{t("A FEW WORDS")}</span>
                     <br/>
-                    <span className="text-6xl mb-5 text-white">{t("O MNIE")}</span>
+                    <span className="text-6xl mb-5 text-white">{t("ABOUT ME")}</span>
                 </strong>
             </div>
             <div className="text-center text-white">
                 <p className="mb-4 text-lg ">
-                    Cześć, jestem Michał, ze sportem mam kontakt od najmłodszych lat, w moim życiu zawsze była duża, a
-                    nawet
-                    zbyt duża ilość aktywności. Początkowo jak to u każdego młodego chłopaka była to piłka nożna z
-                    większymi
-                    jak i mniejszymi sukcesami. Natomiast pewnego dnia w wieku 14 lat poszedłem pierwszy raz na siłownię
-                    i
-                    już tam zostałem.
+                    {t("Hi, I’m Michał. I've been involved in sports since I was a child, with a significant – even excessive – amount of activity in my life. Initially, like many young boys, I played football, achieving both big and small successes. However, one day, at the age of 14, I went to the gym for the first time, and I’ve stayed ever since.")}
                 </p>
                 <p className="mb-4 text-lg">
-                    Wybrałem kulturystykę i pracę nad własnym ciałem, gdyż jest to jedyny tak piękny sport gdzie
-                    jesteśmy
-                    twórcami własnego ciała i to, jakie będą efekty w 100% jest zależne tylko i wyłącznie od nas. Swoją
-                    przygodę z kulturystyką zacząłem sam, popełniając setki błędów na własnym ciele, tym samym zbierając
-                    bezcenne doświadczenie, którego nie zdobędziemy na żadnym szkoleniu, po 8 latach treningów
-                    wystartowałem
-                    pierwszy raz w zawodach kulturystycznych tym samym zdobywając tytuł brązowego medalisty Mistrzostw
-                    Polski Juniorów w kulturystyce klasycznej.
+                    {t("I chose bodybuilding and working on my own body because it's the only sport where we are the creators of our physique, and the results are 100% dependent solely on us. I started my bodybuilding journey on my own, making hundreds of mistakes on my own body, thus gathering invaluable experience that no training course can provide. After 8 years of training, I competed for the first time in bodybuilding competitions, earning the title of bronze medalist in the Polish Junior Championships in classic bodybuilding.")}
                 </p>
                 <p className="mb-4 text-lg">
-                    Aktualnie jestem czynnym zawodnikiem federacji IFBB, trenerem, jak i doradcą żywieniowym. Co mnie
-                    wyróżnia od innych trenerów? Przede wszystkim indywidualne podejście do każdego podopiecznego i
-                    doświadczenie, które zdobywałem przez lata treningów, dzięki czemu mam przewagę nad tymi, co
-                    posiadają
-                    dużą ilość teorii, a brakuje im praktyki.
+                    {t("Currently, I am an active athlete in the IFBB federation, as well as a coach and nutrition advisor. What sets me apart from other trainers? Above all, it’s my individual approach to each client and the experience I’ve gained through years of training, which gives me an edge over those who have a lot of theory but lack practical experience.")}
                 </p>
                 <p className="mb-4 text-lg">
-                    Jestem zdania, że gram praktyki jest warty więcej niż kilogram teorii, oczywiście jeśli chodzi o
-                    teorię
-                    rozwijam się cały czas, ale najpierw sprawdzam ją na sobie, a następnie przenoszę na pracę z ludźmi.
-                    Współpracując również z najlepszym sztabem trenerskim w naszym kraju i przebywając codziennie wśród
-                    czołówki polskiej kulturystyki zdobywam wiedzę każdego dnia, do której nie każdy może mieć dostęp.
+                    {t("I believe that a gram of practice is worth more than a kilogram of theory. Of course, when it comes to theory, I’m constantly developing, but I always test it on myself first before applying it in my work with clients. By working with the best coaching staff in our country and spending time daily among the top Polish bodybuilders, I gain knowledge every day that not everyone has access to.")}
                 </p>
                 <p className="mb-4 text-lg">
-                    Kieruję się również holistycznym podejściem do ludzkiego ciała. Mam świadomość i postaram się
-                    uświadomić
-                    to również Tobie, że na skuteczność treningów ma wpływ nie tylko dobrze zaprogramowany plan
-                    treningowy,
-                    ale także sposób odżywiania, tryb życia oraz sfera psychologiczna człowieka, a nawet nastawienie do
-                    rodzaju uprawianego sportu.
+                    {t("I also follow a holistic approach to the human body. I’m aware, and I’ll try to make you aware too, that the effectiveness of training is influenced not only by a well-programmed training plan but also by proper nutrition, lifestyle, and even the psychological aspect and attitude towards the sport being practiced.")}
                 </p>
             </div>
             <div className="about_me--title my-8 text-center">
                 <strong>
-                    <span className="text-5xl text-lighter-grey my-5">KURSY</span>
+                    <span className="text-5xl text-lighter-grey my-5">{t("COURSES")}</span>
                     <br/>
-                    <span className="text-6xl mb-5 text-white">SZKOLENIA</span>
+                    <span className="text-6xl mb-5 text-white">{t("TRAINING SESSIONS")}</span>
                 </strong>
             </div>
             <ul className="text-center text-white">
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    Kurs na Trenara Personalnego w Centum Szkoleniowym Strefa Sportu u Radka Słodkiewicza 2016
+                    {t("Personal Trainer Course at Strefa Sportu Training Center with Radek Słodkiewicz, 2016")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    Kurs z Teorii i praktyki w treningu siłowym (systemy treningowe: FBW, SPLIT, SLINGSHOT oraz TRENING
-                    HOLISTYCZNY) 2016
+                    {t("Course on Theory and Practice in Strength Training (training systems: FBW, SPLIT, SLINGSHOT, and HOLISTIC TRAINING), 2016")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    “Fundamenty żywienia Człowieka” w A4ACADEMY’ 2017
+                    {t("Fundamentals of Human Nutrition at A4ACADEMY, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    “Dietetyki i suplementacja w sporcie” w A4ACADEMY 2017
+                    {t("Dietetics and Supplementation in Sports at A4ACADEMY, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    “Sport Nutrition – Ketogenic & Carb Cyccling” w Premium Sport Academy; 2017
+                    {t("Sport Nutrition – Ketogenic & Carb Cycling at Premium Sport Academy, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    “Psychodietetyka” – Premium Sport Academy Karolina Gruszecka;
+                    {t("Psychodietetics – Premium Sport Academy with Karolina Gruszecka, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    “Wspomaganie farmakologiczne w kulturystyce i sporcie” seminarium on-line poziom 1 i 2, prowadzący
-                    seminarium Robert Piotrkowicz 2017
+                    {t("Pharmacological Support in Bodybuilding and Sports online seminar, level 1 and 2, led by Robert Piotrkowicz, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    Kompetencje o wiedzę z zakresu postępowania w: Cukrzycy typu 1 i 2, zespole metabolicznym,
-                    nadciśnieniu tętniczym i insulinooporności również w Centrum Szkoleniowym Strefa Sportu prowadzonego
-                    przez Rafała Nejmanna 2017
+                    {t("Expertise in handling: Type 1 and Type 2 Diabetes, Metabolic Syndrome, Hypertension, and Insulin Resistance, at Strefa Sportu Training Center, led by Rafał Nejmann, 2017")}
                 </li>
                 <li className="my-5 text-lg text-left px-3"><font className="text-red-700 text-xl">✓ </font>
-                    Leadership workshop and seminar A4Academy Katarzyna Szyguła 2017
+                    {t("Leadership Workshop and Seminar at A4Academy with Katarzyna Szyguła, 2017")}
                 </li>
             </ul>
             <div className="about_me--title text-center my-8">
                 <strong>
-                    <span className="text-5xl text-lighter-grey my-5">GALERIA</span>
+                    <span className="text-5xl text-lighter-grey my-5">{t("PHOTO")}</span>
                     <br/>
-                    <span className="text-6xl mb-5 text-white">ZDJĘĆ</span>
+                    <span className="text-6xl mb-5 text-white">{t("GALLERY")}</span>
                 </strong>
             </div>
             <div className="about_me__gallery__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
