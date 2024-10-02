@@ -148,8 +148,15 @@
   "Complete the captcha verification": "Complete the captcha verification",
   "Book an appointment": "Book an appointment",
   "I have an account": "I have an account",
-  "Book as a guest, and we will automatically create an account for you.": "Book as a guest, and we will automatically create an account for you."
-
-
+  "Book as a guest, and we will automatically create an account for you.": "Book as a guest, and we will automatically create an account for you.",
+  "The training has been booked. A confirmation has been sent to your email.": "The training has been booked. A confirmation has been sent to your email.",
+  "Order confirmation.": "Order confirmation.",
+  "Your order": "Your order",
+  "Title": "Title",
+  "Price": "Price,",
+  "Date": "Date",
+  "Start time": "Start time",
+  "End time": "End time",
+  "Complete Reservation": "Complete Reservation"
 
 }

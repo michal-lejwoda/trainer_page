@@ -8,7 +8,6 @@ import {useAuth} from "../auth/AuthContext.jsx";
 
 function SystemReservation(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [show, setShow] = useState(false);
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const minDate = new Date()
     const number_of_months = 1
