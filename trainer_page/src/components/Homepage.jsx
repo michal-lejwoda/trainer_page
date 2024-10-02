@@ -106,23 +106,16 @@ function Homepage() {
                             <div className=" items-center justify-center mb-5 flex">
                                 <img loading="lazy" className="inline-block" src="/icons-3-05_1_orig.png" alt=""/>
                             </div>
-                            <div className="text-2xl font-bold text-red-800 text-center">Odżywanie</div>
-                            <p className="mt-3 text-center text-white">Poznaj i zastosuj strategie żywieniowe, które
-                                odmienią Twoją
-                                sylwetkę bez
-                                uczucia głodu.</p>
+                            <div className="text-2xl font-bold text-red-800 text-center">{t("Nutrition")}</div>
+                            <p className="mt-3 text-center text-white">{t("Learn and apply nutritional strategies that will transform your body without feeling hungry.")}</p>
                         </div>
                         <div data-aos="fade-right"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
                             <div className=" items-center justify-center mb-5 flex">
                                 <img loading="lazy" className="inline-block" src="/personheart_orig.png" alt=""/>
                             </div>
-                            <div className="text-2xl font-bold text-red-800 text-center">Styl życia</div>
-                            <p className="mt-3 text-center text-white">Poznaj i wprowadź w życie ważne nawyki dotyczące
-                                stylu
-                                życia, aby zacząć
-                                czuć
-                                się niesamowicie wewnątrz i wyglądać świetnie na zewnątrz.</p>
+                            <div className="text-2xl font-bold text-red-800 text-center">{t("Lifestyle")}</div>
+                            <p className="mt-3 text-center text-white">{t("Discover and implement important lifestyle habits to start feeling amazing on the inside and looking great on the outside.")}</p>
                         </div>
                         <div data-aos="fade-left"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
@@ -130,12 +123,9 @@ function Homepage() {
                                 <img loading="lazy" className="inline-block" src="/imageedit-73-3552888680_orig.png"
                                      alt=""/>
                             </div>
-                            <div className="text-2xl font-bold text-red-800 text-center">Mindset</div>
-                            <p className="mt-3 text-center text-white">Stosując zasady nastawienia do palącego
-                                pragnienia
-                                osiągnięcia swoich celów
-                                -
-                                staniesz się lepszą wersją siebie.</p>
+                            <div className="text-2xl font-bold text-red-800 text-center">{t("Mindset")}</div>
+                            <p className="mt-3 text-center text-white">{t("By applying mindset principles toward the burning desire to achieve your goals – you will become a better version of yourself.")}
+                                </p>
                         </div>
                         <div data-aos="fade-left"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
@@ -143,47 +133,34 @@ function Homepage() {
                                 <img loading="lazy" className="inline-block" src="/imageedit-5-5594810482_orig.png"
                                      alt=""/>
                             </div>
-                            <div className="text-2xl font-bold text-red-800 text-center">Ćwiczenia</div>
-                            <p className="mt-3 text-center text-white">Dopasowany, ustrukturyzowany, efektywny czasowo i
-                                progresywny program
-                                ćwiczeń
-                                spełniający Twoje wymagania i cele.</p>
+                            <div className="text-2xl font-bold text-red-800 text-center">{t("Exercises")}</div>
+                            <p className="mt-3 text-center text-white">{t("A tailored, structured, time-efficient, and progressive exercise program to meet your needs and goals.")}</p>
                         </div>
                     </div>
 
                     <div className="homepage__credo bg-tourists bg-no-repeat py-10 px-4 bg-cover">
                         <div className="homepage__credo--title my-8">
                             <strong>
-                                <span className="text-5xl text-lighter-grey my-5">MOJE</span>
+                                <span className="text-5xl text-lighter-grey my-5">{t("MY")}</span>
                                 <br/>
-                                <span className="text-6xl mb-5 text-white">CREDO</span>
+                                <span className="text-6xl mb-5 text-white">{t("CREDO")}</span>
                             </strong>
                         </div>
-                        <p className="my-10 font-semibold text-lg text-white"> Zapracowani mężczyźni i kobiety
-                            poprawiają swoje
-                            zdrowie i kondycję, korzystając z kombinacji dostosowanych ćwiczeń, odżywiania, stylu życia
-                            i systemów mentalnych, które są holistyczne i trwałe na zawsze.</p>
-                        <p className="my-5 text-white">✓ Poczuj się pewnie i atrakcyjnie w gronie przyjaciół, rodziny i
-                            w
-                            miejscach
-                            publicznych publicznie.</p>
-                        <p className="my-5 text-white">✓ Poczuj się silny fizycznie i psychicznie, zdolny do podjęcia
-                            każdego
-                            wyzwania nie martwiąc się, że poziom energii lub masa ciała staną na przeszkodzie.</p>
-                        <p className="my-5 text-white">✓ Noś ubrania takie jakie chcesz nosić.</p>
-                        <p className="my-5 text-white">✓ Przestań martwić się chorobami i młodą śmiercią</p>
-                        <p className="my-5 text-white">✓ Biegaj ze swoimi dziećmi lub wnukami, nie czując bólu, wiatru
-                            ani
-                            zmęczenia i robiąc to ponownie następnego dnia.</p>
-                        <p className="my-5 text-white">✓ Dodaj sobie 10 lat zdrowego życia na emeryturze</p>
-                        <p className="font-semibold my-7 text-xl text-white">Bez martwienia się o:</p>
-                        <p className="my-3 text-lg text-white">✓ Głodzenie się</p>
-                        <p className="my-3 text-lg text-white">✓ Liczenia kalorii lub ważenia żywności!</p>
-                        <p className="my-3 text-lg text-white">✓ Rezygnowania z produktów, które lubisz</p>
+                        <p className="my-10 font-semibold text-lg text-white">{t("Busy men and women improve their health and fitness using a combination of tailored exercise, nutrition, lifestyle, and mindset systems that are holistic and sustainable for life.")}</p>
+                        <p className="my-5 text-white">{t("✓ Feel confident and attractive among friends, family, and in public spaces.")}</p>
+                        <p className="my-5 text-white">{t("✓ Feel physically and mentally strong, ready to take on any challenge without worrying that your energy levels or body weight will hold you back.")}</p>
+                        <p className="my-5 text-white">{t("✓ Wear the clothes you want to wear.")}</p>
+                        <p className="my-5 text-white">{t("✓ Stop worrying about diseases and early death.")}</p>
+                        <p className="my-5 text-white">{t("✓ Run with your kids or grandkids without feeling pain, winded, or exhausted, and do it again the next day.")}</p>
+                        <p className="my-5 text-white">{t("✓ Add 10 years of healthy life to your retirement.")}</p>
+                        <p className="font-semibold my-7 text-xl text-white">{t("Without worrying about:")}</p>
+                        <p className="my-3 text-lg text-white">{t("✓ Starving yourself.")}</p>
+                        <p className="my-3 text-lg text-white">{t("✓ Counting calories or weighing food!")}</p>
+                        <p className="my-3 text-lg text-white">{t("✓ Giving up the foods you enjoy.")}</p>
                         <div className="flex justify-center">
                             <NavLink to="/about-me" className="text-white">
                                 <button className="mt-7 bg-button-grey">
-                                    O mnie
+                                    {t("About me")}
                                 </button>
                             </NavLink>
                         </div>
@@ -191,9 +168,9 @@ function Homepage() {
                     <div className="homepage__transformations">
                         <div className="homepage__transformations--title text-center my-8">
                             <strong>
-                                <span className="text-4xl text-lighter-grey my-5">TRANSFORMACJE</span>
+                                <span className="text-4xl text-lighter-grey my-5">{t("Clients Reverse Transformations")}</span>
                                 <br/>
-                                <span className="text-4xl mb-5 text-white">PODOPIECZNYCH</span>
+                                <span className="text-4xl mb-5 text-white">{t("Transformations Reverse Clients")}</span>
                             </strong>
                             <div
                                 className="homepage__transformations__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center hidden xl:flex ">
@@ -243,8 +220,7 @@ function Homepage() {
                             </div>
                             <div className="flex flex-col items-center ">
                                 <NavLink to="/transformations" className="text-white">
-                                    <button className="mt-10  text-lg text-white bg-button-grey no-underline">Więcej
-                                        transformacji
+                                    <button className="mt-10  text-lg text-white bg-button-grey no-underline">{t("More Transformations")}
                                     </button>
                                 </NavLink>
                             </div>
