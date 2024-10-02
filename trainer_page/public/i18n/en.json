@@ -130,5 +130,25 @@
   "Password Reset": "Password Reset",
   "Change password": "Change password",
   "Send": "Send",
-  "If the email exists in our database, an email has been sent with a link to reset your password.": "Jeśli email istnieje w naszej bazie danych to na ten email została wysłana wiadomość wraz z linkiem umożliwiającym zmianę hasła"
+  "If the email exists in our database, an email has been sent with a link to reset your password.": "Jeśli email istnieje w naszej bazie danych to na ten email została wysłana wiadomość wraz z linkiem umożliwiającym zmianę hasła",
+  "Name is too short": "Name is too short",
+  "Name is too long": "Name is too long",
+  "Name is required": "Name is required",
+  "Last name is too short": "Last name is too short",
+  "Last Name is too long": "Last Name is too long",
+  "Address Email is incorrect": "Address Email is incorrect",
+  "Address Email is required": "Address Email is required",
+  "Phone number is incorrect": "Phone number is incorrect",
+  "Password is too short": "Password is too short",
+  "Password is required": "Password is required",
+  "The passwords must match.": "The passwords must match.",
+  "Message is too short": "Message is too short",
+  "Message is too long": "Message is too long",
+  "To send a message, you must accept the consent.": "To send a message, you must accept the consent.",
+  "Complete the captcha verification": "Complete the captcha verification"
+
+
+
+
+
 }

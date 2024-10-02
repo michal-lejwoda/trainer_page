@@ -1,77 +1,35 @@
 import * as yup from "yup";
-
-export const validate_login = values => {
-    const errors = {};
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
-    if (!values.password) {
-        errors.password = 'Required';
-    }
-
-    return errors;
-};
-
-export const validate_register = values => {
-    const errors = {};
-    if (!values.firstName) {
-        errors.firstName = 'Required';
-    } else if (values.firstName.length > 15) {
-        errors.firstName = 'Must be 15 characters or less';
-    }
-    if (!values.lastName) {
-        errors.lastName = 'Required';
-    } else if (values.lastName.length > 20) {
-        errors.lastName = 'Must be 20 characters or less';
-    }
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
-    return errors;
-};
-
-export function validateEmail(value) {
-    let error;
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        error = 'Email is not correct!';
-    }
-    return error;
-
-}
+import {t} from "i18next";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 export const validateRegistration = yup.object().shape({
-    name: yup.string().min(2, "Imię jest za krótkie").max(80, "Imię jest za długie"),
-    last_name: yup.string().min(2, "Nazwisko jest za krótkie").max(80, "Nazwisko jest za długie"),
-    email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
-    phone_number: yup.string().matches(phoneRegExp, 'Numer telefonu jest nieprawidłowy'),
-    password: yup.string().min(5, "Hasło jest za krótkie").required("Hasło jest wymagane"),
-    repeat_password: yup.string().oneOf([yup.ref("password"), null], "Hasła muszą do siebie pasować")
+    name: yup.string().min(2, t("Name is too short")).max(80, t("Name is too long")).required("Name is required"),
+    last_name: yup.string().min(2, t("Last name is too short")).max(80, "Last Name is too long"),
+    email: yup.string().email(t("Address Email is incorrect")).required(t("Address Email is required")),
+    phone_number: yup.string().matches(phoneRegExp, t("Phone number is incorrect")),
+    password: yup.string().min(5, t("Password is too short")).required("Password is required"),
+    repeat_password: yup.string().oneOf([yup.ref("password"), null], t("The passwords must match."))
 });
 
 export const validateLogin = yup.object().shape({
-    email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
-    password: yup.string().min(5, "Hasło jest za krótkie").required("Hasło jest wymagane"),
+    email: yup.string().email(t("Address Email is incorrect")).required(t("Address Email is required")),
+    password: yup.string().min(5, t("Password is too short")).required("Password is required"),
 })
 
 export const validateContact = yup.object().shape({
-    name: yup.string().min(2, "Imię jest za krótkie").max(80, "Imię jest za długie").required("Imię jest wymagane"),
-    email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
-    message: yup.string().min(2, "Wiadomość jest za krótka").max(1000, "Wiadomość jest za długa"),
-    toggle: yup.boolean().oneOf([true], 'Aby wysłać wiadomość musisz zaakceptować zgodę'),
+    name: yup.string().min(2, t("Name is too short")).max(80, t("Name is too long")).required("Name is required"),
+    email: yup.string().email(t("Address Email is incorrect")).required(t("Address Email is required")),
+    message: yup.string().min(2, t("Message is too short")).max(1000, t("Message is too long")),
+    toggle: yup.boolean().oneOf([true], t("To send a message, you must accept the consent.")),
 });
 
 
 export const validateResetPassword = yup.object().shape({
-    password: yup.string().min(5, "Hasło jest za krótkie").required("Hasło jest wymagane"),
-    repeat_password: yup.string().oneOf([yup.ref("password"), null], "Hasła muszą do siebie pasować")
+    password: yup.string().min(5, t("Password is too short")).required("Password is required"),
+    repeat_password: yup.string().oneOf([yup.ref("password"), null], t("The passwords must match."))
 });
 
 export const validateResetPasswordBasedOnEmail = yup.object().shape({
-    email: yup.string().email("Adres email jest niepoprawny").required("Email jest wymagany"),
-    captcha: yup.boolean().oneOf([true], 'Przejdź weryfikację captcha'),
+    email: yup.string().email(t("Address Email is incorrect")).required(t("Address Email is required")),
+    captcha: yup.boolean().oneOf([true], t("Complete the captcha verification")),
 });
