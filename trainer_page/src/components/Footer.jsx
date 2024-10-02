@@ -19,54 +19,53 @@ function Footer() {
                                     <path
                                         d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z"/>
                                 </svg>
-                                Michał Trener
+                                {t("Michał Trainer")}
                             </h4>
                             <p>
-                                Pozwól, że z moją pomocą zmienię twoje życie na lepsze.
+                                {t("Let me change your life for the better with my help.")}
                             </p>
                         </div>
 
                         <div className="flex flex-col">
                             <h4 className="mb-4 font-semibold uppercase "
-                                // className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
                                 >
-                                Interesujące linki
+                                {t("Interesting links")}
                             </h4>
                             <NavLink
                                 className="mb-4 text-neutral-600 text-white dark:text-neutral-200"
                                 to="/about-me">
-                                O mnie
+                                {t("About me")}
                             </NavLink>
                             <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/reservation">
-                                Rezerwacje
+                                {t("Reservation")}
                             </NavLink>
                             <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/transformations">
-                                Transformacje
+                                {t("Transformations")}
                             </NavLink>
                             <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/contact">
-                                Kontakt
+                                {t("Contact")}
                             </NavLink>
                         </div>
                         <hr className="md:hidden"/>
                         <div className="flex flex-col">
                             <h6
                                 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                                Dokumenty
+                                {t("Documents")}
                             </h6>
                             <NavLink to="/terms-and-conditions" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
-                                Regulamin
+                                {t("Terms and Conditions")}
                             </NavLink>
                             <NavLink to="/private-policy" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
-                                Polityka Prywatności
+                                {t("Privacy policy")}
                             </NavLink>
                             <NavLink to="/cookies-policy" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
-                                Polityka cookies
+                                {t("Cookies policy")}
                             </NavLink>
                         </div>
                         <div>
                             <h6
                                 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
-                                Kontakt
+                                {t("Contact")}
                             </h6>
                             <p className="mb-4 flex items-center justify-center md:justify-start">
                                 <svg
@@ -114,7 +113,7 @@ function Footer() {
                     <span>© 2024 Copyright: </span>
                     <p
                         className="font-semibold text-neutral-600 dark:text-neutral-400 text-white"
-                    >Michał Trener
+                    >{t("Michał Trainer")}
                     </p>
                 </div>
             </footer>
