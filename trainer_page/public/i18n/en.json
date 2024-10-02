@@ -128,5 +128,7 @@
   "Repeat password": "Repeat password",
   "If you have an account, please log in.": "If you have an account, please log in.",
   "Password Reset": "Password Reset",
-  "Change password": "Change password"
+  "Change password": "Change password",
+  "Send": "Send",
+  "If the email exists in our database, an email has been sent with a link to reset your password.": "Jeśli email istnieje w naszej bazie danych to na ten email została wysłana wiadomość wraz z linkiem umożliwiającym zmianę hasła"
 }
