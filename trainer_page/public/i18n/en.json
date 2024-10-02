@@ -145,9 +145,10 @@
   "Message is too short": "Message is too short",
   "Message is too long": "Message is too long",
   "To send a message, you must accept the consent.": "To send a message, you must accept the consent.",
-  "Complete the captcha verification": "Complete the captcha verification"
-
-
+  "Complete the captcha verification": "Complete the captcha verification",
+  "Book an appointment": "Book an appointment",
+  "I have an account": "I have an account",
+  "Book as a guest, and we will automatically create an account for you.": "Book as a guest, and we will automatically create an account for you."
 
 
 

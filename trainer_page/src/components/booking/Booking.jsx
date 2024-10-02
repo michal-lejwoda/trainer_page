@@ -29,7 +29,7 @@ const Booking = () => {
 
     return (
         <>
-            {bookingStep == 1 && <SystemReservation
+            {bookingStep === 1 && <SystemReservation
                 setTrainer={setTrainer}
                 setTrainerPlan={setTrainerPlan}
                 setSelectedPlanHour={setSelectedPlanHour}
@@ -38,10 +38,10 @@ const Booking = () => {
                 selectedPlanHour={selectedPlanHour}
                 goToBookingAuthorization={goToBookingAuthorization}
                 goToBookingConfirmation={goToBookingConfirmation}/>}
-            {bookingStep == 2 && <BookingAuthorization goToBookingConfirmation={goToBookingConfirmation}
-                                                       goToSystemReservation={goToSystemReservation}/>}
-            {bookingStep == 3 && <BookingConfirmation goToSystemReservation={goToSystemReservation}
-                                                      selectedPlanHour={selectedPlanHour}
+            {bookingStep === 2 && <BookingAuthorization goToBookingConfirmation={goToBookingConfirmation}
+                                                        goToSystemReservation={goToSystemReservation}/>}
+            {bookingStep === 3 && <BookingConfirmation goToSystemReservation={goToSystemReservation}
+                                                       selectedPlanHour={selectedPlanHour}
 
             />}
         </>
