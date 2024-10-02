@@ -6,8 +6,10 @@ import {checkIfUserLogged, getLogin, postGetUser, postResetPassword} from "./api
 import {useCookies} from "react-cookie";
 import {useNavigate, useParams} from "react-router-dom";
 import {useAuth} from "./AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 const ResetPassword = () => {
+    const {t} = useTranslation()
     const [user, setUser] = useState(null)
     const {id, name} = useParams();
     const navigate = useNavigate();
@@ -53,12 +55,12 @@ const ResetPassword = () => {
 
     return (
         <div className="booking__login bg-container-grey p-10 rounded-2xl">
-            <p className="text-4xl mb-4">Zmiana hasła</p>
+            <p className="text-4xl mb-4">{t("Password Reset")}</p>
             <div>
                 <form onSubmit={handleSubmit} className="w-full mt-5 ">
                     <div className="flex justify-between mb-4">
                         <div className="w-1/2 flex flex-col ml-3">
-                            <label className="mb-4 text-lg">Hasło</label>
+                            <label className="mb-4 text-lg">{t("Password")}</label>
                             <input
                                 value={values.password}
                                 onChange={handleChange}
@@ -67,13 +69,13 @@ const ResetPassword = () => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                placeholder="Hasło"
-                                className={errors.password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
+                                placeholder={t("Password")}
+                                className={errors.password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 border-white" : "py-2 px-3 rounded-lg text-lg border-2 border-white"}
                             />
                             {errors.password && <p>{errors.password}</p>}
                         </div>
                         <div className="w-1/2 flex flex-col ml-3">
-                            <label className="mb-4 text-lg">Powtórz hasło</label>
+                            <label className="mb-4 text-lg">{t("Repeat Password")}</label>
                             <input
                                 value={values.repeat_password}
                                 onChange={handleChange}
@@ -82,19 +84,14 @@ const ResetPassword = () => {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                placeholder="Powtórz hasło"
-                                className={errors.repeat_password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 rounded-lg border-white" : "py-2 px-3 rounded-lg text-lg border-2 rounded-lg border-white"}
+                                placeholder={t("Repeat Password")}
+                                className={errors.repeat_password ? "text-lg ml-3 py-2 px-3 rounded-lg input-error border-2 border-white" : "py-2 px-3 rounded-lg text-lg border-2 border-white"}
                             />
                         </div>
                         {errors.repeat_password && <p>{errors.repeat_password}</p>}
                     </div>
-
-                    {/*<div className="booking__login__button w-full flex flex-col items-end">*/}
-                    {/*    <a className="mb-4 cursor-pointer mr-4">Przypomnij hasło</a>*/}
-                    {/*    <a className="mb-4 cursor-pointer mr-4">Jeśli nie posiadasz konta. Zarejestruj się</a>*/}
-                        <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zmień hasło
+                        <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">{t("Change password")}
                         </button>
-                    {/*</div>*/}
                 </form>
             </div>
         </div>
