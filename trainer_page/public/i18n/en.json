@@ -157,6 +157,9 @@
   "Date": "Date",
   "Start time": "Start time",
   "End time": "End time",
-  "Complete Reservation": "Complete Reservation"
-
+  "Complete Reservation": "Complete Reservation",
+  "Training Reservation": "Training Reservation",
+  "Select Trainer": "Select Trainer",
+  "Select Plan": "Select Plan",
+  "Available booking slots": "Available booking slots"
 }

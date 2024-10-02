@@ -122,12 +122,11 @@ function SystemReservation(props) {
         <>
             <div className="px-4 text-white">
                 <div className="reservation--title my-5 text-center">
-                    <h1 className="text-white">Rezerwacja treningu</h1>
+                    <h1 className="text-white">{t("Training Reservation")}</h1>
                 </div>
                 <div className="reservation__container mx-5">
                     <label htmlFor="trainers"
-                           className="block mb-4 text-xl font-semibold text-gray-900 dark:text-white text-white">Wybierz
-                        Trenera</label>
+                           className="block mb-4 text-xl font-semibold text-gray-900 dark:text-white text-white">{t("Select Trainer")}</label>
                     {trainersData &&
                         <div>
                             <Select
@@ -144,8 +143,7 @@ function SystemReservation(props) {
                         </div>
                     }
                     <label htmlFor="trainers"
-                           className="block my-4 text-xl font-semibold text-gray-900 dark:text-white text-white">Wybierz
-                        Plan</label>
+                           className="block my-4 text-xl font-semibold text-gray-900 dark:text-white text-white">{t("Select Plan")}</label>
                     {trainerPlanData &&
                         <Select
                             defaultValue={props.trainerPlan}
@@ -167,7 +165,7 @@ function SystemReservation(props) {
                               maxDetail="month"
                     />
                     <div className="mt-5 mb-5 text-lg font-semibold">
-                        <h2 className="text-center text-white">Dostępne Terminy:</h2>
+                        <h2 className="text-center text-white">{t("Available booking slots")}:</h2>
                     </div>
                     <div className="term__container w-full text-center">
                         {dayWorkHoursData && dayWorkHoursData.map(element => {
@@ -182,12 +180,11 @@ function SystemReservation(props) {
                         {props.selectedPlanHour &&
                             <button onClick={handleReservation}
                                     className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
-                                Zarezerwuj termin
+                                {t("Book an appointment")}
                             </button>}
                     </div>
                 </div>
             </div>
-            {/*{show && <ReservationModal show={show} handleClose={handleClose} selectedPlanHour={selectedPlanHour} />}*/}
         </>
     )
 }
