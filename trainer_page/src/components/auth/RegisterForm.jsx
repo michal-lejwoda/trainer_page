@@ -5,12 +5,14 @@ import {validateRegistration} from "./validation.jsx";
 import {useCookies} from "react-cookie";
 import {checkIfUserLogged, postRegistration} from "./api.jsx";
 import {useAuth} from "./AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 
 const RegisterForm = () => {
     const [, setCookie] = useCookies(['jwt_trainer_auth']);
     const [errorregister, setErrorRegister] = useState(null)
     const {setAuthUser, setIsLoggedIn} = useAuth()
+    const {t} = useTranslation()
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)
@@ -54,12 +56,12 @@ const RegisterForm = () => {
         },
     });
     return (<div className="booking__login bg-container-grey p-10 rounded-2xl text-white">
-            <p className="text-4xl mb-4">Rejestracja</p>
+            <p className="text-4xl mb-4">{t("Register")}</p>
             <div className="booking__register__inputs ">
                 <form className="flex flex-wrap " onSubmit={handleSubmit}>
                     <div className="w-full flex flex-col md:flex-row md:justify-between">
                         <div className="w-full md:w-1/2 flex flex-col">
-                            <label className="mb-4 text-lg">Imię</label>
+                            <label className="mb-4 text-lg">{t("Name")}</label>
                             <input
                                 value={values.name}
                                 onChange={handleChange}
@@ -67,13 +69,13 @@ const RegisterForm = () => {
                                 name="name"
                                 type="text"
                                 required
-                                placeholder="Imię"
+                                placeholder={t("Name")}
                                 className="bg-background-black-color text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
                             {errors.name && <p className="text-red-400 mb-4">{errors.name}</p>}
                         </div>
                         <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
-                            <label className="mb-4 text-lg">Nazwisko</label>
+                            <label className="mb-4 text-lg">{t("Last Name")}</label>
                             <input
                                 value={values.last_name}
                                 onChange={handleChange}
@@ -81,7 +83,7 @@ const RegisterForm = () => {
                                 name="last_name"
                                 type="text"
                                 required
-                                placeholder="Nazwisko"
+                                placeholder={t("Last Name")}
                                 className="bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"
                             />
                             {errors.last_name && <p className="text-red-400 mb-4">{errors.last_name}</p>}
@@ -89,7 +91,7 @@ const RegisterForm = () => {
                     </div>
                     <div className="w-full flex flex-col md:flex-row md:justify-between">
                         <div className="w-full md:w-1/2 flex flex-col">
-                            <label className="mb-4 text-lg ">Adres E-mail</label>
+                            <label className="mb-4 text-lg ">{t("Email address")}</label>
                             <input
                                 onChange={handleChange}
                                 value={values.email}
@@ -99,13 +101,13 @@ const RegisterForm = () => {
                                 required
 
                                 className={errors.email ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
-                                placeholder="Adres E-mail"
+                                placeholder={t("Email address")}
                             />
                             {errors.email && <p className="text-red-400 mb-4">{errors.email}</p>}
                             {errorregister && <p className="text-red-400 mb-4">{errorregister}</p>}
                         </div>
                         <div className="w-full md:w-1/2 md:ml-3 flex flex-col">
-                            <label className="mb-4 text-lg">Numer telefonu</label>
+                            <label className="mb-4 text-lg">{t("Telephone number")}</label>
                             <input
                                 value={values.phone_number}
                                 onChange={handleChange}
@@ -113,7 +115,7 @@ const RegisterForm = () => {
                                 name="phone_number"
                                 type="text"
                                 required
-                                placeholder="Numer telefonu"
+                                placeholder={t("Telephone number")}
                                 className={errors.phone_number ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
                             />
                             {errors.phone_number && <p className="text-red-400 mb-4">{errors.phone_number}</p>}
@@ -121,7 +123,7 @@ const RegisterForm = () => {
                     </div>
                     <div className="w-full flex flex-col md:flex-row md:justify-between">
                         <div className="w-full md:w-1/2 flex flex-col">
-                            <label className="mb-4 text-lg">Hasło</label>
+                            <label className="mb-4 text-lg">{t("Password")}</label>
                             <input
                                 value={values.password}
                                 onChange={handleChange}
@@ -131,12 +133,12 @@ const RegisterForm = () => {
                                 autoComplete="current-password"
                                 required
                                 className={errors.password ? "bg-background-black-color input-error text-lg py-2 px-3 md:mr-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 md:mr-3 rounded-lg input-error border-2 rounded-lg border-white"}
-                                placeholder="Hasło"
+                                placeholder={t("Password")}
                             />
                             {errors.password && <p className="text-red-400 mb-4">{errors.password}</p>}
                         </div>
                         <div className="w-full md:w-1/2 flex flex-col md:ml-3">
-                            <label className="mb-4 text-lg">Powtórz hasło</label>
+                            <label className="mb-4 text-lg">{t("Repeat password")}</label>
                             <input
                                 value={values.repeat_password}
                                 onChange={handleChange}
@@ -146,15 +148,14 @@ const RegisterForm = () => {
                                 autoComplete="repeat_current-password"
                                 required
                                 className={errors.repeat_password ? "bg-background-black-color input-error text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white" : "bg-background-black-color text-lg py-2 px-3 mb-5 rounded-lg input-error border-2 rounded-lg border-white"}
-                                placeholder="Powtórz hasło"
+                                placeholder={t("Repeat password")}
                             />
                             {errors.repeat_password && <p className="text-red-400 mb-4">{errors.repeat_password}</p>}
                         </div>
                     </div>
                     <div className="booking__login__button w-full flex flex-col items-end mt-2">
-                        <a className="mb-4 cursor-pointer mr-4" href="/login">Jeśli posiadasz konto. Zaloguj się</a>
-                        <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">Zarejestruj
-                            się
+                        <a className="mb-4 cursor-pointer mr-4" href="/login">{t("If you have an account, please log in.")}</a>
+                        <button className="border-solid border-1 rounded-lg border-white mr-4" type="submit">{t("Register")}
                         </button>
                     </div>
 
