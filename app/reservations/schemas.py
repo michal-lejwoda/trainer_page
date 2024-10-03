@@ -13,6 +13,10 @@ class AddressBase(BaseModel):
         from_attributes = True
 
 
+class AddressOut(AddressBase):
+    pass
+
+
 class TrainerBase(BaseModel):
     id: int
     name: str
@@ -89,6 +93,11 @@ class WorkHourBase(BaseModel):
     class Config:
         from_attributes = True
 
+class WorkHourOut(WorkHourBase):
+    pass
+
+    class Config:
+        from_attributes = True
 
 class WorkHourCreate(BaseModel):
     day: datetime.date
@@ -154,3 +163,19 @@ class GetWorkHours(BaseModel):
 class EmailBody(BaseModel):
     email: str
     body: dict
+
+class PlanBase(BaseModel):
+    pass
+    class Config:
+        from_attributes = True
+
+class PlanOut(PlanBase):
+    pass
+
+class UserBase(BaseModel):
+    pass
+    class Config:
+        from_attributes = True
+
+class UserOut(UserBase):
+    pass

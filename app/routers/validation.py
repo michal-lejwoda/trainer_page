@@ -22,3 +22,9 @@ def validate_work_hours(work_hours_id: int, db: Session) -> Type[WorkHours]:
 def verify_user_permission(user: User, target_user: User):
     if user.id != target_user.id:
         raise HTTPException(status_code=403, detail="You can't perform this action for another user")
+
+def get_work_hour_or_404(id: int, db: Session):
+    element = db.query(WorkHours).filter(WorkHours.id == id).first()
+    if element is None:
+        raise HTTPException(status_code=404, detail='Work hour not found')
+    return element
