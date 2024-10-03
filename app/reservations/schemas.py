@@ -23,6 +23,8 @@ class TrainerBase(BaseModel):
     class Config:
         from_attributes = True
 
+class TrainerOut(TrainerBase):
+    pass
 
 class TrainerCreate(TrainerBase):
     pass
@@ -49,6 +51,15 @@ class ReservationList(ReservationBase):
     class Config:
         from_attributes = True
 
+class ReservationOut(ReservationBase):
+    start_time: datetime.datetime
+    end_time: datetime.datetime
+    trainer_id: int
+    trainer: TrainerSchema
+
+    class Config:
+        from_attributes = True
+
 
 class ReservationCreate(ReservationBase):
     user_id: int
@@ -63,6 +74,9 @@ class WorkingHourBase(BaseModel):
 
     class Config:
         from_attributes = True
+
+class WorkingHourOut(WorkingHourBase):
+    pass
 
 
 class WorkHourBase(BaseModel):
@@ -94,27 +108,6 @@ class WorkHourGet(BaseModel):
 
     class Config:
         from_attributes = True
-
-
-# class TrainerHolidayBase(BaseModel):
-#     start_holidays: datetime.date
-#     end_holidays: datetime.date
-#     is_active: bool
-#     trainer_id: int
-#
-#     class Config:
-#         from_attributes = True
-
-
-# class SmallBreakBase(BaseModel):
-#     start_break: datetime.datetime
-#     end_break: datetime.datetime
-#     date: datetime.date
-#     is_active: bool
-#     trainer_id: int
-#
-#     class Config:
-#         from_attributes = True
 
 
 class TimeDiff(BaseModel):

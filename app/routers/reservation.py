@@ -15,8 +15,10 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
     Reservation
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
-    GetWorkHours, TrainerId, TrainerPlans, EmailBody
-from app.send_email import send_email_async, send_email_background, send_email, send_mail_to_admin
+    GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut
+from app.routers.dependencies import verify_jwt_trainer_auth
+from app.routers.validation import validate_user, validate_work_hours, verify_user_permission
+from app.send_email import send_email_background, send_email, send_mail_to_admin
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
@@ -24,62 +26,88 @@ load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
+
 @router.post("/reservation")
-def create_reservation(title: Annotated[str, Form()], user_id: Annotated[str, Form()],
-                       work_hours_id: Annotated[str, Form()], jwt_trainer_auth: Annotated[str | None, Cookie()] = None,
-                       db: Session = Depends(get_db)):
-    user_based_on_id = db.query(User).filter(User.id == user_id).first()
-    work_hours = db.query(WorkHours).filter(WorkHours.id == work_hours_id, WorkHours.is_active == True).first()
-    if jwt_trainer_auth is None:
-        raise HTTPException(status_code=401, detail='You need to log in')
+def create_reservation(
+        title: Annotated[str, Form()],
+        user_id: Annotated[int, Form()],
+        work_hours_id: Annotated[int, Form()],
+        jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
+        db: Session = Depends(get_db)
+):
     user = get_current_user(jwt_trainer_auth, db)
-    if user.id == user_based_on_id.id:
-        reservation_model = Reservation()
-        reservation_model.title = title
-        reservation_model.work_hour_id = work_hours.id
-        reservation_model.user_id = user.id
-        work_hours.is_active = False
-        db.add(reservation_model)
-        db.add(work_hours)
-        db.commit()
+    user_based_on_id = validate_user(user_id, db)
+    work_hours = validate_work_hours(work_hours_id, db)
+    verify_user_permission(user, user_based_on_id)
+
+    reservation_model = Reservation(
+        title=title,
+        work_hour_id=work_hours.id,
+        user_id=user.id
+    )
+    work_hours.is_active = False
+    db.add_all([reservation_model, work_hours])
+    db.commit()
+    return {"detail": "Reservation created successfully"}
+# @router.post("/reservation")
+# def create_reservation(title: Annotated[str, Form()], user_id: Annotated[str, Form()],
+#                        work_hours_id: Annotated[str, Form()], jwt_trainer_auth: Annotated[str | None, Cookie()] = None,
+#                        db: Session = Depends(get_db)):
+#     user_based_on_id = db.query(User).filter(User.id == user_id).first()
+#     work_hours = db.query(WorkHours).filter(WorkHours.id == work_hours_id, WorkHours.is_active == True).first()
+#     if jwt_trainer_auth is None:
+#         raise HTTPException(status_code=401, detail='You need to log in')
+#     user = get_current_user(jwt_trainer_auth, db)
+#     if user.id == user_based_on_id.id:
+#         reservation_model = Reservation()
+#         reservation_model.title = title
+#         reservation_model.work_hour_id = work_hours.id
+#         reservation_model.user_id = user.id
+#         work_hours.is_active = False
+#         db.add(reservation_model)
+#         db.add(work_hours)
+#         db.commit()
 
 
-@router.get("/reservation")
-def list_reservations(db: Session = Depends(get_db)):
-    return db.query(Reservation).all()
+@router.get("/reservation", response_model=List[ReservationOut])
+def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    return db.query(Reservation).offset(skip).limit(limit).all()
 
 
-@router.get("/trainers", response_model=None)
-def list_trainers(db: Session = Depends(get_db)) -> Any:
+@router.get("/trainers", response_model=List[TrainerOut])
+def list_trainers(db: Session = Depends(get_db)):
     return db.query(Trainer).all()
 
-
-@router.get("/get_all_working_hours")
+@router.get("/get_all_working_hours", response_model=List[WorkingHourOut])
 def get_all_working_hours(db: Session = Depends(get_db)):
     return db.query(WorkingHour).all()
 
 
-@router.post("/create_working_hour", response_model=None)
+@router.post("/create_working_hour", response_model=WorkingHourOut)
 def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(get_db)):
-    working_hour_model = WorkingHour()
-    working_hour_model.weekday = working_hours.weekday
-    working_hour_model.start_hour = working_hours.start_time
-    working_hour_model.end_hour = working_hours.end_time
-    working_hour_model.trainer_id = working_hours.trainer_id
+
+    working_hour_model = WorkingHour(
+        weekday=working_hours.weekday,
+        start_hour=working_hours.start_time,
+        end_hour=working_hours.end_time,
+        trainer_id=working_hours.trainer_id
+    )
+
     db.add(working_hour_model)
     db.commit()
+    db.refresh(working_hour_model)
     return working_hour_model
 
 
-@router.delete("/delete_working_hour", response_model=None)
+@router.delete("/delete_working_hour/{id}", response_model=dict)
 def delete_working_hour(id: int, db: Session = Depends(get_db)):
-    element_to_delete = db.query(WorkingHour).filter(
-        WorkingHour.id == id
-    ).first()
+    element_to_delete = db.query(WorkingHour).filter(WorkingHour.id == id).first()
     if element_to_delete is None:
         raise HTTPException(status_code=404, detail='Work hour not found')
-    db.query(WorkingHour).filter(WorkingHour.id == id).delete()
+    db.delete(element_to_delete)
     db.commit()
+    return {"detail": "Work hour deleted successfully"}
+
 
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
     dumped_hour_model = hour_data.model_dump()
@@ -146,6 +174,7 @@ def get_test_work_hours(db: Session = Depends(get_db)):
 def get_all_work_hours(db: Session = Depends(get_db)):
     return db.query(WorkHours).all()
 
+
 @router.get("/address")
 async def get_address(db: Session = Depends(get_db)):
     return db.query(Address).all()
@@ -204,6 +233,7 @@ def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: Em
     send_email_background(background_tasks, 'Potwierdzenie rezerwacji',
                           email_body.email, email_body.body)
     return 'Success'
+
 
 @router.post("/send_reset_password_on_email")
 def send_reset_password_on_email(email: Annotated[str, Form()], background_tasks: BackgroundTasks,
