@@ -1,221 +1,111 @@
+import {useTranslation} from "react-i18next";
+
 function PrivatePolicy() {
-    return (
-        <>
+    const {t} = useTranslation()
+    return (<>
 
-            <header className="entry-header">
-                <strong className="mb-5">
-                    <p className="text-4xl text-center text-lighter-grey my-2">Polityka</p>
+        <header className="entry-header">
+            <strong className="mb-5">
+                <p className="text-4xl text-center text-lighter-grey my-2">{t("Privacy")}</p>
 
-                    <p className="text-4xl text-center mb-4">Prywatności</p>
-                </strong>
-            </header>
-
-
-            <div className="entry-content px-4 my-4">
-
-                <p><strong>1. Administrator danych </strong></p>
+                <p className="text-4xl text-center mb-4">{t("Policy")}</p>
+            </strong>
+        </header>
 
 
-                <p>Administratorem Twoich danych osobowych jest Michał Lejwoda</p>
+        <div className="entry-content px-4 my-4">
+            <p><strong>{t("1. Data Administrator")}</strong></p>
+            <p>{t("The administrator of your personal data is Michał Lejwoda")}</p>
+            <p>{t("If you have any questions regarding the method, purpose, or scope of data processing by the Administrator or questions concerning your rights, you can contact the Administrator via email at: michal.lejwoda@gmail.com")}</p>
+            <br/>
 
+            <p><strong>{t("2. GDPR")}</strong></p>
+            <p>{t("GDPR is the Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC. GDPR regulates issues related to the processing of personal data.")}</p>
+            <br/>
 
-                <p>Jeśli masz jakiekolwiek pytania dotyczące sposobu, celów lub zakresu przetwarzania danych osobowych
-                    przez Administratora lub pytania dotyczące przysługujących Tobie uprawnień, możesz skontaktować
-                    się z Administratorem drogą mailową na adres.
-                    michal.lejwoda@gmail.com</p>
+            <p><strong>{t("3. Purposes and legal grounds for processing personal data")}</strong></p>
+            <p>{t("Your personal data is processed for the purpose of concluding and performing a contract with the Administrator, i.e., a contract for the provision of services specified in the Terms of Service available on the website www.michal-trener.com (legal basis: Article 6(1)(b) of GDPR).")}</p>
+            <p>{t("Your personal data is also processed to fulfill legal obligations incumbent on the Administrator related to issuing invoices, receipts, and maintaining financial reporting (legal basis: Article 6(1)(c) of GDPR).")}</p>
+            <p>{t("Furthermore, in some cases, it is or may be necessary to process your personal data for purposes resulting from the legitimate interests of the Administrator (legal basis: Article 6(1)(f) of GDPR), in particular:")}</p>
+            <ul>
+                <li>{t("1) for marketing the products and services offered by the Administrator or the Administrator's partners,")}</li>
+                <li>{t("2) for responding to inquiries submitted via the contact form,")}</li>
+                <li>{t("3) for handling complaints regarding services provided by the Administrator,")}</li>
+                <li>{t("4) for purposes related to monitoring and improving the quality of services provided by the Administrator,")}</li>
+                <li>{t("5) where applicable – for purposes related to conducting legal proceedings, as well as proceedings before public authorities or other proceedings, including the pursuit and defense of claims,")}</li>
+                <li>{t("6) for sending commercial information electronically as defined by the Act of 18 July 2002 on the provision of services by electronic means (if appropriate consent has been given).")}</li>
+            </ul>
+            <p>{t("In other cases, your personal data will be processed solely based on consent (legal basis: Article 6(1)(a) or Article 9(2)(a) of GDPR), for purposes specified in the consent.")}</p>
+            <br/>
+            <p><strong>{t("4. Obligation to provide personal data")}</strong></p>
+            <p>{t("Providing your personal data is a condition for concluding and properly performing the contract or processing a submitted inquiry, complaint, or report. Failure to provide the required personal data may prevent the conclusion and execution of the contract and the provision of services by the Administrator.")}</p>
+            <br/>
 
+            <p><strong>{t("5. Information about recipients of personal data")}</strong></p>
+            <p>{t("Your personal data may be shared with the following recipients or categories of recipients:")}</p>
+            <br/>
+            <p>1) {t("public authorities and entities performing public tasks or acting on behalf of public authorities, to the extent and for the purposes resulting from applicable law,")}</p>
+            <br/>
+            <p>2) {t("entities supporting the Administrator in carrying out his business and operational processes, including entities processing personal data on behalf of the Administrator,")}</p>
+            <br/>
+            <p>3) {t("the electronic payment operator.")}</p>
+            <br/>
+
+            <p><strong>{t("6. Periods of personal data processing")}</strong></p>
+            <p>{t("Your personal data will be processed for the period necessary to achieve the purposes of processing indicated in point 3 above, i.e., for the duration:")}</p>
+            <br/>
+            <ol>
+                <li>{t("a) of the contract binding you with the Administrator,")}</li>
                 <br/>
-                <p><strong>2. RODO </strong></p>
-
-
-                <p>RODO to Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27
-                    kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych
-                    osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy
-                    95/46/WE. RODO reguluje kwestie związane z przetwarzaniem danych osobowych. </p>
-
+                <li>{t("b) of fulfilling legal obligations incumbent on the Administrator, including obligations related to data storage, e.g., for financial reporting purposes,")}</li>
                 <br/>
-                <p><strong>3. Cele oraz podstawy prawne przetwarzania danych osobowych </strong></p>
-
+                <li>{t("c) of the Administrator’s legitimate interests, in particular for the periods of limitation specified in separate regulations,")}</li>
                 <br/>
-                <p>Twoje dane osobowe są przetwarzane w celu zawarcia i wykonania umowy
-                    z Administratorem, tj. umowy o świadczenie usług określonych w Regulaminie
-                    Świadczenia Usług Drogą Elektroniczną, dostępnym na stronie internetowej www.michal-trener.com
-                    (<em>podstawa prawna: art. 6 ust. 1 lit. b RODO</em>). </p>
+                <li>{t("d) until the withdrawal of consent – if the processing is based on your consent.")}</li>
+            </ol>
+            <br/>
+
+            <p><strong>{t("7. Profiling and automated decision-making")}</strong></p>
+            <p>{t("Your personal data will not be subject to profiling. The Administrator will not make automated decisions that have significant consequences for you.")}</p>
+            <br/>
+
+            <p><strong>{t("8. Rights of the data subject")}</strong></p>
+            <p>{t("In connection with the processing of your personal data, you have the following rights:")}</p>
+            <ol>
+                <li>{t("a) the right to access personal data, including the right to obtain a copy of such data,")}</li>
                 <br/>
-
-                <p>Twoje dane osobowe są przetwarzane także w celu wypełniania obowiązków prawnych
-                    ciążących na Administratorze, związanych z wystawianiem faktur, rachunków
-                    oraz prowadzeniem sprawozdawczości finansowej (<em>podstawa prawna: art. 6 ust. 1 lit.
-                        c RODO</em>) </p>
-
+                <li>{t("b) the right to request rectification (correction) of data,")}</li>
                 <br/>
-                <p>Ponadto, w niektórych przypadkach jest lub może okazać się konieczne przetwarzanie
-                    Twoich danych osobowych dla celów wynikających z realizacji prawnie uzasadnionych
-                    interesów Administratora (<em>podstawa prawna: art. 6 ust. 1 lit. f RODO</em>),
-                    w szczególności: </p>
-
+                <li>{t("c) the right to request the erasure of personal data (the so-called 'right to be forgotten'),")}</li>
                 <br/>
-                <p>1) w celu marketingu produktów i usług oferowanych przez Administratora lub partnerów
-                    Administratora, </p>
-
+                <li>{t("d) the right to request restriction of the processing of personal data,")}</li>
                 <br/>
-                <p>2) w celu odpowiadania na zapytania zadawane za pośrednictwem formularza
-                    kontaktowego, </p>
-
+                <li>{t("e) the right to data portability, including the right to transfer data directly to another data controller,")}</li>
                 <br/>
-                <p>3) w celu rozpatrywania skarg i reklamacji dotyczących usług świadczonych
-                    przez Administratora, </p>
+                <li>{t("f) the right to object to the processing of personal data.")}</li>
+            </ol>
+            <br/>
 
-                <br/>
-                <p>4) w celach związanych z monitorowaniem i poprawą jakości usług świadczonych
-                    przez Administratora, </p>
+            <p>{t("You can exercise the above rights:")}</p>
+            <p>{t("The scope of each of the above rights and the situations in which you can exercise them are determined by law. The possibility of exercising some of these rights may depend, among other things, on the legal grounds, purpose, or method of processing.")}</p>
+            <br/>
 
-                <br/>
-                <p>5) w przypadku, gdy znajdzie to zastosowanie – w celach związanych
-                    z prowadzeniem postępowań spornych, a także postępowań przed organami władzy
-                    publicznej oraz innych postępowań, w tym w celu dochodzenia oraz obrony
-                    przed roszczeniami, </p>
+            <p><strong>{t("9. Right to withdraw consent to personal data processing")}</strong></p>
+            <p>{t("To the extent that you have given consent for the processing of personal data, you have the right to withdraw this consent. Withdrawal of consent does not affect the lawfulness of the processing carried out on the basis of consent before its withdrawal.")}</p>
+            <br/>
 
-                <br/>
-                <p>6) w celu wysyłania drogą elektroniczną informacji handlowych w rozumieniu ustawy
-                    z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną (w przypadku
-                    wyrażenia stosownej zgody). </p>
+            <p><strong>{t("10. Right to lodge a complaint with a supervisory authority")}</strong></p>
+            <p>{t("If you believe that the processing of your personal data violates applicable law, you may lodge a complaint with the supervisory authority – the President of the Personal Data Protection Office (ul. Stawki 2, 00-193 Warsaw).")}</p>
+            <br/>
 
-                <br/>
-                <p>W innych przypadkach Twoje dane osobowe przetwarzane będą wyłącznie na podstawie
-                    udzielonej zgody (<em>podstawa prawna: art. 6 ust. 1 lit. a RODO lub art. 9 ust. 2 lit.
-                        a RODO</em>), w celu określonym w treści zgody. </p>
-
-                <br/>
-                <p><strong>4. Obowiązek podania danych osobowych </strong></p>
+            <p>
+                <strong>{t("11. Transfer of personal data to entities outside the European Economic Area ('EEA') or international organizations")}</strong>
+            </p>
+            <p>{t("The Administrator does not plan to transfer your personal data to entities outside the EEA or to international organizations.")}</p>
+        </div>
 
 
-                <p>Podanie przez Ciebie danych osobowych jest warunkiem zawarcia i prawidłowego wykonania
-                    umowy lub rozpatrzenia wniesionego zapytania, skargi lub zgłoszenia. Niepodanie wymaganych danych
-                    osobowych może stanowić przeszkodę uniemożliwiającą zawarcie i realizację umowy
-                    oraz świadczenie usług przez Administratora. </p>
-
-                <br/>
-                <p><strong>5. Informacje o odbiorcach danych osobowych </strong></p>
-
-
-                <p>Twoje dane osobowe mogą być udostępniane następującym odbiorcom bądź kategoriom odbiorców
-                    danych: </p>
-
-                <br/>
-                <p>1) organom władzy publicznej oraz podmiotom wykonującym zadania publiczne lub działającym
-                    na zlecenie organów władzy publicznej, w zakresie i dla celów wynikających
-                    z obowiązujących przepisów prawa, </p>
-
-                <br/>
-                <p>2) podmiotom wspierającym Administratora w realizacji jego procesów biznesowych
-                    i operacyjnych, w tym podmiotom przetwarzającym dane osobowe w imieniu
-                    Administratora, </p>
-
-                <br/>
-                <p>3) operatorowi płatności elektronicznych. </p>
-
-                <br/>
-                <p><strong>6. Okresy przetwarzania danych osobowych </strong></p>
-
-                <br/>
-                <p>Twoje dane osobowe będą przetwarzane przez okres niezbędny do realizacji celów
-                    przetwarzania wskazanych w pkt. 3 powyżej, tj. przez okres: </p>
-
-
-                <ol><br/>
-                    <li>a) obowiązywania umowy łączącej Ciebie z Administratorem,</li>
-                    <br/>
-                    <li>b) wypełniania obowiązków prawnych ciążących na Administratorze, w tym obowiązków
-                        związanych z przechowywaniem danych, np. dla celów sprawozdawczości
-                        finansowej,
-                    </li>
-                    <br/>
-                    <li>c) realizacji przez Administratora jego prawnie uzasadnionych interesów,
-                        w szczególności przez przewidziane w odrębnych przepisach okresy przedawnienia
-                        roszczeń,
-                    </li>
-                    <br/>
-                    <li>d) do czasu wycofania zgody – o ile przetwarzanie odbywa się na podstawie
-                        wyrażonej przez Ciebie zgody.
-                    </li>
-                    <br/>
-                </ol>
-
-
-                <p><strong>7. Profilowanie oraz zautomatyzowane podejmowanie decyzji </strong></p>
-                <br/>
-
-                <p>Twoje dane osobowe nie będą podlegały profilowaniu. Administrator nie będzie
-                    podejmował zautomatyzowanych decyzji wywołujących dla Ciebie istotnych skutków. </p>
-
-
-                <p><strong>8. Prawa osoby, której dane dotyczą </strong></p>
-                <br/>
-
-                <p>W związku z przetwarzaniem Twoich danych osobowych przysługują Tobie następujące
-                    prawa: </p>
-
-
-                <ol><br/>
-                    <li>a) prawo dostępu do danych osobowych, w tym prawo do uzyskania kopii tych
-                        danych,
-                        <br/>
-                    </li>
-                    <br/>
-                    <li>b) prawo do żądania sprostowania (poprawienia) danych,</li>
-                    <br/>
-                    <li>c) prawo do żądania usunięcia danych osobowych (tzw. „prawo do bycia
-                        zapomnianym”),
-                    </li>
-                    <br/>
-                    <li>d) prawo do żądania ograniczenia przetwarzania danych osobowych,</li>
-                    <br/>
-                    <li>e) prawo do przenoszenia danych, w tym prawo do przenoszenia danych bezpośrednio
-                        do innego administratora danych,
-                    </li>
-                    <br/>
-                    <li>f) prawo do sprzeciwu wobec przetwarzania danych osobowych.</li>
-                    <br/>
-                </ol>
-
-
-                <p>Z powyższych uprawnień możesz skorzystać: </p>
-
-                <p>Zakres każdego z powyższych uprawnień oraz sytuacje, w których możesz z nich
-                    skorzystać, są określone przepisami prawa. Możliwość skorzystania z niektórych z ww.
-                    uprawnień może być uzależniona m.in. od podstaw prawnych, celu lub sposobu ich
-                    przetwarzania. </p>
-
-                <br/>
-                <p><strong>9. Prawo do cofnięcia zgody na przetwarzanie danych osobowych </strong></p>
-
-
-                <p>W zakresie, w jakim udzielona została przez Ciebie zgoda na przetwarzanie danych
-                    osobowych, przysługuje Tobie prawo do cofnięcia tej zgody. Wycofanie zgody nie wpływa
-                    na zgodność z prawem przetwarzania, którego dokonano na podstawie zgody
-                    przed jej wycofaniem. </p>
-
-                <br/>
-                <p><strong>10. Prawo wniesienia skargi do organu nadzorczego </strong></p>
-
-
-                <p>W przypadku uznania, że przetwarzanie Twoich danych osobowych narusza przepisy
-                    obowiązującego prawa, możesz wnieść skargę do organu nadzorczego – Prezesa Urzędu Ochrony
-                    Danych Osobowych (ul. Stawki 2, 00-193 Warszawa). </p>
-
-                <br/>
-                <p><strong>11. Przekazywanie danych osobowych do podmiotów spoza Europejskiego Obszaru
-                    Gospodarczego („EOG”) lub organizacji międzynarodowych </strong></p>
-
-
-                <p>Administrator nie planuje przekazywać Twoich danych osobowych do podmiotów spoza EOG
-                    ani do organizacji międzynarodowych. </p>
-            </div>
-
-
-        </>
-    )
+    </>)
 }
 
 export default PrivatePolicy
