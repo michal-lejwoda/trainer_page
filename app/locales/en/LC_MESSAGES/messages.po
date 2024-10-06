@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-21 19:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Congratulations! You have added 5 exercises."
+msgstr "Congratulations! You have added 5 exercises."
+
+msgid "Congratulations! You have just created your first training."
+msgstr "Congratulations! You have just created your first training."
+
+msgid "Password is too short (min 4 letters)"
+msgstr "Password is too short (min 4 letters)"
+
+msgid "Password is too long (max 50 letters)"
+msgstr "Password is too long (max 50 letters)"
+
+msgid "Username is too short (min 4 letters)"
+msgstr "Username is too short (min 4 letters)"
+
+msgid "Username is too long (max 30 letters)"
+msgstr "Username is too long (max 30 letters)"
+
+msgid "Address email is invalid"
+msgstr "Address email is invalid"
+
+msgid "Passwords do not match"
+msgstr "Passwords do not match"
+
+msgid "Token is invalid"
+msgstr "Token is invalid"
+
+msgid "You are logged out"
+msgstr "You are logged out"
+
+msgid "Unfortunately, the password change failed"
+msgstr "Unfortunately, the password change failed"
+
+msgid "Password has been changed"
+msgstr "Password has been changed"
+
+msgid "Old password is invalid"
+msgstr "Old password is invalid"
+
+msgid "Please fix mistakes is change password form"
+msgstr "Please fix mistakes is change password form"
+
+msgid "User Achievement not found"
+msgstr "User Achievement not found"
+
+msgid "You do not have permission to modify this achievement"
+msgstr "You do not have permission to modify this achievement"
+
+msgid "Achievement activated successfully"
+msgstr "Achievement activated successfully"
+
+msgid "Fields 'name' and 'description' cannot be empty"
+msgstr "Fields 'name' and 'description' cannot be empty"

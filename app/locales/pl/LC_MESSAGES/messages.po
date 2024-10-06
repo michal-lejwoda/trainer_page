@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-21 19:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+msgid "Message"
+msgstr "Wiadomość"
+
+msgid "Created goal."
+msgstr "Stworzono cel."
+
+msgid "Congratulations! You have added your first exercise."
+msgstr "Gratulacje! Udało ci się stworzyć twoje własne ćwiczenie."
+
+msgid "Congratulations! You have been logged in for 10 minutes."
+msgstr "Gratulacje! Jesteś zalogowany przez 10 minut."
+
+msgid "Congratulations! You have added 5 exercises."
+msgstr "Gratulacje! Dodałeś 5 własnych ćwiczeń."
+
+msgid "Congratulations! You have successfully modified 100 workouts."
+msgstr "Gratulacje! Zmodyfikowałeś 100 treningów."
+
+msgid "Congratulations! You have successfully modified 10 workouts."
+msgstr "Gratulacje! Zmodyfikowałeś 10 treningów."
+
+msgid "Congratulations! You have successfully modified your first workout."
+msgstr "Gratulacje! Zmodyfikowałeś swój własny pierwszy trening."
+
+msgid "Congratulations! You have spent 50 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 50 godzin."
+
+msgid "Congratulations! You have spent 100 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 100 godzin."
+
+msgid "Congratulations! You have spent 200 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 200 godzin."
+
+
+msgid "Congratulations! You have been logged into the site for 1 hour."
+msgstr "Gratulacje! Jesteś zalogowany przez 1 godzine."
+
+msgid "Congratulations! You have been logged in for 2 hours."
+msgstr "Gratulacje! Jesteś zalogowany przez 2 godziny."
+
+msgid "Congratulations! You have been logged in for 4 hours."
+msgstr "Gratulacje! Jesteś zalogowany przez 4 godziny."
+
+msgid "Congratulations! You have just created your first training."
+msgstr "Gratulacje! Stworzyłeś swój pierwszy trening."
+
+msgid "Password is too short (min 4 letters)"
+msgstr "Hasło jest za krótkie (min 4 litery)"
+
+msgid "Password is too long (max 50 letters)"
+msgstr "Hasło jest za długie (max 50 liter)"
+
+msgid "Username is too short (min 4 letters)"
+msgstr "Nazwa użytkownika jest za krótka (min 4 litery)"
+
+msgid "Username is too long (max 30 letters)"
+msgstr "Nazwa użytkownika jest za długa (max 30 liter)"
+
+msgid "Address email is invalid"
+msgstr "Adres e-mail jest nieprawidłowy"
+
+msgid "Passwords do not match"
+msgstr "Hasła nie są zgodne"
+
+msgid "Token is invalid"
+msgstr "Token jest nieprawidłowy"
+
+msgid "You are logged out"
+msgstr "Zostałeś wylogowany"
+
+msgid "Unfortunately, the password change failed"
+msgstr "Niestety zmiana hasła się nie powiodła"
+
+msgid "Password has been changed"
+msgstr "Hasło zostało zmienione"
+
+msgid "Old password is invalid"
+msgstr "Stare hasło jest nieprawidłowe"
+
+msgid "Please fix mistakes is change password form"
+msgstr "Proszę poprawić błędy w formularzu zmiany hasła"
+
+msgid "Fields 'name' and 'description' cannot be empty"
+msgstr "Pola nazwa i opis nie mogą być puste"

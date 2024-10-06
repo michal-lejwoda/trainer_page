@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-21 19:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: achievements/signals.py:43 achievements/views.py:11
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Created goal."
+msgstr "Angelegtes Ziel."
+
+msgid "Congratulations! You have added your first exercise."
+msgstr "Gratulacje! Udało ci się stworzyć twoje własne ćwiczenie."
+
+msgid "Congratulations! You have been logged in for 10 minutes."
+msgstr "Gratuliere! Du bist seit 10 Minuten eingeloggt."
+
+msgid "Congratulations! You have added 5 exercises."
+msgstr "Gratulacje! Dodałeś 5 własnych ćwiczeń."
+
+msgid "Congratulations! You have successfully modified 100 workouts."
+msgstr "Gratulacje! Zmodyfikowałeś 100 treningów."
+
+msgid "Congratulations! You have successfully modified 10 workouts."
+msgstr "Gratulacje! Zmodyfikowałeś 10 treningów."
+
+msgid "Congratulations! You have successfully modified your first workout."
+msgstr "Gratulacje! Zmodyfikowałeś swój własny pierwszy trening."
+
+msgid "Congratulations! You have spent 50 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 50 godzin."
+
+msgid "Congratulations! You have spent 100 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 100 godzin."
+
+msgid "Congratulations! You have spent 200 hours on the site."
+msgstr "Gratulacje! Spędziłeś na stronie 200 godzin."
+
+
+msgid "Congratulations! You have been logged into the site for 1 hour."
+msgstr "Gratulacje! Jesteś zalogowany przez 1 godzine."
+
+msgid "Congratulations! You have been logged in for 2 hours."
+msgstr "Gratulacje! Jesteś zalogowany przez 2 godziny."
+
+msgid "Congratulations! You have been logged in for 4 hours."
+msgstr "Gratulacje! Jesteś zalogowany przez 4 godziny."
+
+msgid "Congratulations! You have just created your first training."
+msgstr "Gratuliere! Du hast gerade dein erstes Training erstellt."
+
+msgid "Password is too short (min 4 letters)"
+msgstr "Das Passwort ist zu kurz (mind. 4 Buchstaben)"
+
+msgid "Password is too long (max 50 letters)"
+msgstr "Das Passwort ist zu lang (max. 50 Buchstaben)"
+
+msgid "Username is too short (min 4 letters)"
+msgstr "Der Benutzername ist zu kurz (mind. 4 Buchstaben)"
+
+msgid "Username is too long (max 30 letters)"
+msgstr "Der Benutzername ist zu lang (max. 30 Buchstaben)"
+
+msgid "Address email is invalid"
+msgstr "Die E-Mail-Adresse ist ungültig"
+
+msgid "Passwords do not match"
+msgstr "Die Passwörter stimmen nicht überein"
+
+msgid "Token is invalid"
+msgstr "Das Token ist ungültig"
