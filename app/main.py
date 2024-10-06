@@ -1,3 +1,5 @@
+import gettext
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -21,6 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+locales_dir = 'locales'
+lang = 'en'
+translation = gettext.translation('messages', localedir=locales_dir, languages=[lang])
+translation.install()
 app.include_router(users.router)
 app.include_router(reservation.router)
 scheduler.start()
