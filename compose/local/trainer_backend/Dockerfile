@@ -3,6 +3,8 @@ LABEL author="michal"
 
 WORKDIR /code
 
+RUN apt-get update && apt-get install -y gettext
+
 COPY ./requirements.txt /code/requirements.txt
 
 COPY ./compose/local/trainer_backend/start_trainer_backend ./start_trainer_backend

@@ -1,8 +1,9 @@
 import datetime
+import gettext
 from typing import List
 
 from app.reservations.schemas import WorkHourCreate
-
+from fastapi import Request
 
 def hour_range(single_date: datetime.date, start_hour: datetime.time, end_hour: datetime.time, trainer_id: int) -> List[WorkHourCreate]:
     list_of_elements = []
@@ -20,3 +21,10 @@ def hour_range(single_date: datetime.date, start_hour: datetime.time, end_hour: 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days) + 1):
         yield start_date + datetime.timedelta(n)
+
+
+
+def get_locale(request: Request):
+    accept_language = request.headers.get("Accept-Language", "en")
+    lang_code = accept_language.split(",")[0].strip()
+    return gettext.translation('base', localedir='locales', languages=[lang_code], fallback=True).gettext
