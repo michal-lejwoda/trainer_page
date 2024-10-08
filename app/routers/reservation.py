@@ -20,7 +20,7 @@ from app.reservations.schemas import TimeDiff, TrainerBase, \
 from app.routers.dependencies import verify_jwt_trainer_auth
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404
 from app.send_email import send_email_background, send_email, send_mail_to_admin
-from app.translation import trans
+from app.translation import trans as _
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
@@ -288,17 +288,7 @@ locales_dir = "app/locales"
 
 @router.get("/test")
 def test_url(request: Request):
-    lang = request.headers.get('Accept-Language', 'de').split(',')[0]  # Użyj języka z nagłówka
+    lang = request.headers.get('Accept-Language', 'de').split(',')[0]
     print(f"Using language: {lang}")
-    return {"message": trans("Message")}
+    return {"message": _("Message")}
 
-
-@router.get("/")
-async def read_root():
-    return {"message": "Hello, World!"}
-
-
-@router.get("/middleware")
-async def get_middleware():
-    print("middleware")
-    return {"middleware": "middleware"}
