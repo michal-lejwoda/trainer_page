@@ -53,7 +53,7 @@ def create_reservation(
     work_hours.is_active = False
     db.add_all([reservation_model, work_hours])
     db.commit()
-    return {"detail": "Reservation created successfully"}
+    return {"detail": _("Reservation created successfully")}
 
 
 @router.get("/reservation", response_model=List[ReservationOut])
@@ -90,10 +90,10 @@ def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(ge
 def delete_working_hour(id: int, db: Session = Depends(get_db)):
     element_to_delete = db.query(WorkingHour).filter(WorkingHour.id == id).first()
     if element_to_delete is None:
-        raise HTTPException(status_code=404, detail='Work hour not found')
+        raise HTTPException(status_code=404, detail=_('Work hour not found'))
     db.delete(element_to_delete)
     db.commit()
-    return {"detail": "Work hour has been deleted successfully"}
+    return {"detail": _("Work hour has been deleted successfully")}
 
 
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
@@ -120,7 +120,7 @@ def delete_work_hour(id: int, db: Session = Depends(get_db)):
     element_to_delete = get_work_hour_or_404(id, db)
     db.delete(element_to_delete)
     db.commit()
-    return {"detail": "Work hour deleted successfully"}
+    return {"detail": _("Work hour deleted successfully")}
 
 
 # TODO BAck here
@@ -176,7 +176,7 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
     db.commit()
     trainer_model = db.query(Trainer).filter(Trainer.id == trainer.get('id')).first()
     if trainer_model is None:
-        raise HTTPException(status_code=404, detail="Trainer not found")
+        raise HTTPException(status_code=404, detail=_("Trainer not found"))
 
     trainer_model.address_id = address_model.id
     db.commit()
@@ -200,7 +200,7 @@ async def get_trainer_plans(trainer_model: TrainerId, db: Session = Depends(get_
     trainer_plans = db.query(Plan).filter(Plan.trainer_id == trainer_model.trainer_id).all()
 
     if not trainer_plans:
-        raise HTTPException(status_code=404, detail="No plans found for this trainer")
+        raise HTTPException(status_code=404, detail=_("No plans found for this trainer"))
 
     return trainer_plans
 
@@ -229,7 +229,7 @@ async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
 @router.post("/send-email/background_task", status_code=200)
 def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: EmailBody):
     send_email_background(background_tasks, 'Potwierdzenie rezerwacji', email_body.email, email_body.body)
-    return {'message': 'Success'}
+    return {'message': _('Success')}
 
 
 @router.post("/send_reset_password_on_email", status_code=200)
@@ -240,34 +240,35 @@ def send_reset_password_on_email(email: str = Form(...), background_tasks=Backgr
         raise HTTPException(status_code=404, detail="User not found")
 
     url = f"{FRONTEND_DOMAIN}/reset_password/{user.id}/{user.name}"
-    send_email(background_tasks, 'Reset hasła na stronie trener michał', email, {'email': email, 'url': url},
+    send_email(background_tasks, _('Password reset on trener-personalny-michal.pl'), email, {'email': email,
+                                                                                             'url': url},
                'reset_password.html')
-    return {'message': 'Reset password email sent'}
+    return {'message': _('Reset password email sent')}
 
 
 @router.post("/reset_password", status_code=200)
 def reset_password(password: str = Form(...), repeat_password: str = Form(...), email: str = Form(...),
                    db: Session = Depends(get_db)):
     if password != repeat_password:
-        raise HTTPException(status_code=400, detail="Passwords do not match")
+        raise HTTPException(status_code=400, detail=_("Passwords do not match"))
 
     user = get_user_by_email(email, db)
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail=_("User not found"))
 
     hashed_password = get_password_hash(password)
     user.password = hashed_password
     db.add(user)
     db.commit()
     db.refresh(user)
-    return {'message': 'Password reset successful'}
+    return {'message': _('Password reset successful')}
 
 
 @router.post('/get_user', response_model=UserOut, status_code=200)
 def get_user(id: str = Form(...), name: str = Form(...), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == id, User.name == name).first()
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail=_("User not found"))
     return user
 
 
@@ -278,9 +279,9 @@ def send_direct_message(
         message: str = Form(...),
         background_tasks: BackgroundTasks = BackgroundTasks()
 ):
-    subject = f'Wiadomość od użytkownika {name} ({email})'
+    subject = _("Message from user") + f'{name} ({email})'
     send_mail_to_admin(background_tasks, subject, {'message': message}, 'mail_to_admin.html')
-    return {'message': 'Direct message sent'}
+    return {'message': _('Direct message has been sent')}
 
 
 locales_dir = "app/locales"
