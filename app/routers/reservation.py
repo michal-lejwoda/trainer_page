@@ -1,13 +1,13 @@
 import datetime
 import os
-from typing import List, Any, Annotated
+from typing import List, Annotated
 
 from dotenv import load_dotenv
-from fastapi import Depends, HTTPException, APIRouter, Form, Cookie
+from fastapi import Depends, HTTPException, APIRouter, Form
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-from starlette import status
 from starlette.background import BackgroundTasks
+from starlette.requests import Request
 
 from app.database import get_db
 from app.reservations.helpers import daterange, hour_range
@@ -20,8 +20,12 @@ from app.reservations.schemas import TimeDiff, TrainerBase, \
 from app.routers.dependencies import verify_jwt_trainer_auth
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404
 from app.send_email import send_email_background, send_email, send_mail_to_admin
+from app.translation import trans
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
+
+# from app.main import _
+
 
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
@@ -89,7 +93,7 @@ def delete_working_hour(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail='Work hour not found')
     db.delete(element_to_delete)
     db.commit()
-    return {"detail": "Work hour deleted successfully"}
+    return {"detail": "Work hour has been deleted successfully"}
 
 
 def create_work_hour(hour_data: WorkHourCreate, db: Session):
@@ -229,7 +233,7 @@ def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: Em
 
 
 @router.post("/send_reset_password_on_email", status_code=200)
-def send_reset_password_on_email(email: str = Form(...), background_tasks = BackgroundTasks(),
+def send_reset_password_on_email(email: str = Form(...), background_tasks=BackgroundTasks(),
                                  db: Session = Depends(get_db)):
     user = get_user_by_email(email, db)
     if not user:
@@ -266,13 +270,35 @@ def get_user(id: str = Form(...), name: str = Form(...), db: Session = Depends(g
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+
 @router.post('/send_direct_message')
 def send_direct_message(
-    name: str = Form(...),
-    email: str = Form(...),
-    message: str = Form(...),
-    background_tasks: BackgroundTasks = BackgroundTasks()
+        name: str = Form(...),
+        email: str = Form(...),
+        message: str = Form(...),
+        background_tasks: BackgroundTasks = BackgroundTasks()
 ):
     subject = f'Wiadomość od użytkownika {name} ({email})'
     send_mail_to_admin(background_tasks, subject, {'message': message}, 'mail_to_admin.html')
     return {'message': 'Direct message sent'}
+
+
+locales_dir = "app/locales"
+
+
+@router.get("/test")
+def test_url(request: Request):
+    lang = request.headers.get('Accept-Language', 'de').split(',')[0]  # Użyj języka z nagłówka
+    print(f"Using language: {lang}")
+    return {"message": trans("Message")}
+
+
+@router.get("/")
+async def read_root():
+    return {"message": "Hello, World!"}
+
+
+@router.get("/middleware")
+async def get_middleware():
+    print("middleware")
+    return {"middleware": "middleware"}
