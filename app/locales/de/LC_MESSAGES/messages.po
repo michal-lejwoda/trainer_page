@@ -65,8 +65,50 @@ msgstr "Der Benutzername ist zu lang (max. 30 Buchstaben)"
 msgid "Address email is invalid"
 msgstr "Die E-Mail-Adresse ist ungültig"
 
-msgid "Passwords do not match"
-msgstr "Die Passwörter stimmen nicht überein"
-
 msgid "Token is invalid"
 msgstr "Das Token ist ungültig"
+
+msgid "Reservation created successfully"
+msgstr "Reservierung erfolgreich erstellt"
+
+msgid "Work hour has been deleted successfully"
+msgstr "Arbeitsstunde wurde erfolgreich gelöscht"
+
+msgid "Work hour deleted successfully"
+msgstr "Arbeitsstunde erfolgreich gelöscht"
+
+msgid "Trainer not found"
+msgstr "Trainer nicht gefunden"
+
+msgid "No plans found for this trainer"
+msgstr "Keine Pläne für diesen Trainer gefunden"
+
+msgid "Passwords do not match"
+msgstr "Passwörter stimmen nicht überein"
+
+msgid "User not found"
+msgstr "Benutzer nicht gefunden"
+
+msgid "Message from user"
+msgstr "Nachricht vom Benutzer"
+
+msgid "Direct message has been sent"
+msgstr "Direktnachricht wurde gesendet"
+
+msgid "Password reset on trener-personalny-michal.pl website"
+msgstr "Passwortzurücksetzung auf der Website trener-personalny-michal.pl"
+
+msgid "Reset password email has been sent"
+msgstr "E-Mail zur Passwortzurücksetzung wurde gesendet"
+
+msgid "Reservation Confirmation"
+msgstr "Reservierungsbestätigung"
+
+msgid "Success"
+msgstr "Erfolg"
+
+msgid "Password reset successful"
+msgstr "Passwortzurücksetzung erfolgreich"
+
+msgid "Work hour not found"
+msgstr "Arbeitsstunde nicht gefunden"

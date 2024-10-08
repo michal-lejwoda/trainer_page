@@ -90,7 +90,7 @@ def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(ge
 def delete_working_hour(id: int, db: Session = Depends(get_db)):
     element_to_delete = db.query(WorkingHour).filter(WorkingHour.id == id).first()
     if element_to_delete is None:
-        raise HTTPException(status_code=404, detail=_('Work hour not found'))
+        raise HTTPException(status_code=404, detail=_("Work hour not found"))
     db.delete(element_to_delete)
     db.commit()
     return {"detail": _("Work hour has been deleted successfully")}
@@ -228,8 +228,8 @@ async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
 
 @router.post("/send-email/background_task", status_code=200)
 def send_email_backgroundtasks(background_tasks: BackgroundTasks, email_body: EmailBody):
-    send_email_background(background_tasks, 'Potwierdzenie rezerwacji', email_body.email, email_body.body)
-    return {'message': _('Success')}
+    send_email_background(background_tasks, _("Reservation Confirmation"), email_body.email, email_body.body)
+    return {'message': _("Success")}
 
 
 @router.post("/send_reset_password_on_email", status_code=200)
@@ -240,10 +240,10 @@ def send_reset_password_on_email(email: str = Form(...), background_tasks=Backgr
         raise HTTPException(status_code=404, detail="User not found")
 
     url = f"{FRONTEND_DOMAIN}/reset_password/{user.id}/{user.name}"
-    send_email(background_tasks, _('Password reset on trener-personalny-michal.pl'), email, {'email': email,
+    send_email(background_tasks, _("Password reset on trener-personalny-michal.pl website"), email, {'email': email,
                                                                                              'url': url},
                'reset_password.html')
-    return {'message': _('Reset password email sent')}
+    return {'message': _("Reset password email has been sent")}
 
 
 @router.post("/reset_password", status_code=200)
@@ -261,7 +261,7 @@ def reset_password(password: str = Form(...), repeat_password: str = Form(...), 
     db.add(user)
     db.commit()
     db.refresh(user)
-    return {'message': _('Password reset successful')}
+    return {'message': _("Password reset successful")}
 
 
 @router.post('/get_user', response_model=UserOut, status_code=200)
@@ -281,10 +281,7 @@ def send_direct_message(
 ):
     subject = _("Message from user") + f'{name} ({email})'
     send_mail_to_admin(background_tasks, subject, {'message': message}, 'mail_to_admin.html')
-    return {'message': _('Direct message has been sent')}
-
-
-locales_dir = "app/locales"
+    return {'message': _("Direct message has been sent")}
 
 
 @router.get("/test")
