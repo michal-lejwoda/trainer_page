@@ -2,6 +2,7 @@ import datetime
 import os
 from typing import List, Annotated
 
+import stripe
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form
 from sqlalchemy import func
@@ -270,6 +271,24 @@ def get_user(id: str = Form(...), name: str = Form(...), db: Session = Depends(g
     if user is None:
         raise HTTPException(status_code=404, detail=_("User not found"))
     return user
+
+@router.post("/process-payment/")
+async def process_payment(amount: int, currency: str, token: str):
+    try:
+
+        charge = stripe.Charge.create(
+            amount=amount,
+            currency=currency,
+            source=token,
+            description="Payment for FastAPI Store",
+        )
+
+        return {"status": "success", "charge_id": charge.id}
+
+    except stripe.error.CardError as e:
+        return {"status": "error", "message": str(e)}
+    except stripe.error.StripeError as e:
+        return {"status": "error", "message": "Something went wrong. Please try again later."}
 
 
 @router.post('/send_direct_message')
