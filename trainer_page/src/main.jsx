@@ -8,6 +8,9 @@ import {Triangle} from 'react-loader-spinner';
 import "./i18n.jsx"
 
 import './index.css'
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
+import CheckoutForm from "./components/CheckoutForm.jsx";
 
 const RegisterForm = lazy(() => import("./components/auth/RegisterForm.jsx"))
 const LoginForm = lazy(() => import("./components/auth/LoginForm.jsx"))
@@ -27,6 +30,20 @@ const ScrollToTop = lazy(() => import("./components/ScrollToTop.jsx"))
 
 
 const queryClient = new QueryClient()
+const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
+const options = {
+    mode: 'payment',
+    amount: 1099,
+    currency: 'usd',
+    // Fully customizable with appearance API.
+    appearance: {
+        theme: 'night',
+        labels: 'floating'
+    },
+};
+
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
@@ -48,20 +65,23 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <div className="min-h-screen">
                             <Navbar/>
                             <ScrollToTop/>
-                            <Routes>
-                                <Route path="/" element={<Homepage/>}/>
-                                <Route path="login" element={<LoginForm/>}/>
-                                <Route path="register" element={<RegisterForm/>}/>
-                                <Route path="contact" element={<Contact/>}/>
-                                <Route path="reservation" element={<Booking/>}/>
-                                <Route path="about-me" element={<AboutMe/>}/>
-                                <Route path="transformations" element={<Transformations/>}/>
-                                <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
-                                <Route path="cookies-policy" element={<CookiesPolicy/>}/>
-                                <Route path="private-policy" element={<PrivatePolicy/>}/>
-                                <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
-                                <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
-                            </Routes>
+                            <Elements stripe={stripePromise} options={options}>
+                                <Routes>
+                                    <Route path="/" element={<Homepage/>}/>
+                                    <Route path="login" element={<LoginForm/>}/>
+                                    <Route path="register" element={<RegisterForm/>}/>
+                                    <Route path="contact" element={<Contact/>}/>
+                                    <Route path="reservation" element={<Booking/>}/>
+                                    <Route path="about-me" element={<AboutMe/>}/>
+                                    <Route path="transformations" element={<Transformations/>}/>
+                                    <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
+                                    <Route path="cookies-policy" element={<CookiesPolicy/>}/>
+                                    <Route path="private-policy" element={<PrivatePolicy/>}/>
+                                    <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
+                                    <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
+                                    <Route path="checkout-form" element={<CheckoutForm/>}/>
+                                </Routes>
+                            </Elements>
                             <Footer/>
                         </div>
                         <CookieConsent
