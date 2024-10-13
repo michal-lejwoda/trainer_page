@@ -105,15 +105,44 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     return db_work_hour
 
 
-# TODO Back here
+
+# @router.post('/generate_hours_based_on_default')
+# def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
+#     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
+#     for single_date in daterange(date_range.start_time, date_range.end_time):
+#         hours_based_on_weekday = [x for x in default_hours if x.weekday == single_date.weekday()]
+#         for hours in hours_based_on_weekday:
+#             for hour in hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id):
+#                 create_work_hour(hour, db)
+
 @router.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
+    new_work_hours = []
     for single_date in daterange(date_range.start_time, date_range.end_time):
         hours_based_on_weekday = [x for x in default_hours if x.weekday == single_date.weekday()]
         for hours in hours_based_on_weekday:
-            for hour in hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id):
-                create_work_hour(hour, db)
+            work_hours_list = hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id)
+            for work_hour in work_hours_list:
+                exists = db.query(WorkHours).filter(
+                    WorkHours.start_time == work_hour.start_time,
+                    WorkHours.end_time == work_hour.end_time,
+                    WorkHours.trainer_id == work_hour.trainer_id,
+                    WorkHours.day == work_hour.day
+                ).first()
+                if not exists:
+                    new_work_hours.append(WorkHours(
+                        start_time=work_hour.start_time,
+                        end_time=work_hour.end_time,
+                        trainer_id=work_hour.trainer_id,
+                        is_active=work_hour.is_active,
+                        day=work_hour.day
+                    ))
+    if new_work_hours:
+        db.bulk_save_objects(new_work_hours)
+        db.commit()
+
+    return {"message": "Default work hours generated successfully"}
 
 
 @router.delete('/delete_work_hour/{id}', response_model=dict)
@@ -124,7 +153,6 @@ def delete_work_hour(id: int, db: Session = Depends(get_db)):
     return {"detail": _("Work hour deleted successfully")}
 
 
-# # TODO BAck here
 # @router.post('/generate_hours')
 # def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
 #     start_time = timediff.start_time.replace(second=0, microsecond=0)
