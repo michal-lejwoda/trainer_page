@@ -124,27 +124,58 @@ def delete_work_hour(id: int, db: Session = Depends(get_db)):
     return {"detail": _("Work hour deleted successfully")}
 
 
-# TODO BAck here
+# # TODO BAck here
+# @router.post('/generate_hours')
+# def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
+#     start_time = timediff.start_time.replace(second=0, microsecond=0)
+#     end_time = timediff.end_time.replace(second=0, microsecond=0)
+#     diff = int((end_time - start_time).total_seconds() / timediff.interval)
+#     result = int(diff / timediff.interval)
+#     for i in range(result):
+#         actual_time = timediff.interval * i
+#         created_start_time = start_time + datetime.timedelta(minutes=actual_time)
+#         created_end_time = created_start_time + datetime.timedelta(minutes=timediff.interval)
+#         if db.query(WorkHours).filter(WorkHours.start_time == created_start_time,
+#                                       WorkHours.end_time == created_end_time).first() is None:
+#             work_hours_model = WorkHours()
+#             work_hours_model.start_time = created_start_time
+#             work_hours_model.end_time = created_end_time
+#             work_hours_model.trainer_id = timediff.trainer_id
+#             work_hours_model.is_active = True
+#             db.add(work_hours_model)
+#             db.commit()
+
 @router.post('/generate_hours')
 def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
     start_time = timediff.start_time.replace(second=0, microsecond=0)
     end_time = timediff.end_time.replace(second=0, microsecond=0)
-    diff = int((end_time - start_time).total_seconds() / timediff.interval)
-    result = int(diff / timediff.interval)
-    for i in range(result):
-        actual_time = timediff.interval * i
-        created_start_time = start_time + datetime.timedelta(minutes=actual_time)
-        created_end_time = created_start_time + datetime.timedelta(minutes=timediff.interval)
-        if db.query(WorkHours).filter(WorkHours.start_time == created_start_time,
-                                      WorkHours.end_time == created_end_time).first() is None:
-            work_hours_model = WorkHours()
-            work_hours_model.start_time = created_start_time
-            work_hours_model.end_time = created_end_time
-            work_hours_model.trainer_id = timediff.trainer_id
-            work_hours_model.is_active = True
-            db.add(work_hours_model)
-            db.commit()
+    interval = datetime.timedelta(minutes=timediff.interval)
+    diff = int((end_time - start_time).total_seconds() / interval.total_seconds())
+    existing_times = db.query(WorkHours.start_time, WorkHours.end_time).filter(
+        WorkHours.trainer_id == timediff.trainer_id,
+        WorkHours.start_time >= start_time,
+        WorkHours.end_time <= end_time
+    ).all()
+    existing_set = set((row.start_time, row.end_time) for row in existing_times)
+    new_work_hours = []
+    for i in range(diff):
+        created_start_time = start_time + i * interval
+        created_end_time = created_start_time + interval
+        if (created_start_time, created_end_time) not in existing_set:
+            work_hours_model = WorkHours(
+                start_time=created_start_time,
+                end_time=created_end_time,
+                trainer_id=timediff.trainer_id,
+                is_active=True
+            )
+            new_work_hours.append(work_hours_model)
 
+    # Bulk insert new work hours
+    if new_work_hours:
+        db.bulk_save_objects(new_work_hours)
+        db.commit()
+
+    return {"message": "Work hours generated successfully"}
 
 @router.get("/get_test_datetime_work_hours", response_model=WorkHourOut)
 def get_test_datetime_work_hours(start_time: datetime.datetime, end_time: datetime.datetime,
