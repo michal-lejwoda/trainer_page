@@ -100,3 +100,9 @@ msgstr "Work hour not found"
 
 msgid "Error creating reservation"
 msgstr "Error creating reservation"
+
+msgid "Work hours are no longer active or not found"
+msgstr "Work hours are no longer active or not found"
+
+msgid "You can't perform this action for another user"
+msgstr "You can't perform this action for another user"
