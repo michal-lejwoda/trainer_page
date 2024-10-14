@@ -38,7 +38,8 @@ function SystemReservation(props) {
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
             const work_hours_args = {
-                "trainer_id": props.trainerPlan.id, "is_active": true,
+                "trainer_id": props.trainerPlan.id,
+                "is_active": true,
                 "day": date.toISOString().split('T')[0]
             }
             mutateWorkHoursData(work_hours_args)

@@ -164,12 +164,7 @@ class EmailBody(BaseModel):
     email: str
     body: dict
 
-class PlanBase(BaseModel):
-    pass
-    class Config:
-        from_attributes = True
-
-class PlanOut(PlanBase):
+class PlanOut(TrainerPlans):
     pass
 
 class UserBase(BaseModel):

@@ -35,18 +35,32 @@ export async function getTrainerPlan(data) {
     return list_of_elements;
 }
 
-
 export async function getDayWorkHours(data) {
-    const response = await instance.post(`/api/get_day_work_hours`, data)
-    return response.data
+    try {
+        const response = await instance.post(`/api/get_day_work_hours`, data);
+        return response.data;
+    } catch (error) {
+        // console.error("Error fetching day work hours:", error);
+        // throw new Error("Failed to fetch day work hours");
+    }
 }
 
 export async function postReservation(data) {
-    const response = await instance.post(`/api/reservation`, data, {withCredentials: true})
-    return response.data
+    try {
+        const response = await instance.post(`/api/reservation`, data, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Error posting reservation:", error);
+        throw new Error("Failed to post reservation");
+    }
 }
 
-export async function sendConfirmationEmail(data){
-    const response = await instance.post(`/api/send-email/background_task`, data, {withCredentials: true})
-    return response.data
+export async function sendConfirmationEmail(data) {
+    try {
+        const response = await instance.post(`/api/send-email/background_task`, data, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        // console.error("Error sending confirmation email:", error);
+        // throw new Error("Failed to send confirmation email");
+    }
 }
