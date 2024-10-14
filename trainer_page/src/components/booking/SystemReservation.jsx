@@ -4,9 +4,11 @@ import '../../css/react-calendar.css'
 import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutations.jsx";
 import Select from 'react-select';
 import {useAuth} from "../auth/AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 
 function SystemReservation(props) {
+    const {t} = useTranslation()
     const [currentDate, setCurrentDate] = useState(new Date());
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const minDate = new Date()
