@@ -97,3 +97,6 @@ msgstr "Password reset successful"
 
 msgid "Work hour not found"
 msgstr "Work hour not found"
+
+msgid "Error creating reservation"
+msgstr "Error creating reservation"

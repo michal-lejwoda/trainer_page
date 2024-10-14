@@ -6,6 +6,7 @@ import stripe
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form
 from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
 from starlette.requests import Request
@@ -25,9 +26,6 @@ from app.translation import trans as _
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
 
-# from app.main import _
-
-
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 router = APIRouter(tags=["reservation"], prefix="/api")
@@ -43,17 +41,25 @@ def create_reservation(
 ):
     user = get_current_user(jwt_trainer_auth, db)
     user_based_on_id = validate_user(user_id, db)
-    work_hours = validate_work_hours(work_hours_id, db)
     verify_user_permission(user, user_based_on_id)
-
-    reservation_model = Reservation(
-        title=title,
-        work_hour_id=work_hours.id,
-        user_id=user.id
-    )
-    work_hours.is_active = False
-    db.add_all([reservation_model, work_hours])
-    db.commit()
+    try:
+        work_hours = validate_work_hours(work_hours_id, db)
+        reservation_model = Reservation(
+            title=title,
+            work_hour_id=work_hours.id,
+            user_id=user.id
+        )
+        db.add(reservation_model)
+        db.commit()
+        work_hours.is_active = False
+        db.add(work_hours)
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=_("Error creating reservation"))
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
     return {"detail": _("Reservation created successfully")}
 
 
