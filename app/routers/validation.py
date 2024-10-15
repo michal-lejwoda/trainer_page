@@ -1,9 +1,10 @@
+from datetime import datetime
 from typing import Type
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.reservations.models import WorkHours
+from app.reservations.models import WorkHours, WorkingHour
 from app.user.models import User
 from app.translation import trans as _
 
@@ -29,3 +30,17 @@ def get_work_hour_or_404(id: int, db: Session):
     if element is None:
         raise HTTPException(status_code=404, detail=_("Work hour not found"))
     return element
+
+def validate_working_hours_not_exists(trainer_id: int, start_hour: datetime.time, end_hour: datetime.time,
+                                      weekday: int, db: Session):
+    if start_hour > end_hour:
+        raise HTTPException(status_code=404, detail=_("End hour must be greater than start hour"))
+    overlapping_hours = db.query(WorkingHour).filter(
+        WorkingHour.trainer_id == trainer_id,
+        WorkingHour.weekday == weekday,
+        WorkingHour.start_hour < end_hour,
+        WorkingHour.end_hour > start_hour
+    ).first()
+
+    if overlapping_hours:
+        raise HTTPException(status_code=404, detail=_("Can't create working hour"))

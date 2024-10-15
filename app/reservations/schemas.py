@@ -72,8 +72,8 @@ class ReservationCreate(ReservationBase):
 
 class WorkingHourBase(BaseModel):
     weekday: int = Field(None, ge=0, le=6)
-    start_time: datetime.time
-    end_time: datetime.time
+    start_hour: datetime.time
+    end_hour: datetime.time
     trainer_id: int
 
     class Config:

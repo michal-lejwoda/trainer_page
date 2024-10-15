@@ -20,7 +20,8 @@ from app.reservations.schemas import TimeDiff, TrainerBase, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
     AddressOut, PlanOut, UserOut
 from app.routers.dependencies import verify_jwt_trainer_auth
-from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404
+from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
+    validate_working_hours_not_exists
 from app.send_email import send_email_background, send_email, send_mail_to_admin
 from app.translation import trans as _
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
@@ -80,13 +81,14 @@ def get_all_working_hours(db: Session = Depends(get_db)):
 
 @router.post("/create_working_hour", response_model=WorkingHourOut)
 def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(get_db)):
+    validate_working_hours_not_exists(working_hours.trainer_id, working_hours.start_hour, working_hours.end_hour,
+                                      working_hours.weekday, db)
     working_hour_model = WorkingHour(
         weekday=working_hours.weekday,
-        start_hour=working_hours.start_time,
-        end_hour=working_hours.end_time,
+        start_hour=working_hours.start_hour,
+        end_hour=working_hours.end_hour,
         trainer_id=working_hours.trainer_id
     )
-
     db.add(working_hour_model)
     db.commit()
     db.refresh(working_hour_model)
