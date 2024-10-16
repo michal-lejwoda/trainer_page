@@ -12,7 +12,7 @@ from starlette.background import BackgroundTasks
 from starlette.requests import Request
 
 from app.database import get_db
-from app.reservations.helpers import daterange, hour_range
+from app.reservations.helpers import generate_date_range, generate_work_hours
 from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
     Reservation
 from app.reservations.schemas import TimeDiff, TrainerBase, \
@@ -113,36 +113,39 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     return db_work_hour
 
 
+
 @router.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
     start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
     end_time = datetime.datetime.combine(date_range.end_time, datetime.datetime.max.time())
 
-    existing_work_hours = db.query(WorkHours).filter(
-        WorkHours.trainer_id == date_range.trainer_id,
-        WorkHours.start_datetime >= start_time,
-        WorkHours.end_datetime <= end_time
-    ).all()
-
-    existing_hours_set = set(
+    existing_work_hours = set(
         (work_hour.start_datetime, work_hour.end_datetime, work_hour.trainer_id)
-        for work_hour in existing_work_hours
+        for work_hour in db.query(WorkHours)
+        .filter(
+            WorkHours.trainer_id == date_range.trainer_id,
+            WorkHours.start_datetime >= start_time,
+            WorkHours.end_datetime <= end_time
+        )
+        .all()
     )
 
     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
     new_work_hours = []
-    for single_date in daterange(date_range.start_time, date_range.end_time):
-        hours_based_on_weekday = [x for x in default_hours if x.weekday == single_date.weekday()]
-        for hours in hours_based_on_weekday:
-            work_hours_list = hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id)
+
+    for single_date in generate_date_range(date_range.start_time, date_range.end_time):
+        for default_hour in filter(lambda x: x.weekday == single_date.weekday(), default_hours):
+            work_hours_list = generate_work_hours(single_date, default_hour.start_hour, default_hour.end_hour,
+                                                  date_range.trainer_id)
             for work_hour in work_hours_list:
                 key = (work_hour.start_datetime, work_hour.end_datetime, work_hour.trainer_id)
-                if key not in existing_hours_set:
+                if key not in existing_work_hours:
                     new_work_hours.append(WorkHours(
+                        date=work_hour.start_datetime.date(),
                         start_datetime=work_hour.start_datetime,
                         end_datetime=work_hour.end_datetime,
                         trainer_id=work_hour.trainer_id,
-                        is_active=work_hour.is_active,
+                        is_active=True,
                     ))
 
     if new_work_hours:
@@ -211,10 +214,11 @@ def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
 
     return {"message": "Work hours generated successfully"}
 
-@router.get("/get_test_datetime_work_hours", response_model=WorkHourOut)
-def get_test_datetime_work_hours(start_time: datetime.datetime, end_time: datetime.datetime,
-                                 db: Session = Depends(get_db)):
-    return db.query(WorkHours).filter(WorkHours.start_time == start_time, WorkHours.end_time == end_time).first()
+
+# @router.get("/get_test_datetime_work_hours", response_model=WorkHourOut)
+# def get_test_datetime_work_hours(start_time: datetime.datetime, end_time: datetime.datetime,
+#                                  db: Session = Depends(get_db)):
+#     return db.query(WorkHours).filter(WorkHours.start_time == start_time, WorkHours.end_time == end_time).first()
 
 
 @router.get("/get_test_work_hours", response_model=list[WorkHourOut])
@@ -307,7 +311,7 @@ def send_reset_password_on_email(email: str = Form(...), background_tasks=Backgr
 
     url = f"{FRONTEND_DOMAIN}/reset_password/{user.id}/{user.name}"
     send_email(background_tasks, _("Password reset on trener-personalny-michal.pl website"), email, {'email': email,
-                                                                                             'url': url},
+                                                                                                     'url': url},
                'reset_password.html')
     return {'message': _("Reset password email has been sent")}
 
@@ -336,6 +340,7 @@ def get_user(id: str = Form(...), name: str = Form(...), db: Session = Depends(g
     if user is None:
         raise HTTPException(status_code=404, detail=_("User not found"))
     return user
+
 
 @router.post("/process-payment/")
 async def process_payment(amount: int, currency: str, token: str):
@@ -373,4 +378,3 @@ def test_url(request: Request):
     lang = request.headers.get('Accept-Language', 'de').split(',')[0]
     print(f"Using language: {lang}")
     return {"message": _("Message")}
-

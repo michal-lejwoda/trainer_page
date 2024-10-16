@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -23,9 +23,9 @@ class WorkHours(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    day = Column(Date)
-    start_time = Column(Time)
-    end_time = Column(Time)
+    date = Column(Date)
+    start_datetime = Column(DateTime)
+    end_datetime = Column(DateTime)
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
     is_active = Column(Boolean, default=True)
     reservation = relationship("Reservation", back_populates="work_hours")
