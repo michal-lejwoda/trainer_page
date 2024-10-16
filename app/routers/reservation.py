@@ -113,18 +113,22 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     return db_work_hour
 
 
-
-# @router.post('/generate_hours_based_on_default')
-# def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
-#     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
-#     for single_date in daterange(date_range.start_time, date_range.end_time):
-#         hours_based_on_weekday = [x for x in default_hours if x.weekday == single_date.weekday()]
-#         for hours in hours_based_on_weekday:
-#             for hour in hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id):
-#                 create_work_hour(hour, db)
-
 @router.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
+    start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
+    end_time = datetime.datetime.combine(date_range.end_time, datetime.datetime.max.time())
+
+    existing_work_hours = db.query(WorkHours).filter(
+        WorkHours.trainer_id == date_range.trainer_id,
+        WorkHours.start_datetime >= start_time,
+        WorkHours.end_datetime <= end_time
+    ).all()
+
+    existing_hours_set = set(
+        (work_hour.start_datetime, work_hour.end_datetime, work_hour.trainer_id)
+        for work_hour in existing_work_hours
+    )
+
     default_hours = db.query(WorkingHour).filter(WorkingHour.trainer_id == date_range.trainer_id).all()
     new_work_hours = []
     for single_date in daterange(date_range.start_time, date_range.end_time):
@@ -132,20 +136,15 @@ def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends
         for hours in hours_based_on_weekday:
             work_hours_list = hour_range(single_date, hours.start_hour, hours.end_hour, date_range.trainer_id)
             for work_hour in work_hours_list:
-                exists = db.query(WorkHours).filter(
-                    WorkHours.start_time == work_hour.start_time,
-                    WorkHours.end_time == work_hour.end_time,
-                    WorkHours.trainer_id == work_hour.trainer_id,
-                    WorkHours.day == work_hour.day
-                ).first()
-                if not exists:
+                key = (work_hour.start_datetime, work_hour.end_datetime, work_hour.trainer_id)
+                if key not in existing_hours_set:
                     new_work_hours.append(WorkHours(
-                        start_time=work_hour.start_time,
-                        end_time=work_hour.end_time,
+                        start_datetime=work_hour.start_datetime,
+                        end_datetime=work_hour.end_datetime,
                         trainer_id=work_hour.trainer_id,
                         is_active=work_hour.is_active,
-                        day=work_hour.day
                     ))
+
     if new_work_hours:
         db.bulk_save_objects(new_work_hours)
         db.commit()
@@ -206,7 +205,6 @@ def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
             )
             new_work_hours.append(work_hours_model)
 
-    # Bulk insert new work hours
     if new_work_hours:
         db.bulk_save_objects(new_work_hours)
         db.commit()
