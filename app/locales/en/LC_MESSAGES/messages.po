@@ -106,3 +106,12 @@ msgstr "Work hours are no longer active or not found"
 
 msgid "You can't perform this action for another user"
 msgstr "You can't perform this action for another user"
+
+msgid "End time must be after start time."
+msgstr "End time must be after start time."
+
+msgid "The time slot overlaps with existing work hours."
+msgstr "The time slot overlaps with existing work hours."
+
+msgid "An error occurred while saving work hours."
+msgstr "An error occurred while saving work hours."

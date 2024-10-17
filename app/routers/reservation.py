@@ -18,7 +18,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut
+    AddressOut, PlanOut, UserOut, WorkHourIn
 from app.routers.dependencies import verify_jwt_trainer_auth
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -113,7 +113,6 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
     return db_work_hour
 
 
-
 @router.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
     start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
@@ -161,6 +160,37 @@ def delete_work_hour(id: int, db: Session = Depends(get_db)):
     db.delete(element_to_delete)
     db.commit()
     return {"detail": _("Work hour deleted successfully")}
+
+
+@router.post('/generate_hours_manually', response_model=WorkHourOut)
+def generate_hours_manually(work_hour_in: WorkHourIn, db: Session = Depends(get_db)):
+    if work_hour_in.start_datetime >= work_hour_in.end_datetime:
+        raise HTTPException(status_code=400, detail=_("End time must be after start time."))
+
+    overlapping_hours = db.query(WorkHours).filter(
+        WorkHours.trainer_id == work_hour_in.trainer_id,
+        WorkHours.start_datetime < work_hour_in.end_datetime,
+        WorkHours.end_datetime > work_hour_in.start_datetime
+    ).first()
+
+    if overlapping_hours:
+        raise HTTPException(status_code=400, detail=_("The time slot overlaps with existing work hours."))
+    new_work_hour = WorkHours(
+        date=work_hour_in.start_datetime.date(),
+        start_datetime=work_hour_in.start_datetime,
+        end_datetime=work_hour_in.end_datetime,
+        trainer_id=work_hour_in.trainer_id,
+        is_active=True
+    )
+    try:
+        db.add(new_work_hour)
+        db.commit()
+        db.refresh(new_work_hour)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=_("An error occurred while saving work hours."))
+
+    return new_work_hour
 
 
 # @router.post('/generate_hours')

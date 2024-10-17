@@ -96,6 +96,10 @@ class WorkHourBase(BaseModel):
 class WorkHourOut(WorkHourBase):
     date: datetime.date
 
+class WorkHourIn:
+    start_datetime: datetime.datetime
+    end_datetime: datetime.datetime
+    trainer_id: int
 
 class WorkHourCreate(BaseModel):
     date: datetime.date
