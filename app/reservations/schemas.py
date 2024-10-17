@@ -96,7 +96,7 @@ class WorkHourBase(BaseModel):
 class WorkHourOut(WorkHourBase):
     date: datetime.date
 
-class WorkHourIn:
+class WorkHourIn(BaseModel):
     start_datetime: datetime.datetime
     end_datetime: datetime.datetime
     trainer_id: int
@@ -115,7 +115,7 @@ class WorkHourCreate(BaseModel):
 class WorkHourGet(BaseModel):
     trainer_id: int
     is_active: bool
-    day: datetime.date
+    date: datetime.date
 
     class Config:
         from_attributes = True
