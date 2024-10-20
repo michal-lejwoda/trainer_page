@@ -45,6 +45,13 @@ export async function getDayWorkHours(data) {
     }
 }
 
+export async function getNextAvailableDayWorkHours(id){
+    try {
+        const response = await instance.post(`/api/get_next_available_day_work_hours?trainer_id=${id}`);
+        return response.data;
+    } catch (error) {}
+}
+
 export async function postReservation(data) {
     try {
         const response = await instance.post(`/api/reservation`, data, { withCredentials: true });

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Calendar from "react-calendar";
 import '../../css/react-calendar.css'
-import {useGetDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutations.jsx";
+import {useGetDayWorkHours, useGetNextAvailableDayWorkHours, useGetTrainerPlan, useGetTrainers} from "../mutations.jsx";
 import Select from 'react-select';
 import {useAuth} from "../auth/AuthContext.jsx";
 import {useTranslation} from "react-i18next";
@@ -10,6 +10,7 @@ import {useTranslation} from "react-i18next";
 function SystemReservation(props) {
     const {t} = useTranslation()
     const [currentDate, setCurrentDate] = useState(new Date());
+    const [dayWorkHoursData, setDayWorkHoursData] = useState([]);
     const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
     const minDate = new Date()
     const number_of_months = 1
@@ -18,7 +19,7 @@ function SystemReservation(props) {
         data: trainersData,
         mutate: mutateTrainersData,
     } = useGetTrainers()
-
+    console.log("currentDate", currentDate)
 
     const {
         data: trainerPlanData,
@@ -27,9 +28,14 @@ function SystemReservation(props) {
 
 
     const {
-        data: dayWorkHoursData,
-        mutate: mutateWorkHoursData
+        // data: dayWorkHoursData,
+        mutate: mutateWorkHoursData,
     } = useGetDayWorkHours()
+
+    const {
+        data: nextAvailableDayWorkHours,
+        mutate: mutateNextAvailableDayWorkHours
+    } = useGetNextAvailableDayWorkHours()
 
 
     const handleCalendarDateChange = (date) => {
@@ -42,8 +48,13 @@ function SystemReservation(props) {
                 "is_active": true,
                 "date": date.toISOString().split('T')[0]
             }
-            console.log("work_hours_args", work_hours_args)
-            mutateWorkHoursData(work_hours_args)
+            mutateWorkHoursData(work_hours_args, {
+                onSuccess: (data) => {
+
+                    setDayWorkHoursData(data);
+
+                }
+            });
         }
     }
 
@@ -58,7 +69,11 @@ function SystemReservation(props) {
                         "trainer_id": plan_data[0].id, "is_active": true,
                         "day": currentDate.toISOString().split('T')[0]
                     }
-                    mutateWorkHoursData(work_hours_args)
+                    mutateWorkHoursData(work_hours_args, {
+                        onSuccess: (data) => {
+                            setDayWorkHoursData(data);
+                        }
+                    });
                 } else {
                     props.setTrainerPlan(null)
                 }
@@ -67,7 +82,7 @@ function SystemReservation(props) {
 
     }
 
-
+    // TODO Check plan and trainer
     useEffect(() => {
         mutateTrainersData(undefined, {
             onSuccess: (data) => {
@@ -77,11 +92,15 @@ function SystemReservation(props) {
                         onSuccess: (plan_data) => {
                             if (plan_data.length > 0) {
                                 props.setTrainerPlan(plan_data[0])
-                                const work_hours_args = {
-                                    "trainer_id": plan_data[0].id, "is_active": true,
-                                    "day": currentDate.toISOString().split('T')[0]
+                                mutateNextAvailableDayWorkHours(data[0].id, {
+                                onSuccess: (nextAvailableData) => {
+                                    // TODO CREATE EXCEPTION
+                                    console.log("data", nextAvailableData[0].date)
+                                    const isoDateString = new Date(`${nextAvailableData[0].date}T12:00:00Z`).toISOString();
+                                    setCurrentDate(isoDateString)
+                                    setDayWorkHoursData(nextAvailableData);
                                 }
-                                mutateWorkHoursData(work_hours_args)
+                            });
                             } else {
                                 props.setTrainerPlan(null)
                             }
