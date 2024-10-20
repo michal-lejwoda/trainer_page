@@ -37,8 +37,6 @@ function SystemReservation(props) {
         props.setSelectedPlanHour(null)
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
-            console.log(props.trainerPlan.id)
-            console.log(props.trainer)
             const work_hours_args = {
                 "trainer_id": props.trainer.id,
                 "is_active": true,

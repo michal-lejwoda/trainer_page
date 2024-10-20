@@ -286,14 +286,37 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
 
 @router.post("/get_day_work_hours", response_model=List[GetWorkHours])
 async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_db)):
-    print("work_hours.date", work_hours.date)
     trainer_work_hours = db.query(WorkHours).filter(
         WorkHours.date == work_hours.date,
         WorkHours.trainer_id == work_hours.trainer_id,
         WorkHours.is_active == work_hours.is_active
-    ).all()
+    ).order_by(asc(WorkHours.start_datetime)).all()
 
     return trainer_work_hours
+
+
+from sqlalchemy import asc
+from datetime import datetime
+
+
+@router.post("/get_next_available_day_work_hours", response_model=List[GetWorkHours])
+async def get_next_available_day_work_hours(trainer_id: int, db: Session = Depends(get_db)):
+    next_available_work_hour = db.query(WorkHours).filter(
+        WorkHours.trainer_id == trainer_id,
+        WorkHours.is_active == True,
+        WorkHours.date >= datetime.now().date()
+    ).order_by(asc(WorkHours.date)).first()
+
+    if not next_available_work_hour:
+        return []
+
+    work_hours_on_day = db.query(WorkHours).filter(
+        WorkHours.date == next_available_work_hour.date,
+        WorkHours.trainer_id == trainer_id,
+        WorkHours.is_active == True
+    ).order_by(asc(WorkHours.start_datetime)).all()
+
+    return work_hours_on_day
 
 
 @router.post("/get_trainer_plans", response_model=List[PlanOut])
