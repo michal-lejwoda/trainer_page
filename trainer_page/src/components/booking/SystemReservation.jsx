@@ -37,11 +37,14 @@ function SystemReservation(props) {
         props.setSelectedPlanHour(null)
         setCurrentDate(date)
         if (props.trainer !== null && props.trainerPlan !== null) {
+            console.log(props.trainerPlan.id)
+            console.log(props.trainer)
             const work_hours_args = {
-                "trainer_id": props.trainerPlan.id,
+                "trainer_id": props.trainer.id,
                 "is_active": true,
-                "day": date.toISOString().split('T')[0]
+                "date": date.toISOString().split('T')[0]
             }
+            console.log("work_hours_args", work_hours_args)
             mutateWorkHoursData(work_hours_args)
         }
     }
@@ -175,7 +178,7 @@ function SystemReservation(props) {
                             return (
                                 <button key={element.id} onClick={(e) => selectHour(e, element)}
                                         className="bg-transparent hover:bg-blue-300 text-white-700 mx-5 my-5 font-semibold hover:text-white py-2 px-4 border-3 border-darky-grey hover:border-transparent rounded-lg text-white">
-                                    {element.start_time} - {element.end_time}
+                                    {element.start_datetime} - {element.end_datetime}
                                 </button>)
                         })}
                     </div>

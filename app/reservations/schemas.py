@@ -147,18 +147,18 @@ class TrainerId(BaseModel):
 
 class GetWorkHours(BaseModel):
     id: int
-    start_time: datetime.time
-    end_time: datetime.time
-    day: datetime.date
+    start_datetime: datetime.datetime
+    end_datetime: datetime.datetime
+    date: datetime.date
     trainer_id: int
     is_active: bool
 
-    @field_validator('start_time')
-    def parse_start_time(cls, v):
+    @field_validator('start_datetime')
+    def parse_start_datetime(cls, v):
         return v.strftime('%H:%M')
 
-    @field_validator('end_time')
-    def parse_end_time(cls, v):
+    @field_validator('end_datetime')
+    def parse_end_datetime(cls, v):
         return v.strftime('%H:%M')
 
 

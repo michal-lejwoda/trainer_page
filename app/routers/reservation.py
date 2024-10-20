@@ -286,8 +286,9 @@ async def create_address(address: AddressBase, trainer: dict, db: Session = Depe
 
 @router.post("/get_day_work_hours", response_model=List[GetWorkHours])
 async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_db)):
+    print("work_hours.date", work_hours.date)
     trainer_work_hours = db.query(WorkHours).filter(
-        WorkHours.day == work_hours.date,
+        WorkHours.date == work_hours.date,
         WorkHours.trainer_id == work_hours.trainer_id,
         WorkHours.is_active == work_hours.is_active
     ).all()
