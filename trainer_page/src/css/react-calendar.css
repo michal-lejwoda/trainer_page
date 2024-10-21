@@ -26,3 +26,6 @@
     display: flex;
     justify-content: center;
 }
+.react-calendar__tile:disabled{
+    color: grey;
+}

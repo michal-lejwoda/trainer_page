@@ -11,7 +11,7 @@ function SystemReservation(props) {
     const {t} = useTranslation()
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayWorkHoursData, setDayWorkHoursData] = useState([]);
-    const {authUser, setAuthUser, isLoggedIn, setIsLoggedIn} = useAuth()
+    const {authUser} = useAuth()
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
@@ -32,7 +32,6 @@ function SystemReservation(props) {
     } = useGetDayWorkHours()
 
     const {
-        // data: nextAvailableDayWorkHours,
         mutate: mutateNextAvailableDayWorkHours
     } = useGetNextAvailableDayWorkHours()
 
