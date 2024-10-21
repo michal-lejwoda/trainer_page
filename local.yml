@@ -62,8 +62,8 @@ services:
       dockerfile: ./compose/local/trainer_backend/Dockerfile
     env_file:
       - .env.development
-    volumes:
-      - .:/code
+#    volumes:
+#      - .:/code
     networks:
       - backend
     ports:
