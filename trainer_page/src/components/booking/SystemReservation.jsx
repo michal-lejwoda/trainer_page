@@ -15,6 +15,7 @@ function SystemReservation(props) {
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
+    console.log("maxDate", maxDate)
     const {
         data: trainersData,
         mutate: mutateTrainersData,
@@ -28,12 +29,11 @@ function SystemReservation(props) {
 
 
     const {
-        // data: dayWorkHoursData,
         mutate: mutateWorkHoursData,
     } = useGetDayWorkHours()
 
     const {
-        data: nextAvailableDayWorkHours,
+        // data: nextAvailableDayWorkHours,
         mutate: mutateNextAvailableDayWorkHours
     } = useGetNextAvailableDayWorkHours()
 
@@ -88,11 +88,12 @@ function SystemReservation(props) {
             onSuccess: (data) => {
                 if (data.length > 0) {
                     props.setTrainer(data[0])
+                    const formattedDate = new Date(maxDate).toISOString().slice(0, 10);
                     mutatePlanData({"trainer_id": data[0].id}, {
                         onSuccess: (plan_data) => {
                             if (plan_data.length > 0) {
                                 props.setTrainerPlan(plan_data[0])
-                                mutateNextAvailableDayWorkHours(data[0].id, {
+                                mutateNextAvailableDayWorkHours({"id": data[0].id, "max_date": formattedDate}, {
                                 onSuccess: (nextAvailableData) => {
                                     // TODO CREATE EXCEPTION
                                     console.log("data", nextAvailableData[0].date)

@@ -120,6 +120,9 @@ class WorkHourGet(BaseModel):
     class Config:
         from_attributes = True
 
+class MaxDate(BaseModel):
+    max_date: datetime.date
+
 
 class TimeDiff(BaseModel):
     start_time: datetime.datetime

@@ -45,9 +45,9 @@ export async function getDayWorkHours(data) {
     }
 }
 
-export async function getNextAvailableDayWorkHours(id){
+export async function getNextAvailableDayWorkHours(data){
     try {
-        const response = await instance.post(`/api/get_next_available_day_work_hours?trainer_id=${id}`);
+        const response = await instance.post(`/api/get_next_available_day_work_hours?trainer_id=${data.id}`, {"max_date": data.max_date}, { withCredentials: true });
         return response.data;
     } catch (error) {}
 }

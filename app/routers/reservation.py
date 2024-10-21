@@ -18,7 +18,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
 from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate
 from app.routers.dependencies import verify_jwt_trainer_auth
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -300,11 +300,13 @@ from datetime import datetime
 
 
 @router.post("/get_next_available_day_work_hours", response_model=List[GetWorkHours])
-async def get_next_available_day_work_hours(trainer_id: int, db: Session = Depends(get_db)):
+async def get_next_available_day_work_hours(trainer_id: int, data: MaxDate, db: Session = Depends(get_db)):
+    print("data123", data)
     next_available_work_hour = db.query(WorkHours).filter(
         WorkHours.trainer_id == trainer_id,
         WorkHours.is_active == True,
-        WorkHours.date >= datetime.now().date()
+        WorkHours.date >= datetime.now().date(),
+        WorkHours.date <= data.max_date
     ).order_by(asc(WorkHours.date)).first()
 
     if not next_available_work_hour:
