@@ -15,12 +15,11 @@ function SystemReservation(props) {
     const minDate = new Date()
     const number_of_months = 1
     const maxDate = addMonths(minDate, number_of_months);
-    console.log("maxDate", maxDate)
+
     const {
         data: trainersData,
         mutate: mutateTrainersData,
     } = useGetTrainers()
-    console.log("currentDate", currentDate)
 
     const {
         data: trainerPlanData,
