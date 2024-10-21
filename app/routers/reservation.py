@@ -301,7 +301,6 @@ from datetime import datetime
 
 @router.post("/get_next_available_day_work_hours", response_model=List[GetWorkHours])
 async def get_next_available_day_work_hours(trainer_id: int, data: MaxDate, db: Session = Depends(get_db)):
-    print("data123", data)
     next_available_work_hour = db.query(WorkHours).filter(
         WorkHours.trainer_id == trainer_id,
         WorkHours.is_active == True,
