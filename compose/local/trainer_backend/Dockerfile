@@ -9,25 +9,14 @@ COPY . /code
 
 COPY ./requirements.txt /code/requirements.txt
 
-COPY ./migrations /code/migrations
-
-COPY ./compose/local/trainer_backend/create_versions_directory.sh /code/create_versions_directory.sh
-
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
+COPY ./compose/local/trainer_backend/create_versions_directory.sh /scripts/create_versions_directory.sh
+RUN chmod +x /scripts/create_versions_directory.sh
 
+COPY ./compose/local/trainer_backend/createsuperuser.sh /scripts/createsuperuser.sh
+RUN chmod +x /scripts/createsuperuser.sh
 
+ENTRYPOINT ["/scripts/create_versions_directory.sh","/scripts/createsuperuser.sh"]
+CMD ["sh", "-c", "python -m app.createsuperuser && uvicorn app.local:app --host 0.0.0.0 --port 8000 --reload"]
 
-
-#RUN sed -i 's/\r$//g' ./create_versions_directory.sh.sh
-#RUN chmod +x ./create_versions_directory.sh.sh
-
-
-
-
-
-COPY ./alembic.ini /code/alembic.ini
-
-
-
-CMD ["uvicorn", "app.local:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

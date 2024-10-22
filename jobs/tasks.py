@@ -10,7 +10,7 @@ def remove_unactive_records(db: Session):
     for i in old_work_hours:
         i.is_active = False
         db.commit()
-    today_work_hours = db.query(WorkHours).filter(WorkHours.is_active == True, WorkHours.day == current_time.date(),
+    today_work_hours = db.query(WorkHours).filter(WorkHours.is_active == True, WorkHours.date == current_time.date(),
                                                   WorkHours.start_datetime < current_time.time()).all()
     for i in today_work_hours:
         i.is_active = False

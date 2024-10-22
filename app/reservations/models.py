@@ -39,7 +39,7 @@ class Reservation(Base):
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
     work_hours = relationship("WorkHours", back_populates="reservation")
-    users = relationship("User", back_populates="reservations")
+    user = relationship("User", back_populates="reservations")
 
 
 class Trainer(Base):

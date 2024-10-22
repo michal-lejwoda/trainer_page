@@ -14,5 +14,6 @@ class User(Base):
     password = Column(String)
     is_admin = Column(Boolean, default=False)
     is_trainer = Column(Boolean, default=False)
-    reservations = relationship("Reservation", back_populates="users")
+
+    reservations = relationship("Reservation", back_populates="user")
     # reservations_fk = relationship("Reservation", backref="users_fk")
