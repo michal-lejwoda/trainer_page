@@ -6,7 +6,8 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from starlette import status
 
-from app.database import SECRET_KEY, oauth_2_scheme, ALGORITHM, pwd_context
+from app.database import SECRET_KEY, oauth_2_scheme, ALGORITHM, pwd_context, get_db
+from app.reservations.schemas import UserOut
 from app.user.models import User
 from app.user.schemas import TokenData
 
@@ -52,7 +53,8 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta or None = 
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session):
+
+def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)) -> UserOut:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -66,8 +68,10 @@ def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session
         token_data = TokenData(email=email)
     except JWTError:
         raise credentials_exception
+
     user = get_user_by_email(token_data.email, db)
     if user is None:
         raise credentials_exception
-    return user
+
+    return UserOut.model_validate(user)
 

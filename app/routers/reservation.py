@@ -19,7 +19,7 @@ from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
     AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate
-from app.routers.dependencies import verify_jwt_trainer_auth
+from app.routers.dependencies import verify_jwt_trainer_auth, admin_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
 from app.send_email import send_email_background, send_email, send_mail_to_admin
@@ -433,3 +433,8 @@ def test_url(request: Request):
     lang = request.headers.get('Accept-Language', 'de').split(',')[0]
     print(f"Using language: {lang}")
     return {"message": _("Message")}
+
+@router.get("/admin-only")
+async def admin_only_endpoint(superuser = Depends(admin_required)):
+    print("admin", superuser)
+    return {"message": "This is a protected endpoint for admins."}

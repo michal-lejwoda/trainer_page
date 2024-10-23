@@ -178,4 +178,10 @@ class UserBase(BaseModel):
         from_attributes = True
 
 class UserOut(UserBase):
-    pass
+    id: int
+    email: str
+    name: str
+    last_name: str
+    phone_number: str
+    is_admin: bool
+    is_trainer: bool
