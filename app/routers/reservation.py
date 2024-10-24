@@ -19,13 +19,15 @@ from app.reservations.schemas import TimeDiff, TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
     AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate
-from app.routers.dependencies import verify_jwt_trainer_auth, admin_required
+from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
 from app.send_email import send_email_background, send_email, send_mail_to_admin
 from app.translation import trans as _
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
+from sqlalchemy import asc
+from datetime import datetime
 
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
@@ -80,7 +82,8 @@ def get_all_working_hours(db: Session = Depends(get_db)):
 
 
 @router.post("/create_working_hour", response_model=WorkingHourOut)
-def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(get_db)):
+def create_working_hour(working_hours: WorkingHourBase, trainer = Depends(trainer_required), db: Session = Depends(
+    get_db)):
     validate_working_hours_not_exists(working_hours.trainer_id, working_hours.start_hour, working_hours.end_hour,
                                       working_hours.weekday, db)
     working_hour_model = WorkingHour(
@@ -96,7 +99,7 @@ def create_working_hour(working_hours: WorkingHourBase, db: Session = Depends(ge
 
 
 @router.delete("/delete_working_hour/{id}", response_model=dict)
-def delete_working_hour(id: int, db: Session = Depends(get_db)):
+def delete_working_hour(id: int, trainer = Depends(trainer_required), db: Session = Depends(get_db)):
     element_to_delete = db.query(WorkingHour).filter(WorkingHour.id == id).first()
     if element_to_delete is None:
         raise HTTPException(status_code=404, detail=_("Work hour not found"))
@@ -114,7 +117,8 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
 
 
 @router.post('/generate_hours_based_on_default')
-def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends(get_db)):
+def generate_hours_based_on_default(date_range: DateRange, trainer = Depends(trainer_required), db: Session =
+Depends(get_db)):
     start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
     end_time = datetime.datetime.combine(date_range.end_time, datetime.datetime.max.time())
 
@@ -151,11 +155,11 @@ def generate_hours_based_on_default(date_range: DateRange, db: Session = Depends
         db.bulk_save_objects(new_work_hours)
         db.commit()
 
-    return {"message": "Default work hours generated successfully"}
+    return {"message": _("Default work hours generated successfully")}
 
 
 @router.delete('/delete_work_hour/{id}', response_model=dict)
-def delete_work_hour(id: int, db: Session = Depends(get_db)):
+def delete_work_hour(id: int,trainer = Depends(trainer_required), db: Session = Depends(get_db)):
     element_to_delete = get_work_hour_or_404(id, db)
     db.delete(element_to_delete)
     db.commit()
@@ -163,7 +167,8 @@ def delete_work_hour(id: int, db: Session = Depends(get_db)):
 
 
 @router.post('/generate_hours_manually', response_model=WorkHourOut)
-def generate_hours_manually(work_hour_in: WorkHourIn, db: Session = Depends(get_db)):
+def generate_hours_manually(work_hour_in: WorkHourIn, trainer = Depends(trainer_required), db: Session = Depends(
+    get_db)):
     if work_hour_in.start_datetime >= work_hour_in.end_datetime:
         raise HTTPException(status_code=400, detail=_("End time must be after start time."))
 
@@ -192,68 +197,38 @@ def generate_hours_manually(work_hour_in: WorkHourIn, db: Session = Depends(get_
 
     return new_work_hour
 
-
+# #TODO DID I NEED THIS ?
 # @router.post('/generate_hours')
-# def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
+# def generate_hours(timediff: TimeDiff, trainer = Depends(trainer_required), db: Session = Depends(get_db)):
 #     start_time = timediff.start_time.replace(second=0, microsecond=0)
 #     end_time = timediff.end_time.replace(second=0, microsecond=0)
-#     diff = int((end_time - start_time).total_seconds() / timediff.interval)
-#     result = int(diff / timediff.interval)
-#     for i in range(result):
-#         actual_time = timediff.interval * i
-#         created_start_time = start_time + datetime.timedelta(minutes=actual_time)
-#         created_end_time = created_start_time + datetime.timedelta(minutes=timediff.interval)
-#         if db.query(WorkHours).filter(WorkHours.start_time == created_start_time,
-#                                       WorkHours.end_time == created_end_time).first() is None:
-#             work_hours_model = WorkHours()
-#             work_hours_model.start_time = created_start_time
-#             work_hours_model.end_time = created_end_time
-#             work_hours_model.trainer_id = timediff.trainer_id
-#             work_hours_model.is_active = True
-#             db.add(work_hours_model)
-#             db.commit()
+#     interval = datetime.timedelta(minutes=timediff.interval)
+#     diff = int((end_time - start_time).total_seconds() / interval.total_seconds())
+#     existing_times = db.query(WorkHours.start_datetime, WorkHours.end_datetime).filter(
+#         WorkHours.trainer_id == timediff.trainer_id,
+#         WorkHours.start_datetime >= start_time,
+#         WorkHours.end_datetime <= end_time
+#     ).all()
+#     existing_set = set((row.start_datetime, row.end_datetime) for row in existing_times)
+#     new_work_hours = []
+#     for i in range(diff):
+#         created_start_time = start_time + i * interval
+#         created_end_time = created_start_time + interval
+#         if (created_start_time, created_end_time) not in existing_set:
+#             work_hours_model = WorkHours(
+#                 start_time=created_start_time,
+#                 end_time=created_end_time,
+#                 trainer_id=timediff.trainer_id,
+#                 is_active=True
+#             )
+#             new_work_hours.append(work_hours_model)
+#
+#     if new_work_hours:
+#         db.bulk_save_objects(new_work_hours)
+#         db.commit()
+#
+#     return {"message": "Work hours generated successfully"}
 
-@router.post('/generate_hours')
-def generate_hours(timediff: TimeDiff, db: Session = Depends(get_db)):
-    start_time = timediff.start_time.replace(second=0, microsecond=0)
-    end_time = timediff.end_time.replace(second=0, microsecond=0)
-    interval = datetime.timedelta(minutes=timediff.interval)
-    diff = int((end_time - start_time).total_seconds() / interval.total_seconds())
-    existing_times = db.query(WorkHours.start_time, WorkHours.end_time).filter(
-        WorkHours.trainer_id == timediff.trainer_id,
-        WorkHours.start_time >= start_time,
-        WorkHours.end_time <= end_time
-    ).all()
-    existing_set = set((row.start_time, row.end_time) for row in existing_times)
-    new_work_hours = []
-    for i in range(diff):
-        created_start_time = start_time + i * interval
-        created_end_time = created_start_time + interval
-        if (created_start_time, created_end_time) not in existing_set:
-            work_hours_model = WorkHours(
-                start_time=created_start_time,
-                end_time=created_end_time,
-                trainer_id=timediff.trainer_id,
-                is_active=True
-            )
-            new_work_hours.append(work_hours_model)
-
-    if new_work_hours:
-        db.bulk_save_objects(new_work_hours)
-        db.commit()
-
-    return {"message": "Work hours generated successfully"}
-
-
-# @router.get("/get_test_datetime_work_hours", response_model=WorkHourOut)
-# def get_test_datetime_work_hours(start_time: datetime.datetime, end_time: datetime.datetime,
-#                                  db: Session = Depends(get_db)):
-#     return db.query(WorkHours).filter(WorkHours.start_time == start_time, WorkHours.end_time == end_time).first()
-
-
-@router.get("/get_test_work_hours", response_model=list[WorkHourOut])
-def get_test_work_hours(db: Session = Depends(get_db)):
-    return db.query(WorkHours).filter(func.date(WorkHours.start_time) == datetime.date.today()).all()
 
 
 @router.get('/get_all_work_hours', response_model=list[WorkHourOut])
@@ -267,7 +242,9 @@ async def get_address(db: Session = Depends(get_db)):
 
 
 @router.post("/address", response_model=AddressOut, status_code=201)
-async def create_address(address: AddressBase, trainer: dict, db: Session = Depends(get_db)):
+async def create_address(address: AddressBase, trainer: dict, trainer_required = Depends(trainer_required), db: Session
+= (
+    Depends(get_db))):
     address_model = Address(
         address1=address.address1,
         address2=address.address2
@@ -295,8 +272,7 @@ async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_
     return trainer_work_hours
 
 
-from sqlalchemy import asc
-from datetime import datetime
+
 
 
 @router.post("/get_next_available_day_work_hours", response_model=List[GetWorkHours])
