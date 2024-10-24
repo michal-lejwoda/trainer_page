@@ -27,8 +27,10 @@ class TrainerBase(BaseModel):
     class Config:
         from_attributes = True
 
+
 class TrainerOut(TrainerBase):
     pass
+
 
 class TrainerCreate(TrainerBase):
     pass
@@ -55,6 +57,7 @@ class ReservationList(ReservationBase):
     class Config:
         from_attributes = True
 
+
 class ReservationOut(ReservationBase):
     start_time: datetime.datetime
     end_time: datetime.datetime
@@ -79,6 +82,7 @@ class WorkingHourBase(BaseModel):
     class Config:
         from_attributes = True
 
+
 class WorkingHourOut(WorkingHourBase):
     pass
 
@@ -93,13 +97,16 @@ class WorkHourBase(BaseModel):
     class Config:
         from_attributes = True
 
+
 class WorkHourOut(WorkHourBase):
     date: datetime.date
+
 
 class WorkHourIn(BaseModel):
     start_datetime: datetime.datetime
     end_datetime: datetime.datetime
     trainer_id: int
+
 
 class WorkHourCreate(BaseModel):
     date: datetime.date
@@ -119,6 +126,7 @@ class WorkHourGet(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class MaxDate(BaseModel):
     max_date: datetime.date
@@ -169,13 +177,17 @@ class EmailBody(BaseModel):
     email: str
     body: dict
 
+
 class PlanOut(TrainerPlans):
     pass
 
+
 class UserBase(BaseModel):
     pass
+
     class Config:
         from_attributes = True
+
 
 class UserOut(UserBase):
     id: int

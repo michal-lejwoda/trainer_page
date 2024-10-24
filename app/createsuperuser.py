@@ -1,7 +1,6 @@
 from os import environ as env
 
 from app.database import SessionLocal, pwd_context
-from app.reservations.models import Reservation
 from app.user.dependencies import authenticate_and_generate_token_for_user
 from app.user.models import User
 

@@ -3,11 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, HTTPException
 from fastapi import Depends, Cookie, Form
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
 from sqlalchemy import exc
+from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.routers.dependencies import trainer_required, admin_required
+from app.routers.dependencies import admin_required
 from app.user.dependencies import get_password_hash, get_current_user, \
     authenticate_and_generate_token_for_user, get_user_by_email
 from app.user.models import User
@@ -49,14 +49,14 @@ def register_user(name: Annotated[str, Form()], last_name: Annotated[str, Form()
 
 @router.post("/register_trainer", response_model=None)
 def register_trainer(name: Annotated[str, Form()], last_name: Annotated[str, Form()], email: Annotated[str, Form()],
-                  phone_number: Annotated[str, Form()], password: Annotated[str, Form()], admin=Depends(
+                     phone_number: Annotated[str, Form()], password: Annotated[str, Form()], admin=Depends(
             admin_required), db: Session = Depends(get_db)):
     user = get_user_by_email(email, db)
     if user is None:
         try:
             hashed_password = get_password_hash(password)
             user_dict = {"name": name, "last_name": last_name, "email": email, "phone_number": phone_number,
-                         "password": hashed_password,  "is_trainer": True}
+                         "password": hashed_password, "is_trainer": True}
             db_user = User(**user_dict)
             db.add(db_user)
             db.commit()

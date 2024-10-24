@@ -3,9 +3,8 @@ from sqlalchemy.orm import Session
 from starlette import status
 
 from app.database import get_db
-from app.user.dependencies import get_current_user
-from app.user.models import User
 from app.translation import trans as _
+from app.user.dependencies import get_current_user
 
 
 def verify_jwt_trainer_auth(jwt_trainer_auth: str | None = Cookie(None)):
@@ -37,6 +36,7 @@ def admin_required(
 
     return user
 
+
 def trainer_required(
         jwt_trainer_auth_header: str | None = Header(None),
         jwt_trainer_auth: str | None = Cookie(None),
@@ -59,4 +59,3 @@ def trainer_required(
         )
 
     return user
-

@@ -11,6 +11,7 @@ from app.reservations.schemas import UserOut
 from app.user.models import User
 from app.user.schemas import TokenData
 
+
 def authenticate_and_generate_token_for_user(email: str, password: str, db: Session):
     user = authenticate_user(email, password, db)
     if not user:
@@ -21,6 +22,7 @@ def authenticate_and_generate_token_for_user(email: str, password: str, db: Sess
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
 
 def authenticate_user(email: str, password: str, db: Session):
     user = get_user_by_email(email, db)
@@ -37,6 +39,7 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
+
 
 def get_user_by_email(email: str, db: Session):
     return db.query(User).filter(User.email == email).first()
@@ -74,4 +77,3 @@ def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session
         raise credentials_exception
 
     return UserOut.model_validate(user)
-

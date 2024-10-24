@@ -1,10 +1,10 @@
 from os import environ as env
+
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
 
 SECRET_KEY = env['SECRET_KEY']
 ALGORITHM = env['ALGORITHM']

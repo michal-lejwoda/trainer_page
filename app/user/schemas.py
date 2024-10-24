@@ -1,6 +1,5 @@
 import re
 
-from fastapi import Form
 from pydantic import BaseModel, field_validator
 from pydantic_core import PydanticCustomError
 from validate_email import validate_email
@@ -21,6 +20,7 @@ class UserLogin(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class UserBaseSchema(BaseModel):
     name: str
@@ -62,6 +62,7 @@ class UserBaseSchema(BaseModel):
                 # {'number': v},
             )
         return email
+
     @field_validator('phone_number')
     def phone_number_validator(cls, phone_number):
         pattern = re.compile("^\\+?[1-9][0-9]{7,14}$", re.IGNORECASE)
@@ -71,6 +72,7 @@ class UserBaseSchema(BaseModel):
                 'Phone number is incorrect',
             )
         return phone_number
+
     #
     @field_validator('password')
     def password_validator(cls, password):
@@ -87,7 +89,6 @@ class UserBaseSchema(BaseModel):
 
             )
         return password
-
 
 
 class UserInDb(UserBaseSchema):

@@ -1,11 +1,12 @@
 import datetime
 import os
+from datetime import datetime
 from typing import List, Annotated
 
 import stripe
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form
-from sqlalchemy import func
+from sqlalchemy import asc
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
@@ -15,7 +16,7 @@ from app.database import get_db
 from app.reservations.helpers import generate_date_range, generate_work_hours
 from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
     Reservation
-from app.reservations.schemas import TimeDiff, TrainerBase, \
+from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
     AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate
@@ -26,8 +27,6 @@ from app.send_email import send_email_background, send_email, send_mail_to_admin
 from app.translation import trans as _
 from app.user.dependencies import get_current_user, get_user_by_email, get_password_hash
 from app.user.models import User
-from sqlalchemy import asc
-from datetime import datetime
 
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
@@ -82,7 +81,7 @@ def get_all_working_hours(db: Session = Depends(get_db)):
 
 
 @router.post("/create_working_hour", response_model=WorkingHourOut)
-def create_working_hour(working_hours: WorkingHourBase, trainer = Depends(trainer_required), db: Session = Depends(
+def create_working_hour(working_hours: WorkingHourBase, trainer=Depends(trainer_required), db: Session = Depends(
     get_db)):
     validate_working_hours_not_exists(working_hours.trainer_id, working_hours.start_hour, working_hours.end_hour,
                                       working_hours.weekday, db)
@@ -99,7 +98,7 @@ def create_working_hour(working_hours: WorkingHourBase, trainer = Depends(traine
 
 
 @router.delete("/delete_working_hour/{id}", response_model=dict)
-def delete_working_hour(id: int, trainer = Depends(trainer_required), db: Session = Depends(get_db)):
+def delete_working_hour(id: int, trainer=Depends(trainer_required), db: Session = Depends(get_db)):
     element_to_delete = db.query(WorkingHour).filter(WorkingHour.id == id).first()
     if element_to_delete is None:
         raise HTTPException(status_code=404, detail=_("Work hour not found"))
@@ -117,7 +116,7 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
 
 
 @router.post('/generate_hours_based_on_default')
-def generate_hours_based_on_default(date_range: DateRange, trainer = Depends(trainer_required), db: Session =
+def generate_hours_based_on_default(date_range: DateRange, trainer=Depends(trainer_required), db: Session =
 Depends(get_db)):
     start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
     end_time = datetime.datetime.combine(date_range.end_time, datetime.datetime.max.time())
@@ -159,7 +158,7 @@ Depends(get_db)):
 
 
 @router.delete('/delete_work_hour/{id}', response_model=dict)
-def delete_work_hour(id: int,trainer = Depends(trainer_required), db: Session = Depends(get_db)):
+def delete_work_hour(id: int, trainer=Depends(trainer_required), db: Session = Depends(get_db)):
     element_to_delete = get_work_hour_or_404(id, db)
     db.delete(element_to_delete)
     db.commit()
@@ -167,7 +166,7 @@ def delete_work_hour(id: int,trainer = Depends(trainer_required), db: Session = 
 
 
 @router.post('/generate_hours_manually', response_model=WorkHourOut)
-def generate_hours_manually(work_hour_in: WorkHourIn, trainer = Depends(trainer_required), db: Session = Depends(
+def generate_hours_manually(work_hour_in: WorkHourIn, trainer=Depends(trainer_required), db: Session = Depends(
     get_db)):
     if work_hour_in.start_datetime >= work_hour_in.end_datetime:
         raise HTTPException(status_code=400, detail=_("End time must be after start time."))
@@ -196,6 +195,7 @@ def generate_hours_manually(work_hour_in: WorkHourIn, trainer = Depends(trainer_
         raise HTTPException(status_code=500, detail=_("An error occurred while saving work hours."))
 
     return new_work_hour
+
 
 # #TODO DID I NEED THIS ?
 # @router.post('/generate_hours')
@@ -230,7 +230,6 @@ def generate_hours_manually(work_hour_in: WorkHourIn, trainer = Depends(trainer_
 #     return {"message": "Work hours generated successfully"}
 
 
-
 @router.get('/get_all_work_hours', response_model=list[WorkHourOut])
 def get_all_work_hours(db: Session = Depends(get_db)):
     return db.query(WorkHours).all()
@@ -242,9 +241,9 @@ async def get_address(db: Session = Depends(get_db)):
 
 
 @router.post("/address", response_model=AddressOut, status_code=201)
-async def create_address(address: AddressBase, trainer: dict, trainer_required = Depends(trainer_required), db: Session
+async def create_address(address: AddressBase, trainer: dict, trainer_required=Depends(trainer_required), db: Session
 = (
-    Depends(get_db))):
+        Depends(get_db))):
     address_model = Address(
         address1=address.address1,
         address2=address.address2
@@ -270,9 +269,6 @@ async def get_day_work_hours(work_hours: WorkHourGet, db: Session = Depends(get_
     ).order_by(asc(WorkHours.start_datetime)).all()
 
     return trainer_work_hours
-
-
-
 
 
 @router.post("/get_next_available_day_work_hours", response_model=List[GetWorkHours])
@@ -410,7 +406,8 @@ def test_url(request: Request):
     print(f"Using language: {lang}")
     return {"message": _("Message")}
 
+
 @router.get("/admin-only")
-async def admin_only_endpoint(superuser = Depends(admin_required)):
+async def admin_only_endpoint(superuser=Depends(admin_required)):
     print("admin", superuser)
     return {"message": "This is a protected endpoint for admins."}
