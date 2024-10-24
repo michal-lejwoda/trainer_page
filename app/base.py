@@ -1,14 +1,13 @@
+#TODO DONT REMOVE
+from jobs.my_jobs import scheduler
 import os
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
-from jobs.my_jobs import scheduler
 from .database import engine, Base
 from .routers import users, reservation
 from .translation import active_translation
-
 
 def create_app(origins: list) -> FastAPI:
     app = FastAPI()
@@ -33,7 +32,5 @@ def create_app(origins: list) -> FastAPI:
 
     app.include_router(users.router)
     app.include_router(reservation.router)
-
-    scheduler.start()
 
     return app
