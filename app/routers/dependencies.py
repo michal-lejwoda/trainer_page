@@ -36,3 +36,27 @@ def admin_required(
         )
 
     return user
+
+def trainer_required(
+        jwt_trainer_auth_header: str | None = Header(None),
+        jwt_trainer_auth: str | None = Cookie(None),
+        jwt_trainer_auth_query: str | None = None,
+        db: Session = Depends(get_db)
+):
+    jwt_token = jwt_trainer_auth_header or jwt_trainer_auth or jwt_trainer_auth_query
+    if not jwt_token:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=_("You do not have permission to perform this action.")
+        )
+
+    user = get_current_user(jwt_token, db)
+
+    if user is None or not user.is_trainer:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=_("You do not have permission to perform this action.")
+        )
+
+    return user
+
