@@ -6,9 +6,9 @@ from jobs.tasks import remove_unactive_records
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
-def test_message_every_minute():
-    print("test_message", flush=True)
-    logging.info("test_message123")
+# def test_message_every_minute():
+#     print("test_message", flush=True)
+#     logging.info("test_message123")
 
 def remove_unactive_records_with_db():
     session = SessionLocal()
@@ -18,7 +18,7 @@ def remove_unactive_records_with_db():
         session.close()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(test_message_every_minute, 'interval', minutes=1)
+scheduler.add_job(remove_unactive_records_with_db, 'cron', minute=1)
 
 if not scheduler.running:
     print("Starting scheduler...")
