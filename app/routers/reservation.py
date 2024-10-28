@@ -312,7 +312,7 @@ async def create_trainer_plan(plan: TrainerPlans, db: Session = Depends(get_db))
 
 
 @router.post("/trainer", response_model=TrainerOut, status_code=201)
-async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db)):
+async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db),admin=Depends(admin_required)):
     trainer_model = Trainer(
         name=trainer.name,
         last_name=trainer.last_name
