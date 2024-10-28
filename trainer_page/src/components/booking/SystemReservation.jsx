@@ -63,15 +63,32 @@ function SystemReservation(props) {
             onSuccess: (plan_data) => {
                 if (plan_data.length > 0) {
                     props.setTrainerPlan(plan_data[0])
-                    const work_hours_args = {
-                        "trainer_id": plan_data[0].id, "is_active": true,
-                        "day": currentDate.toISOString().split('T')[0]
-                    }
-                    mutateWorkHoursData(work_hours_args, {
-                        onSuccess: (data) => {
-                            setDayWorkHoursData(data);
+                    // const work_hours_args = {
+                    //     "trainer_id": plan_data[0].id, "is_active": true,
+                    //     "day": currentDate.toISOString().split('T')[0]
+                    // }
+                    const formattedDate = new Date(maxDate).toISOString().slice(0, 10);
+                    mutateNextAvailableDayWorkHours({"id": trainer_data.id, "max_date": formattedDate}, {
+                        onSuccess: (nextAvailableData) => {
+                            if (nextAvailableData.length > 0) {
+                                const availableDate = nextAvailableData[0].date;
+                                if (availableDate) {
+                                    const isoDateString = new Date(`${availableDate}T00:00:00`).toISOString();
+                                    setCurrentDate(new Date(isoDateString));
+                                    setDayWorkHoursData(nextAvailableData);
+                                }
+                            }
+                        },
+                        onError: (error) => {
+                            console.error("Błąd przy pobieraniu najbliższych dostępnych godzin pracy:", error);
                         }
                     });
+                    // mutateWorkHoursData(work_hours_args, {
+                    //     onSuccess: (data) => {
+                    //         setDayWorkHoursData(data);
+                    //     }
+                    // });
+                    // TODO paste here
                 } else {
                     props.setTrainerPlan(null)
                 }
@@ -82,46 +99,46 @@ function SystemReservation(props) {
 
     // TODO Check plan and trainer
     useEffect(() => {
-    mutateTrainersData(undefined, {
-        onSuccess: (data) => {
-            if (data.length > 0) {
-                props.setTrainer(data[0]);
-                const formattedDate = new Date(maxDate).toISOString().slice(0, 10);
+        mutateTrainersData(undefined, {
+            onSuccess: (data) => {
+                if (data.length > 0) {
+                    props.setTrainer(data[0]);
+                    const formattedDate = new Date(maxDate).toISOString().slice(0, 10);
 
-                mutatePlanData({"trainer_id": data[0].id}, {
-                    onSuccess: (plan_data) => {
-                        if (plan_data.length > 0) {
-                            props.setTrainerPlan(plan_data[0]);
-                            mutateNextAvailableDayWorkHours({"id": data[0].id, "max_date": formattedDate}, {
-                                onSuccess: (nextAvailableData) => {
-                                    if (nextAvailableData.length > 0) {
-                                        const availableDate = nextAvailableData[0].date;
-                                        if (availableDate) {
-                                            const isoDateString = new Date(`${availableDate}T00:00:00`).toISOString();
-                                            setCurrentDate(new Date(isoDateString));
-                                            setDayWorkHoursData(nextAvailableData);
+                    mutatePlanData({"trainer_id": data[0].id}, {
+                        onSuccess: (plan_data) => {
+                            if (plan_data.length > 0) {
+                                props.setTrainerPlan(plan_data[0]);
+                                mutateNextAvailableDayWorkHours({"id": data[0].id, "max_date": formattedDate}, {
+                                    onSuccess: (nextAvailableData) => {
+                                        if (nextAvailableData.length > 0) {
+                                            const availableDate = nextAvailableData[0].date;
+                                            if (availableDate) {
+                                                const isoDateString = new Date(`${availableDate}T00:00:00`).toISOString();
+                                                setCurrentDate(new Date(isoDateString));
+                                                setDayWorkHoursData(nextAvailableData);
+                                            }
                                         }
+                                    },
+                                    onError: (error) => {
+                                        console.error("Błąd przy pobieraniu najbliższych dostępnych godzin pracy:", error);
                                     }
-                                },
-                                onError: (error) => {
-                                    console.error("Błąd przy pobieraniu najbliższych dostępnych godzin pracy:", error);
-                                }
-                            });
-                        } else {
-                            props.setTrainerPlan(null);
+                                });
+                            } else {
+                                props.setTrainerPlan(null);
+                            }
+                        },
+                        onError: (error) => {
+                            console.error("Błąd przy pobieraniu planu trenera:", error);
                         }
-                    },
-                    onError: (error) => {
-                        console.error("Błąd przy pobieraniu planu trenera:", error);
-                    }
-                });
+                    });
+                }
+            },
+            onError: (error) => {
+                console.error("Błąd przy pobieraniu danych trenerów:", error);
             }
-        },
-        onError: (error) => {
-            console.error("Błąd przy pobieraniu danych trenerów:", error);
-        }
-    });
-}, []);
+        });
+    }, []);
 
 
     const selectHour = (e, data) => {

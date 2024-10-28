@@ -118,8 +118,8 @@ def create_work_hour(hour_data: WorkHourCreate, db: Session):
 @router.post('/generate_hours_based_on_default')
 def generate_hours_based_on_default(date_range: DateRange, trainer=Depends(trainer_required), db: Session =
 Depends(get_db)):
-    start_time = datetime.datetime.combine(date_range.start_time, datetime.datetime.min.time())
-    end_time = datetime.datetime.combine(date_range.end_time, datetime.datetime.max.time())
+    start_time = datetime.combine(date_range.start_time, datetime.min.time())
+    end_time = datetime.combine(date_range.end_time, datetime.max.time())
 
     existing_work_hours = set(
         (work_hour.start_datetime, work_hour.end_datetime, work_hour.trainer_id)

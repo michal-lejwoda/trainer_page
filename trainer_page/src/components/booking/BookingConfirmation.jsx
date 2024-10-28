@@ -14,11 +14,11 @@ const BookingConfirmation = (props) => {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
 
     const handleReservation = () => {
-        const {t} = useTranslation()
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
+        console.log("form", form)
         try {
             if (recaptchaRef.current.getValue().length !== 0) {
                 postReservation(form).then(() => {
@@ -29,9 +29,9 @@ const BookingConfirmation = (props) => {
                             "trainer": props.selectedPlanHour.trainer.label,
                             "price": props.selectedPlanHour.plan.price,
                             "currency": props.selectedPlanHour.plan.currency,
-                            "date": props.selectedPlanHour.time_data.day,
-                            "start_time": props.selectedPlanHour.time_data.start_time,
-                            "end_time": props.selectedPlanHour.time_data.end_time
+                            "date": props.selectedPlanHour.time_data.date,
+                            "start_datetime": props.selectedPlanHour.time_data.start_datetime,
+                            "end_datetime": props.selectedPlanHour.time_data.end_datetime
                         }
                     }
                     sendConfirmationEmail(data)
@@ -77,15 +77,15 @@ const BookingConfirmation = (props) => {
                                 className="font-semibold">{t("Price")}:</span> {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Date")}:</span> {props.selectedPlanHour.time_data.day}
+                            <span className="font-semibold">{t("Date")}:</span> {props.selectedPlanHour.time_data.date}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Start time")}:</span> {props.selectedPlanHour.time_data.start_time}
+                                className="font-semibold">{t("Start time")}:</span> {props.selectedPlanHour.time_data.start_datetime}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("End time")}:</span> {props.selectedPlanHour.time_data.end_time}
+                                className="font-semibold">{t("End time")}:</span> {props.selectedPlanHour.time_data.end_datetime}
                         </p>
                         <div className="py-4">
                             <ReCAPTCHA
