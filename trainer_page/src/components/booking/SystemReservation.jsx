@@ -63,10 +63,6 @@ function SystemReservation(props) {
             onSuccess: (plan_data) => {
                 if (plan_data.length > 0) {
                     props.setTrainerPlan(plan_data[0])
-                    // const work_hours_args = {
-                    //     "trainer_id": plan_data[0].id, "is_active": true,
-                    //     "day": currentDate.toISOString().split('T')[0]
-                    // }
                     const formattedDate = new Date(maxDate).toISOString().slice(0, 10);
                     mutateNextAvailableDayWorkHours({"id": trainer_data.id, "max_date": formattedDate}, {
                         onSuccess: (nextAvailableData) => {
@@ -121,7 +117,7 @@ function SystemReservation(props) {
                                         }
                                     },
                                     onError: (error) => {
-                                        console.error("Błąd przy pobieraniu najbliższych dostępnych godzin pracy:", error);
+                                        console.error(t("Error fetching the nearest available working hours."), error);
                                     }
                                 });
                             } else {
@@ -129,13 +125,13 @@ function SystemReservation(props) {
                             }
                         },
                         onError: (error) => {
-                            console.error("Błąd przy pobieraniu planu trenera:", error);
+                            console.error(t("Error fetching trainer plan."), error);
                         }
                     });
                 }
             },
             onError: (error) => {
-                console.error("Błąd przy pobieraniu danych trenerów:", error);
+                console.error(t("Error fetching trainer data."), error);
             }
         });
     }, []);
@@ -233,6 +229,7 @@ function SystemReservation(props) {
                                     className="bg-transparent hover:bg-blue-500 text-white-700 font-bold hover:text-white py-2 px-4 border border-blue-500 mb-4 hover:border-transparent rounded">
                                 {t("Book an appointment")}
                             </button>}
+
                     </div>
                 </div>
             </div>

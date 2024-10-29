@@ -13,12 +13,30 @@ const BookingConfirmation = (props) => {
     const [captchaError, setCaptchaError] = useState(false)
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
 
-    const handleReservation = () => {
+    const handleCreditCartMethod = () => {
+        console.log("handleCreditCartMethod")
+        const data = {}
+        if (sendReservationRequest("cart")) {
+            navigate("/checkout-form", {state: data});
+        }
+    }
+
+
+    const handleCashReservation = () => {
+        console.log("handleCashReservation")
+        if (sendReservationRequest("cash")) {
+            alert(t("The training has been booked. A confirmation has been sent to your email."))
+            navigate('/');
+        }
+
+    }
+
+    const sendReservationRequest = (payment_type) => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
-        console.log("form", form)
+        form.append("payment_type", payment_type)
         try {
             if (recaptchaRef.current.getValue().length !== 0) {
                 postReservation(form).then(() => {
@@ -35,10 +53,10 @@ const BookingConfirmation = (props) => {
                         }
                     }
                     sendConfirmationEmail(data)
-                    alert(t("The training has been booked. A confirmation has been sent to your email."))
-                    navigate('/');
+
                 })
                 setCaptchaError(false)
+                return true
             } else {
                 setCaptchaError(true)
             }
@@ -46,8 +64,8 @@ const BookingConfirmation = (props) => {
         } catch (err) {
             return err.response
         }
-
     }
+
     //Use auth
     useEffect(() => {
         if (authUser === null) {
@@ -92,10 +110,16 @@ const BookingConfirmation = (props) => {
                                 ref={recaptchaRef}
                                 sitekey={CAPTCHA_SITE_KEY}
                             />
-                            {captchaError && <p className="mt-3 text-red-800">{t("Complete the captcha verification")}</p>}
+                            {captchaError &&
+                                <p className="mt-3 text-red-800">{t("Complete the captcha verification")}</p>}
                         </div>
-                        <button className="text-2xl bg-button-grey" onClick={handleReservation}>{t("Confirm" +
-                            " Reservation")}</button>
+                        <button className="text-2xl bg-button-grey"
+                                onClick={handleCashReservation}>{t("Confirm Reservation and pay with" +
+                            " cash")}</button>
+                        <button className="text-2xl bg-button-grey"
+                                onClick={handleCreditCartMethod}>
+                            {t("Book and pay with other methods(blik, credit cart)")}
+                        </button>
                     </div>
                 </div>
             </div>

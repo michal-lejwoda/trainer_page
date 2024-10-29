@@ -56,7 +56,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                             width="80"
                             color="#4fa94d"
                             radius="9"
-                            // ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
                             wrapperClass=""
                         />

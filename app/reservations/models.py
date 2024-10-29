@@ -2,11 +2,14 @@ import enum
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime
 from sqlalchemy.orm import relationship
-
+from sqlalchemy import Enum as SQLAlchemyEnum
 from app.database import Base
 #TODO IMportant dont remove that one
 from app.user.models import User
 
+class PaymentType(str, enum.Enum):
+    cash = "cash"
+    card = "card"
 
 class Day_of_Week(enum.Enum):
     MONDAY = 0
@@ -31,6 +34,7 @@ class WorkHours(Base):
     reservation = relationship("Reservation", back_populates="work_hours")
 
 
+
 class Reservation(Base):
     __tablename__ = "reservations"
 
@@ -38,6 +42,7 @@ class Reservation(Base):
     title = Column(String)
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
+    payment = Column(SQLAlchemyEnum(PaymentType), default=PaymentType.cash)
     work_hours = relationship("WorkHours", back_populates="reservation")
     user = relationship("User", back_populates="reservations")
 

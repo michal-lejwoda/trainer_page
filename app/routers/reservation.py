@@ -38,6 +38,7 @@ def create_reservation(
         title: Annotated[str, Form()],
         user_id: Annotated[int, Form()],
         work_hours_id: Annotated[int, Form()],
+        payment_type: str,
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
