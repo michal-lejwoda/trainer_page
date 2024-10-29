@@ -15,7 +15,7 @@ from starlette.requests import Request
 from app.database import get_db
 from app.reservations.helpers import generate_date_range, generate_work_hours
 from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
-    Reservation
+    Reservation, PaymentType
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
@@ -32,13 +32,13 @@ load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
-
+#TODO BACK HERE NEXT TIME
 @router.post("/reservation")
 def create_reservation(
         title: Annotated[str, Form()],
         user_id: Annotated[int, Form()],
         work_hours_id: Annotated[int, Form()],
-        payment_type: str,
+        payment_type: PaymentType,
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
