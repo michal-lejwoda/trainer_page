@@ -38,7 +38,7 @@ def create_reservation(
         title: Annotated[str, Form()],
         user_id: Annotated[int, Form()],
         work_hours_id: Annotated[int, Form()],
-        payment_type: PaymentType,
+        payment_type: Annotated[PaymentType, Form()],
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
@@ -50,7 +50,8 @@ def create_reservation(
         reservation_model = Reservation(
             title=title,
             work_hour_id=work_hours.id,
-            user_id=user.id
+            user_id=user.id,
+            payment_type=payment_type
         )
         db.add(reservation_model)
         db.commit()
@@ -196,39 +197,6 @@ def generate_hours_manually(work_hour_in: WorkHourIn, trainer=Depends(trainer_re
         raise HTTPException(status_code=500, detail=_("An error occurred while saving work hours."))
 
     return new_work_hour
-
-
-# #TODO DID I NEED THIS ?
-# @router.post('/generate_hours')
-# def generate_hours(timediff: TimeDiff, trainer = Depends(trainer_required), db: Session = Depends(get_db)):
-#     start_time = timediff.start_time.replace(second=0, microsecond=0)
-#     end_time = timediff.end_time.replace(second=0, microsecond=0)
-#     interval = datetime.timedelta(minutes=timediff.interval)
-#     diff = int((end_time - start_time).total_seconds() / interval.total_seconds())
-#     existing_times = db.query(WorkHours.start_datetime, WorkHours.end_datetime).filter(
-#         WorkHours.trainer_id == timediff.trainer_id,
-#         WorkHours.start_datetime >= start_time,
-#         WorkHours.end_datetime <= end_time
-#     ).all()
-#     existing_set = set((row.start_datetime, row.end_datetime) for row in existing_times)
-#     new_work_hours = []
-#     for i in range(diff):
-#         created_start_time = start_time + i * interval
-#         created_end_time = created_start_time + interval
-#         if (created_start_time, created_end_time) not in existing_set:
-#             work_hours_model = WorkHours(
-#                 start_time=created_start_time,
-#                 end_time=created_end_time,
-#                 trainer_id=timediff.trainer_id,
-#                 is_active=True
-#             )
-#             new_work_hours.append(work_hours_model)
-#
-#     if new_work_hours:
-#         db.bulk_save_objects(new_work_hours)
-#         db.commit()
-#
-#     return {"message": "Work hours generated successfully"}
 
 
 @router.get('/get_all_work_hours', response_model=list[WorkHourOut])

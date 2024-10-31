@@ -56,8 +56,15 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta or None = 
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+#TODO Check if i need it?
+def get_and_validate_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)) -> (
+        UserOut):
+    user = get_current_user(token,db)
+    return UserOut.model_validate(user)
 
-def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)) -> UserOut:
+
+
+def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -72,8 +79,11 @@ def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session
     except JWTError:
         raise credentials_exception
 
+    print("token", token)
+    print("token_data", token_data)
     user = get_user_by_email(token_data.email, db)
     if user is None:
         raise credentials_exception
-
-    return UserOut.model_validate(user)
+    print("user", user)
+    return user
+    # return UserOut.model_validate(user)
