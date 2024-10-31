@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import BookingAuthorization from "./BookingAuthorization.jsx";
 import SystemReservation from "./SystemReservation.jsx";
 import BookingConfirmation from "./BookingConfirmation.jsx";
+import CheckoutForm from "../CheckoutForm.jsx";
 
 const Booking = () => {
     const [bookingStep, setBookingStep] = useState(1)
     const [trainer, setTrainer] = useState(null)
     const [trainerPlan, setTrainerPlan] = useState(null)
     const [selectedPlanHour, setSelectedPlanHour] = useState(null)
+    const [reservation, setReservation] = useState(null)
 
 
     useEffect(() => {
@@ -24,6 +26,9 @@ const Booking = () => {
 
     const goToBookingConfirmation = () => {
         setBookingStep(3)
+    }
+    const goToCheckoutForm = () => {
+        setBookingStep(4)
     }
 
     console.log("selectedPlanHour", selectedPlanHour)
@@ -43,8 +48,9 @@ const Booking = () => {
                                                         goToSystemReservation={goToSystemReservation}/>}
             {bookingStep === 3 && <BookingConfirmation goToSystemReservation={goToSystemReservation}
                                                        selectedPlanHour={selectedPlanHour}
-
-            />}
+                                                       goToCheckoutForm={goToCheckoutForm}
+                                                       setReservation={setReservation}/>}
+            {bookingStep === 4 &&<CheckoutForm selectedPlanHour={selectedPlanHour} reservation={reservation}/>}
         </>
     );
 };

@@ -8,11 +8,11 @@ import {
 } from '@stripe/react-stripe-js';
 import {useTranslation} from "react-i18next";
 
-const CheckoutForm = () => {
+const CheckoutForm = (props) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState(null);
-
+    console.log("props", props)
     const handleSubmit = async (event) => {
         event.preventDefault();
 
