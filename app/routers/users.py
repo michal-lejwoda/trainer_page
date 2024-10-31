@@ -7,6 +7,7 @@ from sqlalchemy import exc
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.reservations.schemas import UserBase
 from app.routers.dependencies import admin_required
 from app.user.dependencies import get_password_hash, get_current_user, \
     authenticate_and_generate_token_for_user, get_user_by_email
@@ -73,7 +74,7 @@ def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
 
 
-@router.get("/users/me")
+@router.get("/users/me", response_model=UserBase)
 async def read_users_me(jwt_trainer_auth: Annotated[str | None, Cookie()] = None, db: Session = Depends(get_db)):
     if jwt_trainer_auth is None:
         return None

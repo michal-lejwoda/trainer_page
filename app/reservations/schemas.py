@@ -183,17 +183,16 @@ class PlanOut(TrainerPlans):
 
 
 class UserBase(BaseModel):
-    pass
+    id: int
+    email: str
+    name: str | None
+    last_name: str | None
+    phone_number: str | None
 
     class Config:
         from_attributes = True
 
 
 class UserOut(UserBase):
-    id: int
-    email: str
-    name: str | None
-    last_name: str | None
-    phone_number: str | None
     is_admin: bool
     is_trainer: bool

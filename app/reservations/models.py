@@ -42,9 +42,19 @@ class Reservation(Base):
     title = Column(String)
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
-    payment = Column(SQLAlchemyEnum(PaymentType), default=PaymentType.cash)
+    payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
     work_hours = relationship("WorkHours", back_populates="reservation")
     user = relationship("User", back_populates="reservations")
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, index=True)
+    reservation_id = Column(Integer, ForeignKey("reservations.id"))
+    payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
+    is_paid = Column(Boolean, default=False)
+    reservation = relationship("Reservation")
 
 
 class Trainer(Base):

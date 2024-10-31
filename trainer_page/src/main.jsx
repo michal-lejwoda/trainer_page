@@ -11,10 +11,13 @@ import './index.css'
 import {loadStripe} from "@stripe/stripe-js";
 import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "./components/CheckoutForm.jsx";
+import LoginForm from "./components/auth/LoginForm.jsx";
+import RegisterForm from "./components/auth/RegisterForm.jsx";
+import ResetPassword from "./components/auth/ResetPassword.jsx";
 
-const RegisterForm = lazy(() => import("./components/auth/RegisterForm.jsx"))
-const LoginForm = lazy(() => import("./components/auth/LoginForm.jsx"))
-const ResetPassword = lazy(() => import("./components/auth/ResetPassword.jsx"))
+// const RegisterForm = lazy(() => import("./components/auth/RegisterForm.jsx"))
+// const LoginForm = lazy(() => import("./components/auth/LoginForm.jsx"))
+// const ResetPassword = lazy(() => import("./components/auth/ResetPassword.jsx"))
 const ResetPasswordBasedonEmail = lazy(() => import("./components/auth/ResetPasswordBasedOnEmail.jsx"))
 const Navbar = lazy(() => import("./components/Navbar.jsx"))
 const Booking = lazy(() => import("./components/booking/Booking.jsx"))
