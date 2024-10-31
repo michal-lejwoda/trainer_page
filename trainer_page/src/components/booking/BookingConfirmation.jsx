@@ -29,7 +29,7 @@ const BookingConfirmation = (props) => {
         }
 
     }
-
+    // #TODO Start here
     const sendReservationRequest = (payment_type) => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
