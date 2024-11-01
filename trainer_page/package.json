@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@stripe/react-stripe-js": "^2.8.1",
@@ -25,6 +27,7 @@
     "loadjs": "^4.3.0-rc1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.5",
     "react-calendar": "^4.2.1",
     "react-cookie": "^6.1.1",
     "react-cookie-consent": "^8.0.1",

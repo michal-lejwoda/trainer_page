@@ -14,6 +14,9 @@ import CheckoutForm from "./components/CheckoutForm.jsx";
 import LoginForm from "./components/auth/LoginForm.jsx";
 import RegisterForm from "./components/auth/RegisterForm.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
+import AccountOrders from "./components/AccountOrders.jsx";
+import Account from "./components/Account.jsx";
+import BoxLoading from "./components/BoxLoading.jsx";
 
 const ResetPasswordBasedonEmail = lazy(() => import("./components/auth/ResetPasswordBasedOnEmail.jsx"))
 const Navbar = lazy(() => import("./components/Navbar.jsx"))
@@ -36,7 +39,6 @@ const options = {
     mode: 'payment',
     amount: 1099,
     currency: 'usd',
-    // Fully customizable with appearance API.
     appearance: {
         theme: 'night',
         labels: 'floating'
@@ -49,17 +51,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <Suspense fallback={
-                    <div className="absolute h-screen w-screen flex items-center justify-center">
-                        <Triangle
-                            visible={true}
-                            height="80"
-                            width="80"
-                            color="#4fa94d"
-                            radius="9"
-                            wrapperStyle={{}}
-                            wrapperClass=""
-                        />
-                    </div>}>
+                    <BoxLoading />
+                }>
                     <BrowserRouter>
                         <div className="min-h-screen">
                             <Navbar/>
@@ -79,6 +72,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                     <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
                                     <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
                                     <Route path="checkout-form" element={<CheckoutForm/>}/>
+                                    <Route path="account" element={<Account/>}/>
+                                    {/*<Route path="account-orders" element{<AccountOrders/>}/>*/}
                                 </Routes>
                             </Elements>
                             <Footer/>
