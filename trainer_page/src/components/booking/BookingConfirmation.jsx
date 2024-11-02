@@ -15,7 +15,7 @@ const BookingConfirmation = (props) => {
 
     const handleCreditCartMethod = () => {
         console.log("handleCreditCartMethod")
-        if (sendReservationRequest("cart")) {
+        if (sendReservationRequest("card")) {
             props.goToCheckoutForm()
         }
     }

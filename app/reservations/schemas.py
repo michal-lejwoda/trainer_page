@@ -3,6 +3,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator
 
+from app.reservations.models import PaymentCurrency, PaymentMethodType
+
 
 class AddressBase(BaseModel):
     id: int
@@ -196,3 +198,8 @@ class UserBase(BaseModel):
 class UserOut(UserBase):
     is_admin: bool
     is_trainer: bool
+
+class PaymentIntentRequest(BaseModel):
+    amount: int
+    currency: PaymentCurrency
+    payment_method_types: list[PaymentMethodType]

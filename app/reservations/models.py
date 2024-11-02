@@ -11,6 +11,14 @@ class PaymentType(str, enum.Enum):
     cash = "cash"
     card = "card"
 
+class PaymentCurrency(str, enum.Enum):
+    pln = "pln"
+    eur = "eur"
+
+class PaymentMethodType(str, enum.Enum):
+    card = 'card'
+    p24  = 'p24'
+
 class Day_of_Week(enum.Enum):
     MONDAY = 0
     TUESDAY = 1

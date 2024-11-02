@@ -1,12 +1,5 @@
-import React, {useState} from 'react';
-import {loadStripe} from '@stripe/stripe-js';
-import {
-    PaymentElement,
-    Elements,
-    useStripe,
-    useElements,
-} from '@stripe/react-stripe-js';
-import {useTranslation} from "react-i18next";
+import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
+import React, {useState} from "react";
 
 const CheckoutForm = (props) => {
     const stripe = useStripe();
@@ -23,7 +16,7 @@ const CheckoutForm = (props) => {
         const res = await fetch('/create-intent', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({amount: 1099, currency: 'pln', payment_method_types: ['card', 'blik', 'p24']}),
+            body: JSON.stringify({amount: 1099, currency: 'pln', payment_method_types: ['card', 'p24']}),
         });
 
         const {client_secret: clientSecret} = await res.json();
@@ -56,28 +49,4 @@ const CheckoutForm = (props) => {
         </div>
     );
 };
-
-const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-
-
-const PaymentPage = () => {
-const {i18n} = useTranslation();
-const options = {
-    mode: 'payment',
-    amount: 1099,
-    locale: i18n.language,
-    currency: 'pln',
-    payment_method_types: ['card', 'p24'],
-    appearance: {
-        theme: 'night'
-    },
-};
-return (
-    <Elements stripe={stripePromise} options={options}>
-        <CheckoutForm/>
-    </Elements>
-
-)}
-;
-
-export default PaymentPage;
+export default CheckoutForm

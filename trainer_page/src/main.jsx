@@ -4,17 +4,13 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import {CookieConsent} from "react-cookie-consent";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
-import {Triangle} from 'react-loader-spinner';
 import "./i18n.jsx"
-
 import './index.css'
 import {loadStripe} from "@stripe/stripe-js";
 import {Elements} from "@stripe/react-stripe-js";
-import CheckoutForm from "./components/CheckoutForm.jsx";
 import LoginForm from "./components/auth/LoginForm.jsx";
 import RegisterForm from "./components/auth/RegisterForm.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
-import AccountOrders from "./components/AccountOrders.jsx";
 import Account from "./components/Account.jsx";
 import BoxLoading from "./components/BoxLoading.jsx";
 
@@ -71,9 +67,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                     <Route path="private-policy" element={<PrivatePolicy/>}/>
                                     <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
                                     <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
-                                    <Route path="checkout-form" element={<CheckoutForm/>}/>
                                     <Route path="account" element={<Account/>}/>
-                                    {/*<Route path="account-orders" element{<AccountOrders/>}/>*/}
                                 </Routes>
                             </Elements>
                             <Footer/>

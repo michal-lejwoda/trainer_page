@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import BookingAuthorization from "./BookingAuthorization.jsx";
 import SystemReservation from "./SystemReservation.jsx";
 import BookingConfirmation from "./BookingConfirmation.jsx";
-import CheckoutForm from "../CheckoutForm.jsx";
+import PaymentPage from "../payments/PaymentPage.jsx";
+
 
 const Booking = () => {
     const [bookingStep, setBookingStep] = useState(1)
@@ -50,7 +51,7 @@ const Booking = () => {
                                                        selectedPlanHour={selectedPlanHour}
                                                        goToCheckoutForm={goToCheckoutForm}
                                                        setReservation={setReservation}/>}
-            {bookingStep === 4 &&<CheckoutForm selectedPlanHour={selectedPlanHour} reservation={reservation}/>}
+            {bookingStep === 4 &&<PaymentPage selectedPlanHour={selectedPlanHour} reservation={reservation}/>}
         </>
     );
 };

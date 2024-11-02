@@ -1,6 +1,7 @@
 #TODO DONT REMOVE
 from jobs.my_jobs import scheduler
 import os
+import stripe
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -11,8 +12,12 @@ from .translation import active_translation
 
 def create_app(origins: list) -> FastAPI:
     app = FastAPI()
-    stripe_api_key = os.environ.get('STRIPE_SECRET_KEY')
 
+    stripe_api_key = os.environ.get('STRIPE_SECRET_KEY')
+    if not stripe_api_key:
+        raise RuntimeError("Stripe API key not configured.")
+
+    stripe.api_key = stripe_api_key
     Base.metadata.create_all(bind=engine)
 
     app.add_middleware(

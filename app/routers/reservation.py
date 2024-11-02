@@ -19,7 +19,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest
 from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -380,3 +380,23 @@ def test_url(request: Request):
 async def admin_only_endpoint(superuser=Depends(admin_required)):
     print("admin", superuser)
     return {"message": "This is a protected endpoint for admins."}
+
+@router.post("/create-intent")
+async def create_payment_intent(payment_intent_request: PaymentIntentRequest):
+    print("payment_intent_request", payment_intent_request)
+    print("payment_intent_request.amount",payment_intent_request.amount)
+    print("payment_intent_request.currency",payment_intent_request.currency.value)
+    print("payment_intent_request.payment_method_types",payment_intent_request.payment_method_types)
+    try:
+
+        payment_intent = stripe.PaymentIntent.create(
+            amount=payment_intent_request.amount,
+            currency=payment_intent_request.currency.value,
+            payment_method_types=[method.value for method in payment_intent_request.payment_method_types]
+
+        )
+
+        return {"client_secret": payment_intent.client_secret}
+    except Exception as e:
+        print(f"Error creating payment intent: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create PaymentIntent")
