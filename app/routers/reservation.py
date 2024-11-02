@@ -5,10 +5,10 @@ from typing import List, Annotated
 
 import stripe
 from dotenv import load_dotenv
-from fastapi import Depends, HTTPException, APIRouter, Form
-from sqlalchemy import asc
+from fastapi import Depends, HTTPException, APIRouter, Form, Cookie, Header
+from sqlalchemy import asc, desc
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from starlette.background import BackgroundTasks
 from starlette.requests import Request
 
@@ -19,7 +19,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut
 from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -32,12 +32,14 @@ load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
-#TODO BACK HERE NEXT TIME
+
+# TODO BACK HERE NEXT TIME
 @router.post("/reservation")
 def create_reservation(
         title: Annotated[str, Form()],
         user_id: Annotated[int, Form()],
         work_hours_id: Annotated[int, Form()],
+        is_paid: Annotated[bool, Form()],
         payment_type: Annotated[PaymentType, Form()],
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
@@ -50,6 +52,7 @@ def create_reservation(
         reservation_model = Reservation(
             title=title,
             work_hour_id=work_hours.id,
+            is_paid=is_paid,
             user_id=user.id,
             payment_type=payment_type
         )
@@ -70,6 +73,30 @@ def create_reservation(
 @router.get("/reservation", response_model=List[ReservationOut])
 def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return db.query(Reservation).offset(skip).limit(limit).all()
+
+
+@router.get("/user_reservations", response_model=List[UserReservationOut])
+def user_reservations(
+        jwt_trainer_auth_header: str | None = Header(None),
+        jwt_trainer_auth: str | None = Cookie(None),
+        jwt_trainer_auth_query: str | None = None,
+        skip: int = 0, limit: int = 10,
+        db: Session = Depends(get_db)):
+    jwt_token = jwt_trainer_auth_header or jwt_trainer_auth or jwt_trainer_auth_query
+    user = get_current_user(jwt_token, db)
+
+    reservations = (
+        db.query(Reservation)
+        .join(WorkHours)
+        .join(Trainer)
+        .filter(Reservation.user_id == user.id)
+        .order_by(desc(WorkHours.start_datetime))
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+    return reservations
 
 
 @router.get("/trainers", response_model=List[TrainerOut])
@@ -281,7 +308,7 @@ async def create_trainer_plan(plan: TrainerPlans, db: Session = Depends(get_db))
 
 
 @router.post("/trainer", response_model=TrainerOut, status_code=201)
-async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db),admin=Depends(admin_required)):
+async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db), admin=Depends(admin_required)):
     trainer_model = Trainer(
         name=trainer.name,
         last_name=trainer.last_name
@@ -381,12 +408,13 @@ async def admin_only_endpoint(superuser=Depends(admin_required)):
     print("admin", superuser)
     return {"message": "This is a protected endpoint for admins."}
 
+
 @router.post("/create-intent")
 async def create_payment_intent(payment_intent_request: PaymentIntentRequest):
     print("payment_intent_request", payment_intent_request)
-    print("payment_intent_request.amount",payment_intent_request.amount)
-    print("payment_intent_request.currency",payment_intent_request.currency.value)
-    print("payment_intent_request.payment_method_types",payment_intent_request.payment_method_types)
+    print("payment_intent_request.amount", payment_intent_request.amount)
+    print("payment_intent_request.currency", payment_intent_request.currency.value)
+    print("payment_intent_request.payment_method_types", payment_intent_request.payment_method_types)
     try:
 
         payment_intent = stripe.PaymentIntent.create(

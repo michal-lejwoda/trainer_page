@@ -62,6 +62,18 @@ export async function postReservation(data) {
     }
 }
 
+export async function getUserReservations() {
+    try {
+        console.log("Fetching user reservations from API");
+        const response = await instance.get(`/api/user_reservations`, { withCredentials: true });
+        console.log("API response:", response);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching reservations:", error);
+        throw error;
+    }
+}
+
 export async function sendConfirmationEmail(data) {
     try {
         const response = await instance.post(`/api/send-email/background_task`, data, { withCredentials: true });

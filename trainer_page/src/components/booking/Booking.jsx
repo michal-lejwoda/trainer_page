@@ -32,7 +32,6 @@ const Booking = () => {
         setBookingStep(4)
     }
 
-    console.log("selectedPlanHour", selectedPlanHour)
 
     return (
         <>

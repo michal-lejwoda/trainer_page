@@ -3,7 +3,8 @@ LABEL author="michal"
 
 WORKDIR /code
 
-RUN apt-get update && apt-get install -y gettext
+RUN apt-get update && apt-get install -y gettext && apt-get install -y nano
+
 
 COPY . /code
 

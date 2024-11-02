@@ -1,5 +1,6 @@
 import enum
 
+import sqlalchemy.sql
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import Enum as SQLAlchemyEnum
@@ -40,6 +41,7 @@ class WorkHours(Base):
     trainer_id = Column(Integer, ForeignKey("trainers.id"))
     is_active = Column(Boolean, default=True)
     reservation = relationship("Reservation", back_populates="work_hours")
+    trainer = relationship("Trainer", back_populates="work_hours")
 
 
 
@@ -52,17 +54,18 @@ class Reservation(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
     work_hours = relationship("WorkHours", back_populates="reservation")
+    is_paid = Column(Boolean, default=False, server_default=sqlalchemy.sql.false())
     user = relationship("User", back_populates="reservations")
 
-class Order(Base):
-    __tablename__ = "orders"
-
-    id = Column(Integer, primary_key=True, index=True)
-    order_id = Column(Integer, index=True)
-    reservation_id = Column(Integer, ForeignKey("reservations.id"))
-    payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
-    is_paid = Column(Boolean, default=False)
-    reservation = relationship("Reservation")
+# class Order(Base):
+#     __tablename__ = "orders"
+#
+#     id = Column(Integer, primary_key=True, index=True)
+#     order_id = Column(Integer, index=True)
+#     reservation_id = Column(Integer, ForeignKey("reservations.id"))
+#     payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
+#     is_paid = Column(Boolean, default=False)
+#     reservation = relationship("Reservation")
 
 
 class Trainer(Base):
@@ -74,7 +77,9 @@ class Trainer(Base):
     phone_number = Column(String)
     address_id = Column(Integer, ForeignKey("address.id"), nullable=True)
     address = relationship("Address", back_populates="trainer_address")
-    working_hour = relationship("WorkingHour", back_populates="trainer_working_hour")
+    working_hour = relationship("WorkingHour", back_populates="trainer_working_hour"
+                                )
+    work_hours = relationship("WorkHours", back_populates="trainer")
 
 
 class Address(Base):

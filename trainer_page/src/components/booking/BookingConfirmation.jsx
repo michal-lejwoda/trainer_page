@@ -15,7 +15,7 @@ const BookingConfirmation = (props) => {
 
     const handleCreditCartMethod = () => {
         console.log("handleCreditCartMethod")
-        if (sendReservationRequest("card")) {
+        if (sendReservationRequest("card", false)) {
             props.goToCheckoutForm()
         }
     }
@@ -23,19 +23,20 @@ const BookingConfirmation = (props) => {
 
     const handleCashReservation = () => {
         console.log("handleCashReservation")
-        if (sendReservationRequest("cash")) {
+        if (sendReservationRequest("cash", true)) {
             alert(t("The training has been booked. A confirmation has been sent to your email."))
             navigate('/');
         }
 
     }
     // #TODO Start here
-    const sendReservationRequest = (payment_type) => {
+    const sendReservationRequest = (payment_type, is_paid) => {
         let form = new FormData()
         form.append("title", props.selectedPlanHour.plan.title)
         form.append("user_id", authUser.id)
         form.append("work_hours_id", props.selectedPlanHour.time_data.id)
         form.append("payment_type", payment_type)
+        form.append("is_paid", is_paid)
         try {
             if (recaptchaRef.current.getValue().length !== 0) {
                 postReservation(form).then(() => {

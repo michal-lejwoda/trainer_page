@@ -203,3 +203,28 @@ class PaymentIntentRequest(BaseModel):
     amount: int
     currency: PaymentCurrency
     payment_method_types: list[PaymentMethodType]
+
+class UserTrainerOut(BaseModel):
+    id: int
+    name: str
+    last_name: str | None = None
+    phone_number: str | None = None
+
+class UserWorkHourOut(BaseModel):
+    # title: Optional[str] = None
+    date: datetime.date
+    end_datetime: datetime.datetime
+    # is_active: bool
+    start_datetime: datetime.datetime
+    id: int
+    trainer: UserTrainerOut
+
+
+class UserReservationOut(BaseModel):
+    id: int
+    user_id: int
+    is_paid: bool
+    work_hour_id: int
+    title: str
+    payment_type: str
+    work_hours: UserWorkHourOut
