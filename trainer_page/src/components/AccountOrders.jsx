@@ -3,12 +3,20 @@ import {useGetUserReservations} from "./mutations.jsx";
 import BoxLoading from "./BoxLoading.jsx";
 import {faArrowDown} from "@fortawesome/fontawesome-free-solid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useNavigate} from "react-router-dom";
 
 const AccountOrders = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const {mutateAsync: mutateGetUserReservations} = useGetUserReservations();
     const [expandedOrderIds, setExpandedOrderIds] = useState([]);
+    const navigate = useNavigate();
+
+    const handlePayment = () =>{
+        // #TODO STARTS HERE
+        console.log("handlePayment")
+        navigate("/login")
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,7 +66,7 @@ const AccountOrders = () => {
                                         ) : (
                                             <div>
                                                 {order.is_paid ? "Płatność opłacona" :
-                                                    <button>Opłać rezerwacje</button>}
+                                                    <button onClick={handlePayment}>Opłać rezerwacje</button>}
                                             </div>
                                         )}
                                     </div>
