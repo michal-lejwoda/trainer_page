@@ -35,7 +35,7 @@ const AccountOrders = () => {
             {data ? (
                 <ul className="flex flex-col justify-center items-center">
                     {data.map((order) => (
-                        <li className="flex flex-row m-5 w-2/5 justify-between">
+                        <li className="flex flex-row m-1 w-2/5 justify-between border-2 border-amber-500 p-4 cursor-pointer">
                             <div className="content-center">
                                 <p>Plan: {order.title}</p>
                                 <p>Data: {order.work_hours.date} {order.work_hours.start_datetime} - {order.work_hours.end_datetime}</p>
@@ -45,7 +45,7 @@ const AccountOrders = () => {
                             {/*<p>Godzina zakończenia: {order.work_hours.end_datetime}</p>*/}
                             {/*<p>Metoda Płatności: {order.payment_type === "cash" ? "Płatność gotówką" : "Przelew" +*/}
                             {/*    " lub karta"}</p>*/}
-                            <div className="m-5 content-center flex flex-row">
+                            <div className="content-center flex flex-row items-center">
                                 {order.payment_type === "cash" ? (
                                     "Opłacone: Płatność na miejscu"
                                 ) : (
