@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional, Union
 
 from fastapi import APIRouter, HTTPException
 from fastapi import Depends, Cookie, Form
@@ -75,8 +75,11 @@ def get_users(db: Session = Depends(get_db)):
 
 
 @router.get("/users/me", response_model=UserBase)
-async def read_users_me(jwt_trainer_auth: Annotated[str | None, Cookie()] = None, db: Session = Depends(get_db)):
+async def read_users_me(jwt_trainer_auth: Optional[str] = Cookie(None), db: Session = Depends(get_db)) -> Union[
+    UserBase, None]:
     if jwt_trainer_auth is None:
-        return None
+        raise HTTPException(status_code=401, detail="Unauthorized")
     user = get_current_user(jwt_trainer_auth, db)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
     return user

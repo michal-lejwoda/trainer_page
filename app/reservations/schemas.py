@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, validator
 
 from app.reservations.models import PaymentCurrency, PaymentMethodType
 
@@ -211,13 +211,23 @@ class UserTrainerOut(BaseModel):
     phone_number: str | None = None
 
 class UserWorkHourOut(BaseModel):
-    # title: Optional[str] = None
     date: datetime.date
-    end_datetime: datetime.datetime
-    # is_active: bool
-    start_datetime: datetime.datetime
     id: int
     trainer: UserTrainerOut
+    start_datetime: datetime.datetime
+    end_datetime: datetime.datetime
+
+
+    @field_validator('start_datetime')
+    @classmethod
+    def convert_start_datetime_to_time(cls, v: datetime.datetime) -> str:
+        return v.time()
+
+    @field_validator('end_datetime')
+    @classmethod
+    def convert_end_datetime_to_time(cls, v: datetime.datetime) -> str:
+        return v.time()
+
 
 
 class UserReservationOut(BaseModel):

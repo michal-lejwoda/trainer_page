@@ -32,11 +32,7 @@ const navigation = [{name: t('Homepage'), href: '/', current: false},
         href: '/contact/',
         current: false
     },
-    {
-        name: t('Account'),
-        href:'/account/',
-        current: false
-    }
+
 ]
 
 function classNames(...classes) {
@@ -60,6 +56,11 @@ export default function Navbar() {
         removeCookie("jwt_trainer_auth")
         setAuthUser(null)
         setIsLoggedIn(false)
+    }
+
+    const handleToAccount = () => {
+        console.log("handleToAccount")
+        navigate("/account123")
     }
 
     const onChangeLanguage = (e) => {
@@ -118,6 +119,12 @@ export default function Navbar() {
                                     {item.name}
                                 </NavLink>))}
                                 {authUser && <NavLink
+                                    className="text-gray-300 hover:text-white hover:bg-gray-700 rounded-md px-3 py-2 text-sm font-medium"
+                                    to="/account"
+                                >
+                                    {t("Account")}
+                                </NavLink>}
+                                {authUser && <NavLink
                                     className="text-gray-300 cursor-default hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium"
                                 >
                                     {t("Welcome")} {authUser.name}
@@ -166,6 +173,13 @@ export default function Navbar() {
                         </NavLink>
 
                     ))}
+                    {authUser && <NavLink
+                        to="/account"
+                        className={({isActive}) => classNames(isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium')}
+                    >
+                        {t("Account")}
+                    </NavLink>}
+
                     {authUser && <NavLink
                         className="text-gray-300 cursor-default hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium"
                     >

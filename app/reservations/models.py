@@ -57,16 +57,6 @@ class Reservation(Base):
     is_paid = Column(Boolean, default=False, server_default=sqlalchemy.sql.false())
     user = relationship("User", back_populates="reservations")
 
-# class Order(Base):
-#     __tablename__ = "orders"
-#
-#     id = Column(Integer, primary_key=True, index=True)
-#     order_id = Column(Integer, index=True)
-#     reservation_id = Column(Integer, ForeignKey("reservations.id"))
-#     payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
-#     is_paid = Column(Boolean, default=False)
-#     reservation = relationship("Reservation")
-
 
 class Trainer(Base):
     __tablename__ = "trainers"
