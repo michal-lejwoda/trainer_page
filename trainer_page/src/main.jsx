@@ -13,6 +13,7 @@ import RegisterForm from "./components/auth/RegisterForm.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
 import Account from "./components/Account.jsx";
 import BoxLoading from "./components/BoxLoading.jsx";
+import PaymentPage from "./components/payments/PaymentPage.jsx";
 
 const ResetPasswordBasedonEmail = lazy(() => import("./components/auth/ResetPasswordBasedOnEmail.jsx"))
 const Navbar = lazy(() => import("./components/Navbar.jsx"))
@@ -68,6 +69,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                     <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
                                     <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
                                     <Route path="account" element={<Account/>}/>
+                                    <Route path="payment_page" element={<PaymentPage/>}/>
                                 </Routes>
                             </Elements>
                             <Footer/>

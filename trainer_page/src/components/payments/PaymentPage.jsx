@@ -9,12 +9,13 @@ const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
 const PaymentPage = (props) => {
         console.log("payment page", props)
+
         const {i18n} = useTranslation();
         const options = {
             mode: 'payment',
-            amount: 1099,
+            amount: props.selectedPlanHour.plan.price,
             locale: i18n.language,
-            currency: 'pln',
+            currency: 'pln',// #TODO : props.selectedPlanHour.plan.currency Uncomment this when fix zl
             payment_method_types: ['card', 'p24'],
             appearance: {
                 theme: 'night'
