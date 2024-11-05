@@ -3,7 +3,7 @@ import AccountOrders from "./AccountOrders.jsx";
 import ResetPassword from "./auth/ResetPassword.jsx";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLock, faWeight} from "@fortawesome/fontawesome-free-solid";
+import {faLock, faShoppingCart, faWeight} from "@fortawesome/fontawesome-free-solid";
 import BoxLoading from "./BoxLoading.jsx";
 import SaveSettingsSuccessModal from "./modals/SaveSettingsSuccessModal.jsx";
 import {useAuth} from "./auth/AuthContext.jsx";
@@ -30,18 +30,18 @@ const Account = () => {
         <div className="settings">
             <div className="menu settings__menu">
                 <div className="menu__elements flex flex-row w-full justify-center mt-5">
-                    <div className="choices menu__choices">
+                    <div className="choices menu__choices mt-3 border-r-2 mr-3">
                         <div
-                            className={`choices__element ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
+                            className={`cursor-pointer choices__element pr-1 pr-2 pb-4 ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
                             onClick={() => setActiveState("ACCOUNT_ORDERS")}
                         >
-                            <FontAwesomeIcon size="2x" icon={faWeight}/>
+                            <FontAwesomeIcon size="3x" icon={faShoppingCart}/>
                         </div>
                         <div
-                            className={`choices__element ${activeState === 'RESET_PASSWORD' ? 'active' : ''}`}
+                            className={`cursor-pointer border-t-2 choices__element flex justify-center  pr-1 pt-4 ${activeState === 'RESET_PASSWORD' ? 'active' : ''}`}
                             onClick={() => setActiveState("RESET_PASSWORD")}
                         >
-                            <FontAwesomeIcon size="2x" icon={faLock}/>
+                            <FontAwesomeIcon size="3x" icon={faLock}/>
                         </div>
                     </div>
                     <div className="menu__options">
