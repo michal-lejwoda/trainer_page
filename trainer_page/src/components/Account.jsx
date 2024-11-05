@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountOrders from "./AccountOrders.jsx";
 import ResetPassword from "./auth/ResetPassword.jsx";
-import {useTranslation} from "react-i18next";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLock, faShoppingCart, faWeight} from "@fortawesome/fontawesome-free-solid";
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faShoppingCart } from "@fortawesome/fontawesome-free-solid";
 import BoxLoading from "./BoxLoading.jsx";
 import SaveSettingsSuccessModal from "./modals/SaveSettingsSuccessModal.jsx";
-import {useAuth} from "./auth/AuthContext.jsx";
-import {useNavigate} from "react-router-dom";
+import { useAuth } from "./auth/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [activeState, setActiveState] = useState('ACCOUNT_ORDERS');
     const [successModal, setSuccessModal] = useState(false);
     const navigate = useNavigate();
-    const {authUser} = useAuth();
+    const { authUser } = useAuth();
 
     useEffect(() => {
         if (authUser == null) {
@@ -27,34 +27,32 @@ const Account = () => {
     }
 
     return (
-        <div className="settings">
-            <div className="menu settings__menu">
-                <div className="menu__elements flex flex-row w-full justify-center mt-5">
-                    <div className="choices menu__choices mt-3 border-r-2 mr-3">
-                        <div
-                            className={`cursor-pointer choices__element pr-1 pr-2 pb-4 ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
-                            onClick={() => setActiveState("ACCOUNT_ORDERS")}
-                        >
-                            <FontAwesomeIcon size="3x" icon={faShoppingCart}/>
-                        </div>
-                        <div
-                            className={`cursor-pointer border-t-2 choices__element flex justify-center  pr-1 pt-4 ${activeState === 'RESET_PASSWORD' ? 'active' : ''}`}
-                            onClick={() => setActiveState("RESET_PASSWORD")}
-                        >
-                            <FontAwesomeIcon size="3x" icon={faLock}/>
-                        </div>
+        <div className="settings flex justify-center items-center min-h-screen">
+            <div className="menu settings__menu flex flex-row  rounded-lg p-6 min-h-[600px] min-w-[700px] max-w-[800px]">
+                <div className="menu__choices flex flex-col  items-center border-r-2 mr-5">
+                    <div
+                        className={`cursor-pointer choices__element w-full flex justify-center pb-4 pr-2 ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
+                        onClick={() => setActiveState("ACCOUNT_ORDERS")}
+                    >
+                        <FontAwesomeIcon size="3x" icon={faShoppingCart} />
                     </div>
-                    <div className="menu__options">
-                        {activeState === 'ACCOUNT_ORDERS' && (
-                            <AccountOrders setSuccessModal={setSuccessModal}/>
-                        )}
-                        {activeState === 'RESET_PASSWORD' && (
-                            <ResetPassword setSuccessModal={setSuccessModal}/>
-                        )}
+                    <div
+                        className={`cursor-pointer choices__element pt-4 w-full flex justify-center border-t-2 ${activeState === 'RESET_PASSWORD' ? 'active' : ''}`}
+                        onClick={() => setActiveState("RESET_PASSWORD")}
+                    >
+                        <FontAwesomeIcon size="3x" icon={faLock} />
                     </div>
                 </div>
+                <div className="menu__options min-w-[700px] flex-grow flex justify-center">
+                    {activeState === 'ACCOUNT_ORDERS' && (
+                        <AccountOrders setSuccessModal={setSuccessModal} />
+                    )}
+                    {activeState === 'RESET_PASSWORD' && (
+                        <ResetPassword setSuccessModal={setSuccessModal} />
+                    )}
+                </div>
             </div>
-            <SaveSettingsSuccessModal show={successModal} handleClose={() => setSuccessModal(false)}/>
+            <SaveSettingsSuccessModal show={successModal} handleClose={() => setSuccessModal(false)} />
         </div>
     );
 };

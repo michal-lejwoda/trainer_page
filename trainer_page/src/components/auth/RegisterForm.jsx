@@ -6,13 +6,16 @@ import {useCookies} from "react-cookie";
 import {checkIfUserLogged, postRegistration} from "./api.jsx";
 import {useAuth} from "./AuthContext.jsx";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     const [, setCookie] = useCookies(['jwt_trainer_auth']);
     const [errorregister, setErrorRegister] = useState(null)
+    const navigate = useNavigate()
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const {t} = useTranslation()
+    // #TODO BACK HERE AND CHECK REGISTRATION
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)
@@ -32,8 +35,10 @@ const RegisterForm = () => {
                 setAuthUser(null)
                 setIsLoggedIn(false)
             }
-            await props.goToBookingConfirmation()
+            await navigate("/")
+            // await props.goToBookingConfirmation()
         } catch (err) {
+            console.log(err)
             setErrorRegister(err.response.data.detail)
         }
     }

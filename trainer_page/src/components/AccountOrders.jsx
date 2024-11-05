@@ -48,12 +48,12 @@ const AccountOrders = () => {
     }
 
     return (
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto bg-container-grey p-10 rounded-2xl">
             <div className="mb-5">
                 <span className="text-4xl">{t("Account Orders")}</span>
             </div>
             {data ? (
-                <ul className="w-full flex flex-col items-center">
+                <ul className="w-full flex flex-col items-center ">
                     {data.map((order) => (
                         <li key={order.id}
                             className="m-1 w-full max-w-2xl border-2 border-amber-500 p-4 cursor-pointer rounded-lg mx-auto">
