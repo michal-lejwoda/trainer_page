@@ -18,7 +18,6 @@ const Account = () => {
 
     useEffect(() => {
         if (authUser == null) {
-
             navigate("/login");
         }
     }, [authUser, navigate]);
