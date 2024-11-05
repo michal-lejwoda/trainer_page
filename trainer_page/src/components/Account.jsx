@@ -28,9 +28,8 @@ const Account = () => {
 
     return (
         <div className="settings">
-            <h1 className="title settings__title">{t("Settings")}</h1>
             <div className="menu settings__menu">
-                <div className="menu__elements">
+                <div className="menu__elements flex flex-row w-full justify-center mt-5">
                     <div className="choices menu__choices">
                         <div
                             className={`choices__element ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
