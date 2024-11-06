@@ -18,7 +18,7 @@ const AccountOrders = () => {
         console.log("handlePayment");
         navigate("/login");
     };
-
+    console.log("data", data)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -52,7 +52,7 @@ const AccountOrders = () => {
             <div className="mb-5">
                 <span className="text-4xl">{t("Account Orders")}</span>
             </div>
-            {data ? (
+            {data && data.length > 0 ? (
                 <ul className="w-full flex flex-col items-center ">
                     {data.map((order) => (
                         <li key={order.id}
