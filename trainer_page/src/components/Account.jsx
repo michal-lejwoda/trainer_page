@@ -27,7 +27,7 @@ const Account = () => {
     }
 
     return (
-        <div className="settings flex justify-center items-center min-h-screen">
+        <div className="settings flex justify-center">
             <div
                 className="menu settings__menu flex flex-row  rounded-lg p-6 min-h-[600px] min-w-[700px] max-w-[800px]">
                 <div className="menu__choices flex flex-col  items-center border-r-2 mr-5">
@@ -44,7 +44,7 @@ const Account = () => {
                         <FontAwesomeIcon size="3x" icon={faLock}/>
                     </div>
                 </div>
-                <div className="menu__options min-w-[700px] flex-grow flex justify-center">
+                <div className="menu__options min-w-[700px] flex-grow flex">
                     {activeState === 'ACCOUNT_ORDERS' && (
                         <AccountOrders setSuccessModal={setSuccessModal}/>
                     )}

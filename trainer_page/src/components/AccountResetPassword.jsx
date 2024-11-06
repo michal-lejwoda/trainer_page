@@ -54,12 +54,12 @@ const AccountResetPassword = () => {
 
 
     return (
-        <div className="booking__login bg-container-grey p-10 rounded-2xl">
+        <div className="booking__login bg-container-grey p-10 rounded-2xl w-full">
             <p className="text-4xl mb-4">{t("Password Reset")}</p>
             <div>
                 <form onSubmit={handleSubmit} className="w-full mt-5 ">
-                    <div className="flex justify-between mb-4">
-                        <div className="w-1/2 flex flex-col ml-3">
+                    <div className="flex flex-col justify-between mb-4">
+                        <div className="flex flex-col ml-3 mt-3">
                             <label className="mb-4 text-lg">{t("Password")}</label>
                             <input
                                 value={values.password}
@@ -74,7 +74,7 @@ const AccountResetPassword = () => {
                             />
                             {errors.password && <p>{errors.password}</p>}
                         </div>
-                        <div className="w-1/2 flex flex-col ml-3">
+                        <div className="flex flex-col ml-3 mt-3">
                             <label className="mb-4 text-lg">{t("Repeat Password")}</label>
                             <input
                                 value={values.repeat_password}
@@ -90,9 +90,11 @@ const AccountResetPassword = () => {
                         </div>
                         {errors.repeat_password && <p>{errors.repeat_password}</p>}
                     </div>
-                    <button className="border-solid border-1 rounded-lg border-white mr-4"
-                            type="submit">{t("Change password")}
-                    </button>
+                    <div className="flex w-full justify-end mt-3">
+                        <button className="border-solid border-1 rounded-lg border-white mr-4"
+                                type="submit">{t("Change password")}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
