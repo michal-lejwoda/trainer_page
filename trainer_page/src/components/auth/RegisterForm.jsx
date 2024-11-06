@@ -15,7 +15,6 @@ const RegisterForm = (props) => {
     const navigate = useNavigate()
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const {t} = useTranslation()
-    // #TODO BACK HERE AND CHECK REGISTRATION
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)
