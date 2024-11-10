@@ -21,7 +21,8 @@ def authenticate_and_generate_token_for_user(email: str, password: str, db: Sess
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    expires_datetime = datetime.datetime.now(datetime.timezone.utc) + access_token_expires
+    return {"access_token": access_token, "token_type": "bearer", "access_token_expires": expires_datetime}
 
 
 def authenticate_user(email: str, password: str, db: Session):
@@ -48,9 +49,9 @@ def get_user_by_email(email: str, db: Session):
 def create_access_token(data: dict, expires_delta: datetime.timedelta or None = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.datetime.utcnow() + expires_delta
+        expire = datetime.datetime.now() + expires_delta
     else:
-        expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
+        expire = datetime.datetime.now() + datetime.timedelta(minutes=15)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
