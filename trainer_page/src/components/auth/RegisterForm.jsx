@@ -25,7 +25,12 @@ const RegisterForm = (props) => {
         form.append("repeat_password", values.repeat_password)
         try {
             const registration_data = await postRegistration(form)
-            setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax'})
+            const dtObject = new Date(registration_data.access_token_expires);
+            await setCookie('jwt_trainer_auth', registration_data.access_token, {'sameSite': 'lax', 'expires': dtObject})
+            await setCookie('jwt_trainer_auth_expires', dtObject.toUTCString(), {
+                'sameSite': 'lax',
+                'expires': dtObject
+            });
             try {
                 let logged_user = await checkIfUserLogged()
                 setAuthUser(logged_user)
@@ -35,7 +40,6 @@ const RegisterForm = (props) => {
                 setIsLoggedIn(false)
             }
             await navigate("/")
-            // await props.goToBookingConfirmation()
         } catch (err) {
             console.log(err)
             setErrorRegister(err.response.data.detail)

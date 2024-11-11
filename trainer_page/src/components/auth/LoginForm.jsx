@@ -21,7 +21,12 @@ const LoginForm = () => {
         form.append("password", values.password)
         try {
             let login_data = await getLogin(form)
-            await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
+            const dtObject = new Date(login_data.access_token_expires);
+            await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax', 'expires': dtObject})
+            await setCookie('jwt_trainer_auth_expires', dtObject.toUTCString(), {
+                'sameSite': 'lax',
+                'expires': dtObject
+            });
             try {
                 let logged_user = await checkIfUserLogged()
                 setAuthUser(logged_user)
@@ -92,8 +97,10 @@ const LoginForm = () => {
                     {errorlogin && <p className="text-red-400">{errorlogin}</p>}
                     <div className="booking__login__button w-full flex flex-col items-end">
                         <a className="mb-4 cursor-pointer mr-4" href="/password_reminder">{t("Remind Password")}</a>
-                        <a className="mb-4 cursor-pointer mr-4" href="/register">{t("If you do not have an account, please register.")}</a>
-                        <button className="border-solid border-1 rounded-lg border-white mr-4 text-white" type="submit">{t("Log in")}
+                        <a className="mb-4 cursor-pointer mr-4"
+                           href="/register">{t("If you do not have an account, please register.")}</a>
+                        <button className="border-solid border-1 rounded-lg border-white mr-4 text-white"
+                                type="submit">{t("Log in")}
                         </button>
                     </div>
                 </form>

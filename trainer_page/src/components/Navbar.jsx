@@ -3,7 +3,7 @@ import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {NavLink} from "react-router-dom";
 import {useAuth} from "./auth/AuthContext.jsx";
-import {checkIfUserLogged} from "./auth/api.jsx";
+import {checkIfUserLogged, refreshUserToken} from "./auth/api.jsx";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {LANGUAGES} from "../languages.jsx";
@@ -45,7 +45,7 @@ export default function Navbar() {
     const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
     const {i18n, t} = useTranslation();
-
+    console.log("cookies", cookies)
     const moveToLogin = () => {
         removeCookie("jwt_trainer_auth")
         setAuthUser(null)
@@ -81,6 +81,48 @@ export default function Navbar() {
     useEffect(() => {
         handleAuthentication()
     }, [])
+
+    let intervalId;
+
+    useEffect(() => {
+        const checkTokenExpiration = async () => {
+            if (cookies['jwt_trainer_auth_expires']) {
+                const date = new Date();
+                const remainingTime = new Date(cookies['jwt_trainer_auth_expires']) - date;
+                const minutes = 20 * 60 * 1000; // 20 minutes
+                if (remainingTime < minutes) {
+                    let login_data = await refreshUserToken()
+                    const dtObject = new Date(login_data.access_token_expires);
+                    await setCookie('jwt_trainer_auth', login_data.access_token, {
+                        'sameSite': 'lax',
+                        'expires': dtObject
+                    })
+                    await setCookie('jwt_trainer_auth_expires', dtObject.toUTCString(), {
+                        'sameSite': 'lax',
+                        'expires': dtObject
+                    });
+                    try {
+                        let logged_user = await checkIfUserLogged()
+                        setAuthUser(logged_user)
+                        setIsLoggedIn(true)
+                    } catch (err) {
+                        setAuthUser(null)
+                        setIsLoggedIn(false)
+                    }
+                }
+            } else {
+                console.log("Brak cookies");
+            }
+        };
+
+        intervalId = setInterval(checkTokenExpiration, 10 * 60 * 1000);
+
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [cookies]);
+
 
     return (<Disclosure as="nav" className="bg-background-black-color">
         {({open}) => (<>

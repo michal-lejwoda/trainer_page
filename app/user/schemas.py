@@ -1,3 +1,4 @@
+import datetime
 import re
 
 from pydantic import BaseModel, field_validator
@@ -8,6 +9,7 @@ from validate_email import validate_email
 class Token(BaseModel):
     access_token: str
     token_type: str
+    access_token_expires: datetime.datetime
 
 
 class TokenData(BaseModel):

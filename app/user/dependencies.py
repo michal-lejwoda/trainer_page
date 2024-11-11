@@ -12,12 +12,34 @@ from app.user.models import User
 from app.user.schemas import TokenData
 
 
+def verify_token(token: str, db: Session):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+        user = db.query(User).filter(User.email == email).first()
+        if user is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+        return user
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+
+def refresh_token_based_on_old(old_token: str, db: Session):
+    user = verify_token(old_token, db)
+    new_token_expires = datetime.timedelta(minutes=120)
+    new_token = create_access_token(data={"sub": user.email}, expires_delta=new_token_expires)
+    expires_datetime = datetime.datetime.now(datetime.timezone.utc) + new_token_expires
+    return {"access_token": new_token, "token_type": "bearer", "access_token_expires": expires_datetime}
+
 def authenticate_and_generate_token_for_user(email: str, password: str, db: Session):
     user = authenticate_user(email, password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password",
                             headers={"WWW-Authenticate": "Bearer"})
-    access_token_expires = datetime.timedelta(minutes=80)
+    access_token_expires = datetime.timedelta(minutes=120)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
@@ -51,7 +73,7 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta or None = 
     if expires_delta:
         expire = datetime.datetime.now() + expires_delta
     else:
-        expire = datetime.datetime.now() + datetime.timedelta(minutes=15)
+        expire = datetime.datetime.now() + datetime.timedelta(minutes=120)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

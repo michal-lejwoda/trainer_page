@@ -18,7 +18,12 @@ const BookingAuthorizationLogin = (props) => {
         form.append("password", values.password)
         try {
             let login_data = await getLogin(form)
-            await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax'})
+            const dtObject = new Date(login_data.access_token_expires);
+            await setCookie('jwt_trainer_auth', login_data.access_token, {'sameSite': 'lax', 'expires': dtObject})
+            await setCookie('jwt_trainer_auth_expires', dtObject.toUTCString(), {
+                'sameSite': 'lax',
+                'expires': dtObject
+            });
             try {
                 let logged_user = await checkIfUserLogged()
                 setAuthUser(logged_user)

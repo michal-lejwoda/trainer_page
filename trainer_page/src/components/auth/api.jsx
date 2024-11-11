@@ -11,6 +11,12 @@ export async function checkIfUserLogged() {
     return response.data
 }
 
+export async function refreshUserToken(){
+    const response = await instance.post(`/api/refresh_token`, {
+        withCredentials: true
+    })
+    return response.data
+}
 
 export async function getLogin(form) {
     const response = await instance.post(`/api/token`, form);

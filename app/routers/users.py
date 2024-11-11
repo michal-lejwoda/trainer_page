@@ -10,7 +10,7 @@ from app.database import get_db
 from app.reservations.schemas import UserBase
 from app.routers.dependencies import admin_required
 from app.user.dependencies import get_password_hash, get_current_user, \
-    authenticate_and_generate_token_for_user, get_user_by_email
+    authenticate_and_generate_token_for_user, get_user_by_email, refresh_token_based_on_old
 from app.user.models import User
 from app.user.schemas import Token
 
@@ -24,6 +24,14 @@ router = APIRouter(
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
                                  ) -> dict:
     user_token = authenticate_and_generate_token_for_user(form_data.username, form_data.password, db)
+    return user_token
+
+
+@router.post("/refresh_token", response_model=Token)
+async def refresh_token(jwt_trainer_auth: Optional[str] = Cookie(None), db: Session = Depends(get_db)) -> dict:
+    if jwt_trainer_auth is None:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    user_token = refresh_token_based_on_old(jwt_trainer_auth, db)
     return user_token
 
 
