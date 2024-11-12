@@ -1,4 +1,4 @@
-import {Fragment, useEffect} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
 import {NavLink} from "react-router-dom";
@@ -9,6 +9,8 @@ import {useCookies} from "react-cookie";
 import {LANGUAGES} from "../languages.jsx";
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
+import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 const navigation = [{name: t('Homepage'), href: '/', current: false},
@@ -124,7 +126,7 @@ export default function Navbar() {
     }, [cookies]);
 
 
-    return (<Disclosure as="nav" className="bg-background-black-color">
+    return (<Disclosure as="nav" className="bg-background-black-color flex justify-center">
         {({open}) => (<>
             <div className="mx-auto max-w-7xl">
                 <div className="relative flex h-16 items-center justify-between">
@@ -139,16 +141,8 @@ export default function Navbar() {
                     <div
                         className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start px-2">
                         <div className="flex flex-shrink-0 items-center">
-                            <img
-                                className="block h-8 w-auto lg:hidden"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"
-                            />
-                            <img
-                                className="hidden h-8 w-auto lg:block"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                alt="Your Company"
-                            />
+                            <FontAwesomeIcon className="block h-8 w-auto" size="3x" icon={faMedal}/>
+
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
@@ -183,7 +177,7 @@ export default function Navbar() {
                                 >
                                     {t("Log in")}
                                 </NavLink>}
-                                <select className="menu__language--select navbar__select"
+                                <select className="menu__language--select navbar__select cursor-pointer bg-navbar-bg"
                                         value={i18n.language}
                                         onChange={onChangeLanguage}
                                 >

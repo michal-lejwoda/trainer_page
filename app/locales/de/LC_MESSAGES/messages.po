@@ -1,66 +1,59 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid "Message"
 msgstr "Nachricht"
 
 msgid "Created goal."
-msgstr "Angelegtes Ziel."
+msgstr "Ziel erstellt."
 
 msgid "Congratulations! You have added your first exercise."
-msgstr "Gratulacje! Udało ci się stworzyć twoje własne ćwiczenie."
+msgstr "Herzlichen Glückwunsch! Du hast deine erste Übung hinzugefügt."
 
 msgid "Congratulations! You have been logged in for 10 minutes."
-msgstr "Gratuliere! Du bist seit 10 Minuten eingeloggt."
+msgstr "Herzlichen Glückwunsch! Du bist seit 10 Minuten eingeloggt."
 
 msgid "Congratulations! You have added 5 exercises."
-msgstr "Gratulacje! Dodałeś 5 własnych ćwiczeń."
+msgstr "Herzlichen Glückwunsch! Du hast 5 Übungen hinzugefügt."
 
 msgid "Congratulations! You have successfully modified 100 workouts."
-msgstr "Gratulacje! Zmodyfikowałeś 100 treningów."
+msgstr "Herzlichen Glückwunsch! Du hast 100 Workouts erfolgreich geändert."
 
 msgid "Congratulations! You have successfully modified 10 workouts."
-msgstr "Gratulacje! Zmodyfikowałeś 10 treningów."
+msgstr "Herzlichen Glückwunsch! Du hast 10 Workouts erfolgreich geändert."
 
 msgid "Congratulations! You have successfully modified your first workout."
-msgstr "Gratulacje! Zmodyfikowałeś swój własny pierwszy trening."
+msgstr "Herzlichen Glückwunsch! Du hast dein erstes Workout erfolgreich geändert."
 
 msgid "Congratulations! You have spent 50 hours on the site."
-msgstr "Gratulacje! Spędziłeś na stronie 50 godzin."
+msgstr "Herzlichen Glückwunsch! Du hast 50 Stunden auf der Seite verbracht."
 
 msgid "Congratulations! You have spent 100 hours on the site."
-msgstr "Gratulacje! Spędziłeś na stronie 100 godzin."
+msgstr "Herzlichen Glückwunsch! Du hast 100 Stunden auf der Seite verbracht."
 
 msgid "Congratulations! You have spent 200 hours on the site."
-msgstr "Gratulacje! Spędziłeś na stronie 200 godzin."
-
+msgstr "Herzlichen Glückwunsch! Du hast 200 Stunden auf der Seite verbracht."
 
 msgid "Congratulations! You have been logged into the site for 1 hour."
-msgstr "Gratulacje! Jesteś zalogowany przez 1 godzine."
+msgstr "Herzlichen Glückwunsch! Du bist seit 1 Stunde eingeloggt."
 
 msgid "Congratulations! You have been logged in for 2 hours."
-msgstr "Gratulacje! Jesteś zalogowany przez 2 godziny."
+msgstr "Herzlichen Glückwunsch! Du bist seit 2 Stunden eingeloggt."
 
 msgid "Congratulations! You have been logged in for 4 hours."
-msgstr "Gratulacje! Jesteś zalogowany przez 4 godziny."
+msgstr "Herzlichen Glückwunsch! Du bist seit 4 Stunden eingeloggt."
 
 msgid "Congratulations! You have just created your first training."
-msgstr "Gratuliere! Du hast gerade dein erstes Training erstellt."
+msgstr "Herzlichen Glückwunsch! Du hast gerade dein erstes Training erstellt."
 
 msgid "Password is too short (min 4 letters)"
-msgstr "Das Passwort ist zu kurz (mind. 4 Buchstaben)"
+msgstr "Das Passwort ist zu kurz (mindestens 4 Buchstaben)"
 
 msgid "Password is too long (max 50 letters)"
-msgstr "Das Passwort ist zu lang (max. 50 Buchstaben)"
+msgstr "Das Passwort ist zu lang (maximal 50 Buchstaben)"
 
 msgid "Username is too short (min 4 letters)"
-msgstr "Der Benutzername ist zu kurz (mind. 4 Buchstaben)"
+msgstr "Der Benutzername ist zu kurz (mindestens 4 Buchstaben)"
 
 msgid "Username is too long (max 30 letters)"
-msgstr "Der Benutzername ist zu lang (max. 30 Buchstaben)"
+msgstr "Der Benutzername ist zu lang (maximal 30 Buchstaben)"
 
 msgid "Address email is invalid"
 msgstr "Die E-Mail-Adresse ist ungültig"
@@ -84,7 +77,7 @@ msgid "No plans found for this trainer"
 msgstr "Keine Pläne für diesen Trainer gefunden"
 
 msgid "Passwords do not match"
-msgstr "Passwörter stimmen nicht überein"
+msgstr "Die Passwörter stimmen nicht überein"
 
 msgid "User not found"
 msgstr "Benutzer nicht gefunden"

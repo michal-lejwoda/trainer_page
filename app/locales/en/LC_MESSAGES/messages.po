@@ -38,7 +38,7 @@ msgid "Old password is invalid"
 msgstr "Old password is invalid"
 
 msgid "Please fix mistakes is change password form"
-msgstr "Please fix mistakes is change password form"
+msgstr "Please fix mistakes in change password form"
 
 msgid "User Achievement not found"
 msgstr "User Achievement not found"
@@ -90,7 +90,6 @@ msgstr "Reservation Confirmation"
 
 msgid "Success"
 msgstr "Success"
-
 
 msgid "Password reset successful"
 msgstr "Password reset successful"

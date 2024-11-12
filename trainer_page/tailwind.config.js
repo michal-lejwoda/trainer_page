@@ -18,6 +18,7 @@ export default {
         'container-grey': 'rgba(44,44,44,1)',
         'purple-text': '#646cff',
         'button-grey': '#1a1a1a',
+        'navbar-bg': 'rgb(36 36 36)',
       },
     },
   },
