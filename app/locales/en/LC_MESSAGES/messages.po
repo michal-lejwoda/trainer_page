@@ -115,3 +115,12 @@ msgstr "The time slot overlaps with existing work hours."
 
 msgid "An error occurred while saving work hours."
 msgstr "An error occurred while saving work hours."
+
+msgid "Unauthorized"
+msgstr "Unauthorized"
+
+msgid "An error occurred"
+msgstr "An error occurred"
+
+msgid "The user with this email already exists."
+msgstr "The user with this email already exists."

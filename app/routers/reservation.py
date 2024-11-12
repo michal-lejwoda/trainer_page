@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie, Header
 from sqlalchemy import asc, desc
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
 from starlette.requests import Request
 
