@@ -1,41 +1,39 @@
-import React, {Fragment, useEffect} from 'react'
-import {Disclosure, Menu, Transition} from '@headlessui/react'
+import React, {Fragment, useEffect, useState} from 'react'
+import {Disclosure} from '@headlessui/react'
 import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline'
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useAuth} from "./auth/AuthContext.jsx";
 import {checkIfUserLogged, refreshUserToken} from "./auth/api.jsx";
-import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {LANGUAGES} from "../languages.jsx";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import {faMedal} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-const navigation = [{name: t('Homepage'), href: '/', current: false},
-    {
-        name: t('About me'),
-        href: '/about-me',
-        current: false
-    },
-    {
-        name: t('Reservation'),
-        href: '/reservation/',
-        current: false
-    },
-    {
-        name: t('Transformations'),
-        href: '/transformations/',
-        current: true
-    },
-    {
-        name: t('Contact'),
-        href: '/contact/',
-        current: false
-    },
-
-]
+// const navigation = [{name: t('Homepage'), href: '/', current: false},
+//     {
+//         name: t('About me'),
+//         href: '/about-me',
+//         current: false
+//     },
+//     {
+//         name: t('Reservation'),
+//         href: '/reservation/',
+//         current: false
+//     },
+//     {
+//         name: t('Transformations'),
+//         href: '/transformations/',
+//         current: true
+//     },
+//     {
+//         name: t('Contact'),
+//         href: '/contact/',
+//         current: false
+//     },
+//
+// ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -47,6 +45,17 @@ export default function Navbar() {
     const [cookies, setCookie, removeCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
     const {i18n, t} = useTranslation();
+    const [navigation, setNavigation] = useState([]);
+
+    useEffect(() => {
+        setNavigation([
+            {name: t('Homepage'), href: '/', current: false},
+            {name: t('About me'), href: '/about-me', current: false},
+            {name: t('Reservation'), href: '/reservation/', current: false},
+            {name: t('Transformations'), href: '/transformations/', current: true},
+            {name: t('Contact'), href: '/contact/', current: false},
+        ]);
+    }, [t, i18n.language]);
     console.log("cookies", cookies)
     const moveToLogin = () => {
         removeCookie("jwt_trainer_auth")
