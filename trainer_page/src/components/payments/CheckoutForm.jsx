@@ -16,7 +16,7 @@ const CheckoutForm = (props) => {
         const res = await fetch('/create-intent', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({amount: 1099, currency: 'pln', payment_method_types: ['card', 'p24']}),
+            body: JSON.stringify({amount: 2200, currency: 'pln', payment_method_types: ['card', 'p24']}),
         });
 
         const {client_secret: clientSecret} = await res.json();

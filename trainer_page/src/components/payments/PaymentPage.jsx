@@ -11,9 +11,11 @@ const PaymentPage = (props) => {
         console.log("payment page", props)
 
         const {i18n} = useTranslation();
+        //TODO BACK HERE
         const options = {
             mode: 'payment',
-            amount: props.selectedPlanHour.plan.price,
+            amount: 5000.00, //Amounts in the smallest units of the currency
+            // amount: props.selectedPlanHour.plan.price,
             locale: i18n.language,
             currency: 'pln',// #TODO : props.selectedPlanHour.plan.currency Uncomment this when fix zl
             payment_method_types: ['card', 'p24'],
@@ -21,6 +23,7 @@ const PaymentPage = (props) => {
                 theme: 'night'
             },
         };
+        console.log("options", options)
         return (
             <Elements stripe={stripePromise} options={options}>
                 <CheckoutForm/>
