@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 
 
 function SystemReservation(props) {
-    const {t} = useTranslation()
+    const {i18n, t} = useTranslation()
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayWorkHoursData, setDayWorkHoursData] = useState([]);
     const {authUser} = useAuth()
@@ -210,6 +210,8 @@ function SystemReservation(props) {
                               value={currentDate}
                               minDetail="month"
                               maxDetail="month"
+                              locale={i18n.language}
+
                     />
                     <div className="mt-5 mb-5 text-lg font-semibold">
                         <h2 className="text-center text-white">{t("Available booking slots")}:</h2>
