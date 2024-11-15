@@ -83,25 +83,25 @@ const BookingConfirmation = (props) => {
                         <p className="text-gray-500 text-white text-center text-4xl font-semibold pb-4">
                             {t("Your order")}
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span className="font-semibold">{t("Title")}:</span> <span>{props.selectedPlanHour.plan.title}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span
                                 className="font-semibold">{t("Trainer")}:</span> <span>{props.selectedPlanHour.trainer.label}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span
                                 className="font-semibold">{t("Price")}:</span> <span>{props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span className="font-semibold">{t("Date")}:</span> <span>{props.selectedPlanHour.time_data.date}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span
                                 className="font-semibold">{t("Start time")}:</span> <span>{props.selectedPlanHour.time_data.start_datetime}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-2xl py-2">
+                        <p className="text-gray-500 text-white text-xl py-2">
                             <span
                                 className="font-semibold">{t("End time")}:</span> <span>{props.selectedPlanHour.time_data.end_datetime}</span>
                         </p>
