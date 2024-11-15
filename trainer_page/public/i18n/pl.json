@@ -224,5 +224,7 @@
   "Account": "Konto",
   "Settings saved": "Ustawienia zapisane",
   "Successfully saved the settings !!!": "Ustawienia zostały pomyślnie zapisane !!!",
-  "Close": "Zamknij"
+  "Close": "Zamknij",
+  "Confirm Reservation and pay with cash": "Potwierdź rezerwacje i zaplac gotówką",
+  "Book and pay with other methods(blik, credit cart)": "Potwierdź i zapłać za pomocą innych metod(blik, karta kredytowa)"
 }

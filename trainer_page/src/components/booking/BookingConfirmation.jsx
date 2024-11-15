@@ -76,34 +76,34 @@ const BookingConfirmation = (props) => {
 
     return (
         <div className="flex items-center flex-col text-white">
-            <h1 className="py-4 ">{t("Order confirmation.")}</h1>
+            {/*<h1 className="py-4 ">{t("Order confirmation.")}</h1>*/}
             <div className="sm:flex sm:items-start mb-5">
                 <div className="my-3 text-center sm:ml-4 sm:mt-0 sm:text-left text-4xl">
                     <div className="mt-2 p-10 bg-even-more-darky-grey rounded-lg">
                         <p className="text-gray-500 text-white text-center text-4xl font-semibold pb-4">
                             {t("Your order")}
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Title")}:</span> {props.selectedPlanHour.plan.title}
+                        <p className="text-gray-500 text-white text-2xl py-2">
+                            <span className="font-semibold">{t("Title")}:</span> <span>{props.selectedPlanHour.plan.title}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
+                        <p className="text-gray-500 text-white text-2xl py-2">
                             <span
-                                className="font-semibold">{t("Trainer")}:</span> {props.selectedPlanHour.trainer.label}
+                                className="font-semibold">{t("Trainer")}:</span> <span>{props.selectedPlanHour.trainer.label}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
+                        <p className="text-gray-500 text-white text-2xl py-2">
                             <span
-                                className="font-semibold">{t("Price")}:</span> {props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}
+                                className="font-semibold">{t("Price")}:</span> <span>{props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Date")}:</span> {props.selectedPlanHour.time_data.date}
+                        <p className="text-gray-500 text-white text-2xl py-2">
+                            <span className="font-semibold">{t("Date")}:</span> <span>{props.selectedPlanHour.time_data.date}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
+                        <p className="text-gray-500 text-white text-2xl py-2">
                             <span
-                                className="font-semibold">{t("Start time")}:</span> {props.selectedPlanHour.time_data.start_datetime}
+                                className="font-semibold">{t("Start time")}:</span> <span>{props.selectedPlanHour.time_data.start_datetime}</span>
                         </p>
-                        <p className="text-gray-500 text-white text-xl py-2">
+                        <p className="text-gray-500 text-white text-2xl py-2">
                             <span
-                                className="font-semibold">{t("End time")}:</span> {props.selectedPlanHour.time_data.end_datetime}
+                                className="font-semibold">{t("End time")}:</span> <span>{props.selectedPlanHour.time_data.end_datetime}</span>
                         </p>
                         <div className="py-4">
                             <ReCAPTCHA
@@ -113,13 +113,15 @@ const BookingConfirmation = (props) => {
                             {captchaError &&
                                 <p className="mt-3 text-red-800">{t("Complete the captcha verification")}</p>}
                         </div>
-                        <button className="text-2xl bg-button-grey"
-                                onClick={handleCashReservation}>{t("Confirm Reservation and pay with" +
-                            " cash")}</button>
-                        <button className="text-2xl bg-button-grey"
-                                onClick={handleCreditCartMethod}>
-                            {t("Book and pay with other methods(blik, credit cart)")}
-                        </button>
+                        <div className="flex flex-col">
+                            <button className="text-base bg-button-grey mb-3"
+                                    onClick={handleCashReservation}>{t("Confirm Reservation and pay with" +
+                                " cash")}</button>
+                            <button className="text-base bg-button-grey"
+                                    onClick={handleCreditCartMethod}>
+                                {t("Book and pay with other methods(blik, credit cart)")}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
