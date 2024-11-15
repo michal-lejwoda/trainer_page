@@ -42,9 +42,11 @@ const CheckoutForm = (props) => {
             <div className="w-3/4 m-5">
                 <form onSubmit={handleSubmit}>
                     <PaymentElement/>
-                    <button className="mt-4 text-base bg-button-grey" type="submit" disabled={!stripe || !elements}>
-                        {t("Make a payment")}
-                    </button>
+                    <div className="flex justify-end">
+                        <button className="mt-4 text-base bg-button-grey" type="submit" disabled={!stripe || !elements}>
+                            {t("Make a payment")}
+                        </button>
+                    </div>
                     {errorMessage && <div>{errorMessage}</div>}
                 </form>
             </div>
