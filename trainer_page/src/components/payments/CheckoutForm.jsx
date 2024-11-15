@@ -1,10 +1,12 @@
 import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import React, {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 const CheckoutForm = (props) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState(null);
+    const {t} = useTranslation()
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -40,8 +42,8 @@ const CheckoutForm = (props) => {
             <div className="w-3/4 m-5">
                 <form onSubmit={handleSubmit}>
                     <PaymentElement/>
-                    <button type="submit" disabled={!stripe || !elements}>
-                        Pay
+                    <button className="mt-4 text-base bg-button-grey" type="submit" disabled={!stripe || !elements}>
+                        {t("Make a payment")}
                     </button>
                     {errorMessage && <div>{errorMessage}</div>}
                 </form>

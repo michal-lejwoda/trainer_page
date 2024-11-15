@@ -35,13 +35,13 @@ const Account = () => {
                         className={`cursor-pointer choices__element w-full flex justify-center pb-4 pr-2 ${activeState === 'ACCOUNT_ORDERS' ? 'active' : ''}`}
                         onClick={() => setActiveState("ACCOUNT_ORDERS")}
                     >
-                        <FontAwesomeIcon size="3x" icon={faShoppingCart}/>
+                        <FontAwesomeIcon size="2x" icon={faShoppingCart}/>
                     </div>
                     <div
                         className={`cursor-pointer choices__element pt-4 w-full flex justify-center border-t-2 ${activeState === 'RESET_PASSWORD' ? 'active' : ''}`}
                         onClick={() => setActiveState("RESET_PASSWORD")}
                     >
-                        <FontAwesomeIcon size="3x" icon={faLock}/>
+                        <FontAwesomeIcon size="2x" icon={faLock}/>
                     </div>
                 </div>
                 <div className="menu__options min-w-[700px] flex-grow flex">
