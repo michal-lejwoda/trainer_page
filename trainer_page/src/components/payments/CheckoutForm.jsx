@@ -33,12 +33,13 @@ const CheckoutForm = (props) => {
         });
 
         const {client_secret: clientSecret} = await res.json();
-
+        const returnUrl = `${window.location.origin}`
+        // TODO WORK WITH THIS URL
         const {error} = await stripe.confirmPayment({
             elements,
             clientSecret,
             confirmParams: {
-                return_url: 'https://example.com/order/123/complete',
+                return_url: returnUrl,
             },
         });
 
