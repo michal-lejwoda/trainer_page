@@ -5,11 +5,10 @@ import {loadStripe} from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm.jsx";
 
 
-const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
 const PaymentPage = (props) => {
-        console.log("payment page", props)
-
+        const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+        const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
         const {i18n} = useTranslation();
         //TODO BACK HERE
         const options = {

@@ -38,7 +38,8 @@ const BookingConfirmation = (props) => {
         form.append("payment_type", payment_type)
         form.append("is_paid", is_paid)
         try {
-            if (recaptchaRef.current.getValue().length !== 0) {
+            //TODO UNcomment on production
+            // if (recaptchaRef.current.getValue().length !== 0) {
                 postReservation(form).then(() => {
                     const data = {
                         email: authUser.email,
@@ -57,9 +58,10 @@ const BookingConfirmation = (props) => {
                 })
                 setCaptchaError(false)
                 return true
-            } else {
-                setCaptchaError(true)
-            }
+            // }
+            // else {
+            //     setCaptchaError(true)
+            // }
 
         } catch (err) {
             return err.response
@@ -111,7 +113,7 @@ const BookingConfirmation = (props) => {
                                 sitekey={CAPTCHA_SITE_KEY}
                             />
                             {captchaError &&
-                                <p className="mt-3 text-red-800">{t("Complete the captcha verification")}</p>}
+                                <p className="mt-3 text-base text-red-800">{t("Complete the captcha verification")}</p>}
                         </div>
                         <div className="flex flex-col">
                             <button className="text-base bg-button-grey mb-3"

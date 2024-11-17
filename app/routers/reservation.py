@@ -30,6 +30,7 @@ from app.user.models import User
 
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
+WEBHOOK_API_KEY = os.getenv("WEBHOOK_API_KEY")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
 
@@ -408,23 +409,48 @@ async def admin_only_endpoint(superuser=Depends(admin_required)):
     print("admin", superuser)
     return {"message": "This is a protected endpoint for admins."}
 
+@router.post("/webhook_payment")
+async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
+    print("WEBHOOK_API_KEY", WEBHOOK_API_KEY)
+    payload = await request.body()
+    sig_header = request.headers.get("Stripe-Signature")
+    endpoint_secret = WEBHOOK_API_KEY
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+    except ValueError as e:
+        return {"message": "Invalid payload"}, 400
+    except stripe.error.SignatureVerificationError as e:
+        return {"message": "Invalid signature"}, 400
+
+    if event["type"] == "payment_intent.succeeded":
+        payment_intent = event["data"]["object"]
+        payment_intent_id = payment_intent["id"]
+
+        # # Zaktualizuj status zamówienia w bazie danych
+        # db.query(Order).filter(Order.payment_intent_id == payment_intent_id).update({"status": "paid"})
+        # db.commit()
+
+    return {"message": "Success"}
+
+
+@router.post("/webhook")
+async def webhook(request: Request):
+    print("webhook")
+    payload = await request.json()
+    print("Dane odebrane z webhooka:", payload)
+    return {"status": "success"}
 
 @router.post("/create-intent")
-async def create_payment_intent(payment_intent_request: PaymentIntentRequest):
-    print("payment_intent_request", payment_intent_request)
-    print("payment_intent_request.amount", payment_intent_request.amount)
-    print("payment_intent_request.currency", payment_intent_request.currency.value)
-    print("payment_intent_request.payment_method_types", payment_intent_request.payment_method_types)
+async def create_intent(data: dict):
     try:
-
         payment_intent = stripe.PaymentIntent.create(
-            amount=payment_intent_request.amount,
-            currency=payment_intent_request.currency.value,
-            payment_method_types=[method.value for method in payment_intent_request.payment_method_types]
-
+            amount=data["amount"],
+            currency=data["currency"],
+            payment_method_types=data["payment_method_types"],
         )
-
+        print("Utworzono PaymentIntent:", payment_intent.id)
         return {"client_secret": payment_intent.client_secret}
     except Exception as e:
-        print(f"Error creating payment intent: {e}")
-        raise HTTPException(status_code=500, detail="Failed to create PaymentIntent")
+        print("Błąd tworzenia PaymentIntent:", str(e))
+        return {"error": str(e)}, 400
