@@ -412,6 +412,7 @@ async def admin_only_endpoint(superuser=Depends(admin_required)):
 @router.post("/webhook_payment")
 async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     print("WEBHOOK_API_KEY", WEBHOOK_API_KEY)
+    print("----------------------------------------")
     payload = await request.body()
     sig_header = request.headers.get("Stripe-Signature")
     endpoint_secret = WEBHOOK_API_KEY
