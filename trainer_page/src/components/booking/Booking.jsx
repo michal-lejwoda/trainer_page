@@ -11,6 +11,7 @@ const Booking = () => {
     const [trainerPlan, setTrainerPlan] = useState(null)
     const [selectedPlanHour, setSelectedPlanHour] = useState(null)
     const [reservation, setReservation] = useState(null)
+    const [clientSecretKey, setClientSecretKey] = useState(null)
 
 
     useEffect(() => {
@@ -49,8 +50,16 @@ const Booking = () => {
             {bookingStep === 3 && <BookingConfirmation goToSystemReservation={goToSystemReservation}
                                                        selectedPlanHour={selectedPlanHour}
                                                        goToCheckoutForm={goToCheckoutForm}
-                                                       setReservation={setReservation}/>}
-            {bookingStep === 4 &&<PaymentPage selectedPlanHour={selectedPlanHour} reservation={reservation}/>}
+                                                       setReservation={setReservation}
+                                                       setClientSecretKey={setClientSecretKey}/>}
+            {bookingStep === 4 && clientSecretKey && (
+                <PaymentPage
+                    clientSecretKey={clientSecretKey}
+                    selectedPlanHour={selectedPlanHour}
+                    reservation={reservation}
+                />
+            )}
+
         </>
     );
 };

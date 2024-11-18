@@ -30,43 +30,72 @@ const BookingConfirmation = (props) => {
 
     }
     // #TODO Start here
-    const sendReservationRequest = (payment_type, is_paid) => {
-        let form = new FormData()
-        form.append("title", props.selectedPlanHour.plan.title)
-        form.append("user_id", authUser.id)
-        form.append("work_hours_id", props.selectedPlanHour.time_data.id)
-        form.append("payment_type", payment_type)
-        form.append("is_paid", is_paid)
-        try {
-            //TODO UNcomment on production
-            // if (recaptchaRef.current.getValue().length !== 0) {
-                postReservation(form).then(() => {
-                    const data = {
-                        email: authUser.email,
-                        body: {
-                            "title": props.selectedPlanHour.plan.title,
-                            "trainer": props.selectedPlanHour.trainer.label,
-                            "price": props.selectedPlanHour.plan.price,
-                            "currency": props.selectedPlanHour.plan.currency,
-                            "date": props.selectedPlanHour.time_data.date,
-                            "start_datetime": props.selectedPlanHour.time_data.start_datetime,
-                            "end_datetime": props.selectedPlanHour.time_data.end_datetime
-                        }
-                    }
-                    sendConfirmationEmail(data)
+    const sendReservationRequest = async (payment_type, is_paid) => {
+    let form = new FormData();
+    form.append("title", props.selectedPlanHour.plan.title);
+    form.append("user_id", authUser.id);
+    form.append("work_hours_id", props.selectedPlanHour.time_data.id);
+    form.append("payment_type", payment_type);
+    form.append("is_paid", is_paid);
 
-                })
-                setCaptchaError(false)
-                return true
-            // }
-            // else {
-            //     setCaptchaError(true)
-            // }
+    // try {
+        // TODO Weryfikacja Captcha (zakomentowane w trybie produkcyjnym)
+        // if (recaptchaRef.current.getValue().length === 0) {
+        //     setCaptchaError(true);
+        //     return false;
+        // }
 
-        } catch (err) {
-            return err.response
+
+        const reservationResponse = await postReservation(form);
+        console.log(reservationResponse)
+        console.log(reservationResponse.status)
+        if (!reservationResponse || reservationResponse.status !== 200) {
+            throw new Error("Reservation request failed.");
         }
-    }
+
+        const paymentResponse = await fetch('/api/create-intent', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                amount: Math.round(props.selectedPlanHour.plan.price * 100),
+                // currency: props.selectedPlanHour.plan.currency.toLowerCase(),
+                currency: 'pln',
+                payment_method_types: ['card', 'p24'],
+                metadata: {
+                    reservation_id: reservationResponse.data.reservation_id,
+                },
+            }),
+        });
+
+        if (!paymentResponse.ok) {
+            throw new Error("Failed to create PaymentIntent.");
+        }
+
+        const { client_secret: clientSecret } = await paymentResponse.json();
+        props.setClientSecretKey(clientSecret)
+        const emailData = {
+            email: authUser.email,
+            body: {
+                title: props.selectedPlanHour.plan.title,
+                trainer: props.selectedPlanHour.trainer.label,
+                price: props.selectedPlanHour.plan.price,
+                currency: props.selectedPlanHour.plan.currency,
+                date: props.selectedPlanHour.time_data.date,
+                start_datetime: props.selectedPlanHour.time_data.start_datetime,
+                end_datetime: props.selectedPlanHour.time_data.end_datetime,
+            },
+        };
+
+        await sendConfirmationEmail(emailData);
+        return clientSecret;
+    // }
+    // catch (err) {
+    //     console.error("Error during reservation process:", err);
+    //     setCaptchaError(true);
+    //     return false;
+    // }
+};
+
 
     //Use auth
     useEffect(() => {
@@ -86,26 +115,32 @@ const BookingConfirmation = (props) => {
                             {t("Your order")}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Title")}:</span> <span>{props.selectedPlanHour.plan.title}</span>
+                            <span className="font-semibold">{t("Title")}:</span>
+                            <span>{props.selectedPlanHour.plan.title}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Trainer")}:</span> <span>{props.selectedPlanHour.trainer.label}</span>
+                                className="font-semibold">{t("Trainer")}:</span>
+                            <span>{props.selectedPlanHour.trainer.label}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Price")}:</span> <span>{props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}</span>
+                                className="font-semibold">{t("Price")}:</span>
+                            <span>{props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Date")}:</span> <span>{props.selectedPlanHour.time_data.date}</span>
+                            <span className="font-semibold">{t("Date")}:</span>
+                            <span>{props.selectedPlanHour.time_data.date}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Start time")}:</span> <span>{props.selectedPlanHour.time_data.start_datetime}</span>
+                                className="font-semibold">{t("Start time")}:</span>
+                            <span>{props.selectedPlanHour.time_data.start_datetime}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("End time")}:</span> <span>{props.selectedPlanHour.time_data.end_datetime}</span>
+                                className="font-semibold">{t("End time")}:</span>
+                            <span>{props.selectedPlanHour.time_data.end_datetime}</span>
                         </p>
                         <div className="py-4">
                             <ReCAPTCHA

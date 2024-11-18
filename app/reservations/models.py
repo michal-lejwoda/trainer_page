@@ -55,6 +55,7 @@ class Reservation(Base):
     payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
     work_hours = relationship("WorkHours", back_populates="reservation")
     is_paid = Column(Boolean, default=False, server_default=sqlalchemy.sql.false())
+    payment_id = Column(String)
     user = relationship("User", back_populates="reservations")
 
 

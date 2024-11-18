@@ -54,8 +54,7 @@ export async function getNextAvailableDayWorkHours(data){
 
 export async function postReservation(data) {
     try {
-        const response = await instance.post(`/api/reservation`, data, { withCredentials: true });
-        return response.data;
+        return await instance.post(`/api/reservation`, data, {withCredentials: true});
     } catch (error) {
         console.error("Error posting reservation:", error);
         throw new Error("Failed to post reservation");

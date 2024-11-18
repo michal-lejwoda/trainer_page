@@ -428,8 +428,8 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
         payment_intent = event["data"]["object"]
         payment_intent_id = payment_intent["id"]
 
-        # # Zaktualizuj status zamówienia w bazie danych
-        # db.query(Order).filter(Order.payment_intent_id == payment_intent_id).update({"status": "paid"})
+        #TODO BACK HERE
+        db.query(Reservation).filter(Order.payment_intent_id == payment_intent_id).update({"status": "paid"})
         # db.commit()
 
     return {"message": "Success"}

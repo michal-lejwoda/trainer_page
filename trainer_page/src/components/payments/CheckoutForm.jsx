@@ -7,7 +7,7 @@ const CheckoutForm = (props) => {
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState(null);
     const {t} = useTranslation()
-
+    console.log("Checkout Form", props.clientSecretKey)
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -22,17 +22,18 @@ const CheckoutForm = (props) => {
             return;
         }
 
-        const res = await fetch('/api/create-intent', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                amount: 2200,
-                currency: 'pln',
-                payment_method_types: ['card', 'p24'],
-            }),
-        });
-
-        const {client_secret: clientSecret} = await res.json();
+        // const res = await fetch('/api/create-intent', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //         amount: 2200,
+        //         currency: 'pln',
+        //         payment_method_types: ['card', 'p24'],
+        //     }),
+        // });
+        //
+        // const {client_secret: clientSecret} = await res.json();
+        const clientSecret = props.clientSecretKey
         const returnUrl = `${window.location.origin}`
         // TODO WORK WITH THIS URL
         const {error} = await stripe.confirmPayment({

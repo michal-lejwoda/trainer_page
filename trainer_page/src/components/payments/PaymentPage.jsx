@@ -25,7 +25,7 @@ const PaymentPage = (props) => {
         console.log("options", options)
         return (
             <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm/>
+                <CheckoutForm clientSecretKey={props.clientSecretKey}/>
             </Elements>
 
         )
