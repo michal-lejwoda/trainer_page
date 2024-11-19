@@ -13,7 +13,7 @@ const PaymentPage = (props) => {
         //TODO BACK HERE
         const options = {
             mode: 'payment',
-            amount: 5000.00, //Amounts in the smallest units of the currency
+            amount: Math.round(props.selectedPlanHour.plan.price * 100),
             // amount: props.selectedPlanHour.plan.price,
             locale: i18n.language,
             currency: 'pln',// #TODO : props.selectedPlanHour.plan.currency Uncomment this when fix zl
