@@ -19,7 +19,7 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut, CancelIntentRequest
 from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -409,6 +409,17 @@ async def admin_only_endpoint(superuser=Depends(admin_required)):
     print("admin", superuser)
     return {"message": "This is a protected endpoint for admins."}
 
+
+@router.post("/api/cancel-intent")
+async def cancel_payment_intent(request: CancelIntentRequest):
+    try:
+        canceled_intent = stripe.PaymentIntent.cancel(request.payment_intent_id)
+        return {"status": "success", "data": canceled_intent}
+    except stripe.error.StripeError as e:
+        raise HTTPException(status_code=500, detail=f"Stripe error: {e.user_message}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Unexpected error occurred")
+
 @router.post("/webhook_payment")
 async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     print("WEBHOOK_API_KEY", WEBHOOK_API_KEY)
@@ -428,9 +439,12 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
         payment_intent = event["data"]["object"]
         payment_intent_id = payment_intent["id"]
 
-        #TODO BACK HERE
-        db.query(Reservation).filter(Order.payment_intent_id == payment_intent_id).update({"status": "paid"})
-        # db.commit()
+        rows_updated = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
+            {"is_paid": True})
+        db.commit()
+
+        if rows_updated == 0:
+            return {"message": "No reservation found to update."}, 404
 
     return {"message": "Success"}
 

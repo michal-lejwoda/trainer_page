@@ -31,70 +31,81 @@ const BookingConfirmation = (props) => {
     }
     // #TODO Start here
     const sendReservationRequest = async (payment_type, is_paid) => {
-    let form = new FormData();
-    form.append("title", props.selectedPlanHour.plan.title);
-    form.append("user_id", authUser.id);
-    form.append("work_hours_id", props.selectedPlanHour.time_data.id);
-    form.append("payment_type", payment_type);
-    form.append("is_paid", is_paid);
-
-    // try {
+        // try {
         // TODO Weryfikacja Captcha (zakomentowane w trybie produkcyjnym)
         // if (recaptchaRef.current.getValue().length === 0) {
         //     setCaptchaError(true);
         //     return false;
         // }
+        let form = new FormData();
+        form.append("title", props.selectedPlanHour.plan.title);
+        form.append("user_id", authUser.id);
+        form.append("work_hours_id", props.selectedPlanHour.time_data.id);
+        form.append("payment_type", payment_type);
+        form.append("is_paid", is_paid);
+
+        try {
+
+            const paymentResponse = await fetch('/api/create-intent', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    amount: Math.round(props.selectedPlanHour.plan.price * 100),
+                    currency: 'pln',
+                    payment_method_types: ['card', 'p24'],
+                    metadata: {user_id: authUser.id},
+                }),
+            });
+
+            if (!paymentResponse.ok) {
+                throw new Error("Failed to create PaymentIntent.");
+            }
+
+            const {id: paymentIntentId, client_secret: clientSecret} = await paymentResponse.json();
+
+            form.append("client_secret", clientSecret);
+            const reservationResponse = await postReservation(form);
+
+            if (!reservationResponse || reservationResponse.status !== 200) {
+                console.log("Wrong")
+                // TODO CLEAN IT LATER
+                await fetch('/api/cancel-intent', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({payment_intent_id: paymentIntentId}),
+                });
+                throw new Error("Reservation request failed.");
+            }
 
 
-        const reservationResponse = await postReservation(form);
-        console.log(reservationResponse)
-        console.log(reservationResponse.status)
-        if (!reservationResponse || reservationResponse.status !== 200) {
-            throw new Error("Reservation request failed.");
-        }
-
-        const paymentResponse = await fetch('/api/create-intent', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                amount: Math.round(props.selectedPlanHour.plan.price * 100),
-                // currency: props.selectedPlanHour.plan.currency.toLowerCase(),
-                currency: 'pln',
-                payment_method_types: ['card', 'p24'],
-                metadata: {
-                    reservation_id: reservationResponse.data.reservation_id,
+            const emailData = {
+                email: authUser.email,
+                body: {
+                    title: props.selectedPlanHour.plan.title,
+                    trainer: props.selectedPlanHour.trainer.label,
+                    price: props.selectedPlanHour.plan.price,
+                    currency: props.selectedPlanHour.plan.currency,
+                    date: props.selectedPlanHour.time_data.date,
+                    start_datetime: props.selectedPlanHour.time_data.start_datetime,
+                    end_datetime: props.selectedPlanHour.time_data.end_datetime,
                 },
-            }),
-        });
+            };
+            await sendConfirmationEmail(emailData);
+            props.setClientSecretKey(clientSecret);
+            return clientSecret;
 
-        if (!paymentResponse.ok) {
-            throw new Error("Failed to create PaymentIntent.");
+        } catch (err) {
+            console.error("Error during reservation process:", err);
+            setCaptchaError(true);
+            return false;
         }
-
-        const { client_secret: clientSecret } = await paymentResponse.json();
-        props.setClientSecretKey(clientSecret)
-        const emailData = {
-            email: authUser.email,
-            body: {
-                title: props.selectedPlanHour.plan.title,
-                trainer: props.selectedPlanHour.trainer.label,
-                price: props.selectedPlanHour.plan.price,
-                currency: props.selectedPlanHour.plan.currency,
-                date: props.selectedPlanHour.time_data.date,
-                start_datetime: props.selectedPlanHour.time_data.start_datetime,
-                end_datetime: props.selectedPlanHour.time_data.end_datetime,
-            },
-        };
-
-        await sendConfirmationEmail(emailData);
-        return clientSecret;
-    // }
-    // catch (err) {
-    //     console.error("Error during reservation process:", err);
-    //     setCaptchaError(true);
-    //     return false;
-    // }
-};
+        // }
+        // catch (err) {
+        //     console.error("Error during reservation process:", err);
+        //     setCaptchaError(true);
+        //     return false;
+        // }
+    };
 
 
     //Use auth
