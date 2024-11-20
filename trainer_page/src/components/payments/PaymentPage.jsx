@@ -14,7 +14,6 @@ const PaymentPage = (props) => {
         const options = {
             mode: 'payment',
             amount: Math.round(props.selectedPlanHour.plan.price * 100),
-            // amount: props.selectedPlanHour.plan.price,
             locale: i18n.language,
             currency: 'pln',// #TODO : props.selectedPlanHour.plan.currency Uncomment this when fix zl
             payment_method_types: ['card', 'p24'],

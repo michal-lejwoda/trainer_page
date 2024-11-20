@@ -64,6 +64,8 @@ const BookingConfirmation = (props) => {
             const {id: paymentIntentId, client_secret: clientSecret} = await paymentResponse.json();
 
             form.append("client_secret", clientSecret);
+            form.append("payment_id", paymentIntentId);
+            console.log("form", form)
             const reservationResponse = await postReservation(form);
 
             if (!reservationResponse || reservationResponse.status !== 200) {

@@ -42,12 +42,14 @@ def create_reservation(
         work_hours_id: Annotated[int, Form()],
         is_paid: Annotated[bool, Form()],
         payment_type: Annotated[PaymentType, Form()],
+        payment_id: Annotated[str, Form()],
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
     user = get_current_user(jwt_trainer_auth, db)
     user_based_on_id = validate_user(user_id, db)
     verify_user_permission(user, user_based_on_id)
+    print("payment_id", payment_id)
     try:
         work_hours = validate_work_hours(work_hours_id, db)
         reservation_model = Reservation(
@@ -55,7 +57,8 @@ def create_reservation(
             work_hour_id=work_hours.id,
             is_paid=is_paid,
             user_id=user.id,
-            payment_type=payment_type
+            payment_type=payment_type,
+            payment_id=payment_id
         )
         db.add(reservation_model)
         db.commit()
@@ -435,13 +438,16 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     except stripe.error.SignatureVerificationError as e:
         return {"message": "Invalid signature"}, 400
 
-    if event["type"] == "payment_intent.succeeded":
+    print("ev", event["type"])
+
+    if event["type"] == "charge.succeeded":
         payment_intent = event["data"]["object"]
         payment_intent_id = payment_intent["id"]
-
+        print("payment_intent_id", payment_intent_id)
         rows_updated = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
             {"is_paid": True})
         db.commit()
+        print("rows_updated", rows_updated)
 
         if rows_updated == 0:
             return {"message": "No reservation found to update."}, 404
@@ -465,7 +471,7 @@ async def create_intent(data: dict):
             payment_method_types=data["payment_method_types"],
         )
         print("Utworzono PaymentIntent:", payment_intent.id)
-        return {"client_secret": payment_intent.client_secret}
+        return {"client_secret": payment_intent.client_secret, "id":payment_intent.id}
     except Exception as e:
         print("Błąd tworzenia PaymentIntent:", str(e))
         return {"error": str(e)}, 400

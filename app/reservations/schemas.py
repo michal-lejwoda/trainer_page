@@ -237,6 +237,7 @@ class UserReservationOut(BaseModel):
     work_hour_id: int
     title: str
     payment_type: str
+    payment_id: Optional[str]
     work_hours: UserWorkHourOut
 
 class CancelIntentRequest(BaseModel):
