@@ -442,7 +442,7 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
 
     if event["type"] == "charge.succeeded":
         payment_intent = event["data"]["object"]
-        payment_intent_id = payment_intent["id"]
+        payment_intent_id = payment_intent["payment_intent"]
         print("payment_intent_id", payment_intent_id)
         rows_updated = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
             {"is_paid": True})
@@ -471,6 +471,7 @@ async def create_intent(data: dict):
             payment_method_types=data["payment_method_types"],
         )
         print("Utworzono PaymentIntent:", payment_intent.id)
+        print("payment_intetn", payment_intent)
         return {"client_secret": payment_intent.client_secret, "id":payment_intent.id}
     except Exception as e:
         print("Błąd tworzenia PaymentIntent:", str(e))
