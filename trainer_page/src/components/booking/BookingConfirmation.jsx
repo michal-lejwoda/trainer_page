@@ -39,6 +39,7 @@ const BookingConfirmation = (props) => {
         // }
         let form = new FormData();
         form.append("title", props.selectedPlanHour.plan.title);
+        form.append("plan_id", props.selectedPlanHour.plan.id)
         form.append("user_id", authUser.id);
         form.append("work_hours_id", props.selectedPlanHour.time_data.id);
         form.append("payment_type", payment_type);

@@ -43,6 +43,16 @@ class WorkHours(Base):
     reservation = relationship("Reservation", back_populates="work_hours")
     trainer = relationship("Trainer", back_populates="work_hours")
 
+class ReservationPlan(Base):
+    __tablename__ = "reservation_plans"
+
+    id = Column(Integer, primary_key=True, index=True)
+    reservation_id = Column(Integer, ForeignKey("reservations.id"))
+    plan_id = Column(Integer, ForeignKey("plans.id"))
+    price_at_booking = Column(Float)
+    reservation = relationship("Reservation", back_populates="reservation_plans")
+    plan = relationship("Plan")
+
 
 
 class Reservation(Base):
@@ -52,11 +62,14 @@ class Reservation(Base):
     title = Column(String)
     work_hour_id = Column(Integer, ForeignKey("workhours.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
+    plan_id = Column(Integer, ForeignKey("plans.id"))
     payment_type = Column(SQLAlchemyEnum(PaymentType, name="paymenttype", create_type=False), default=PaymentType.cash)
+    plan = relationship("Plan", back_populates="reservations")
     work_hours = relationship("WorkHours", back_populates="reservation")
     is_paid = Column(Boolean, default=False, server_default=sqlalchemy.sql.false())
     payment_id = Column(String)
     user = relationship("User", back_populates="reservations")
+    reservation_plans = relationship("ReservationPlan", back_populates="reservation")
 
 
 class Trainer(Base):
@@ -98,3 +111,4 @@ class Plan(Base):
     price = Column(Float)
     currency = Column(String)
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
+

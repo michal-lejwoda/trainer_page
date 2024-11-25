@@ -15,11 +15,12 @@ from starlette.requests import Request
 from app.database import get_db
 from app.reservations.helpers import generate_date_range, generate_work_hours
 from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
-    Reservation, PaymentType
+    Reservation, PaymentType, ReservationPlan
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
     GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut, CancelIntentRequest
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut, CancelIntentRequest, \
+    PaymentIdSchema
 from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
     validate_working_hours_not_exists
@@ -39,6 +40,7 @@ router = APIRouter(tags=["reservation"], prefix="/api")
 def create_reservation(
         title: Annotated[str, Form()],
         user_id: Annotated[int, Form()],
+        plan_id: Annotated[int, Form()],
         work_hours_id: Annotated[int, Form()],
         is_paid: Annotated[bool, Form()],
         payment_type: Annotated[PaymentType, Form()],
@@ -46,6 +48,9 @@ def create_reservation(
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
+    plan = db.query(Plan).filter(Plan.id == plan_id).one_or_none()
+    if not plan:
+        raise ValueError("Plan not found")
     user = get_current_user(jwt_trainer_auth, db)
     user_based_on_id = validate_user(user_id, db)
     verify_user_permission(user, user_based_on_id)
@@ -54,6 +59,7 @@ def create_reservation(
         work_hours = validate_work_hours(work_hours_id, db)
         reservation_model = Reservation(
             title=title,
+            plan_id=plan_id,
             work_hour_id=work_hours.id,
             is_paid=is_paid,
             user_id=user.id,
@@ -65,6 +71,15 @@ def create_reservation(
         work_hours.is_active = False
         db.add(work_hours)
         db.commit()
+        db.flush()
+
+        # Utwórz ReservationPlan z aktualną ceną
+        reservation_plan = ReservationPlan(
+            reservation_id=reservation.id,
+            plan_id=plan_id,
+            price_at_booking=plan.price,
+        )
+        db.add(reservation_plan)
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=400, detail=_("Error creating reservation"))
@@ -422,6 +437,13 @@ async def cancel_payment_intent(request: CancelIntentRequest):
         raise HTTPException(status_code=500, detail=f"Stripe error: {e.user_message}")
     except Exception as e:
         raise HTTPException(status_code=500, detail="Unexpected error occurred")
+
+@router.post("/get_price")
+async def get_price(payment_id_schema: PaymentIdSchema, db: Session = Depends(get_db)):
+    reservation = db.query(Reservation).filter(Reservation.payment_id == payment_id_schema.payment_id).first()
+    if reservation is None:
+        raise HTTPException(status_code=404, detail=_("Reservation does not exist"))
+    return reservation
 
 @router.post("/webhook_payment")
 async def stripe_webhook(request: Request, db: Session = Depends(get_db)):

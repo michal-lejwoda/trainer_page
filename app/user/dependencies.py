@@ -65,6 +65,8 @@ def get_password_hash(password):
 
 
 def get_user_by_email(email: str, db: Session):
+    print("email", email)
+    print("db.query(User).filter(User.email == email).first()",db.query(User).filter(User.email == email).first())
     return db.query(User).filter(User.email == email).first()
 
 

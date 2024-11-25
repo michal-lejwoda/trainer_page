@@ -242,3 +242,6 @@ class UserReservationOut(BaseModel):
 
 class CancelIntentRequest(BaseModel):
     payment_intent_id: str
+
+class PaymentIdSchema(BaseModel):
+    payment_id: str

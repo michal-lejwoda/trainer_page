@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useGetUserReservations } from "./mutations.jsx";
+import React, {useEffect, useState} from 'react';
+import {useGetUserReservations} from "./mutations.jsx";
 import BoxLoading from "./BoxLoading.jsx";
-import { faArrowDown } from "@fortawesome/fontawesome-free-solid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {faArrowDown} from "@fortawesome/fontawesome-free-solid";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const AccountOrders = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { mutateAsync: mutateGetUserReservations } = useGetUserReservations();
+    const {mutateAsync: mutateGetUserReservations} = useGetUserReservations();
     const [expandedOrderIds, setExpandedOrderIds] = useState([]);
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
-    const handlePayment = () => {
+    const handlePayment = (order) => {
+        console.log("order",order)
         console.log("handlePayment");
-        navigate("/login");
+        navigate("/payment_page", {state: order});
     };
     console.log("data", data)
     useEffect(() => {
@@ -34,7 +35,7 @@ const AccountOrders = () => {
 
         fetchData();
     }, [mutateGetUserReservations]);
-
+    console.log("data", data)
     const toggleOrder = (orderId) => {
         setExpandedOrderIds(prevState =>
             prevState.includes(orderId)
@@ -44,7 +45,7 @@ const AccountOrders = () => {
     };
 
     if (loading) {
-        return <BoxLoading />;
+        return <BoxLoading/>;
     }
 
     return (
@@ -66,11 +67,17 @@ const AccountOrders = () => {
                                     {order.payment_type === "cash" ? (
                                         t("Cash payment")
                                     ) : (
-                                        <button onClick={handlePayment}>
-                                            {order.is_paid ? t("Payment completed") : t("Pay your reservations")}
-                                        </button>
+                                        order.is_paid ? (
+                                            <span>
+                                                {t("Payment completed")}
+                                            </span>
+                                        ) : (
+                                            <button onClick={() => handlePayment(order)}>
+                                                {t("Pay your reservations")}
+                                            </button>
+                                        )
                                     )}
-                                    <FontAwesomeIcon size="xs" icon={faArrowDown} className="ml-3" />
+                                    <FontAwesomeIcon size="xs" icon={faArrowDown} className="ml-3"/>
                                 </div>
                             </div>
 
