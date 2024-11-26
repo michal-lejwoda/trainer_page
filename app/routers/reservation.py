@@ -73,11 +73,10 @@ def create_reservation(
         db.commit()
         db.flush()
 
-        # Utwórz ReservationPlan z aktualną ceną
         reservation_plan = ReservationPlan(
-            reservation_id=reservation.id,
+            reservation_id=reservation_model.id,
             plan_id=plan_id,
-            price_at_booking=plan.price,
+            price_at_booking=plan.price
         )
         db.add(reservation_plan)
     except IntegrityError:

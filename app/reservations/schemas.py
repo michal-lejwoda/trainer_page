@@ -148,6 +148,7 @@ class DateRange(BaseModel):
 
 
 class TrainerPlans(BaseModel):
+    id: int
     title: str
     price: float
     currency: str

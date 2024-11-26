@@ -56,7 +56,6 @@ export default function Navbar() {
             {name: t('Contact'), href: '/contact/', current: false},
         ]);
     }, [t, i18n.language]);
-    console.log("cookies", cookies)
     const moveToLogin = () => {
         removeCookie("jwt_trainer_auth")
         setAuthUser(null)

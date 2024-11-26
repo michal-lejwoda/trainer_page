@@ -8,10 +8,8 @@ import {useLocation} from "react-router-dom";
 
 
 const PaymentPage = (props) => {
-        const location = useLocation();
-        const state = location.state;
-        console.log("state", state)
-        console.log("payment_id", state.payment_id)
+        // const location = useLocation();
+        // const state = location.state;
         const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
         const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
         const {i18n} = useTranslation();

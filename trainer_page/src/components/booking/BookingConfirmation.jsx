@@ -29,6 +29,7 @@ const BookingConfirmation = (props) => {
         }
 
     }
+    console.log("props.selectedPlanHour",props.selectedPlanHour)
     // #TODO Start here
     const sendReservationRequest = async (payment_type, is_paid) => {
         // try {
@@ -38,6 +39,7 @@ const BookingConfirmation = (props) => {
         //     return false;
         // }
         let form = new FormData();
+
         form.append("title", props.selectedPlanHour.plan.title);
         form.append("plan_id", props.selectedPlanHour.plan.id)
         form.append("user_id", authUser.id);
@@ -129,31 +131,31 @@ const BookingConfirmation = (props) => {
                             {t("Your order")}
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Title")}:</span>
+                            <span className="font-semibold">{t("Title")} : </span>
                             <span>{props.selectedPlanHour.plan.title}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Trainer")}:</span>
+                                className="font-semibold">{t("Trainer")} : </span>
                             <span>{props.selectedPlanHour.trainer.label}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Price")}:</span>
+                                className="font-semibold">{t("Price")} : </span>
                             <span>{props.selectedPlanHour.plan.price} {props.selectedPlanHour.plan.currency}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
-                            <span className="font-semibold">{t("Date")}:</span>
+                            <span className="font-semibold">{t("Date")} : </span>
                             <span>{props.selectedPlanHour.time_data.date}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("Start time")}:</span>
+                                className="font-semibold">{t("Start time")} : </span>
                             <span>{props.selectedPlanHour.time_data.start_datetime}</span>
                         </p>
                         <p className="text-gray-500 text-white text-xl py-2">
                             <span
-                                className="font-semibold">{t("End time")}:</span>
+                                className="font-semibold">{t("End time")} : </span>
                             <span>{props.selectedPlanHour.time_data.end_datetime}</span>
                         </p>
                         <div className="py-4">

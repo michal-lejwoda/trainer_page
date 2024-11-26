@@ -111,4 +111,4 @@ class Plan(Base):
     price = Column(Float)
     currency = Column(String)
     trainer_id = Column(Integer, ForeignKey("trainers.id"), nullable=True)
-
+    reservations = relationship("Reservation", back_populates="plan")
