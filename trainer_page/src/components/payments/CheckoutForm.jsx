@@ -7,7 +7,6 @@ const CheckoutForm = (props) => {
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState(null);
     const {t} = useTranslation()
-    console.log("Checkout Form", props.clientSecretKey)
     const handleSubmit = async (event) => {
         event.preventDefault();
 

@@ -17,7 +17,7 @@ const AccountOrders = () => {
     const handlePayment = (order) => {
         console.log("order",order)
         console.log("handlePayment");
-        navigate("/payment_page", {state: order});
+        navigate("/pay_the_order", {state: order});
     };
     console.log("data", data)
     useEffect(() => {

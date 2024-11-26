@@ -1,0 +1,41 @@
+import {useTranslation} from "react-i18next";
+import {Elements} from "@stripe/react-stripe-js";
+import React from "react";
+import {loadStripe} from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm.jsx";
+import {useLocation} from "react-router-dom";
+
+
+const TryAgainPaymentPage = () => {
+        const location = useLocation();
+        const state = location.state;
+        const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+        const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
+        const {i18n} = useTranslation();
+        console.log("state", state)
+        //TODO BACK HERE get order with client secret key
+
+        const options = {
+            mode: 'payment',
+            amount: 5000,
+            // amount: Math.round(props.selectedPlanHour.plan.price * 100),
+            locale: i18n.language,
+            currency: 'pln',// #TODO : props.selectedPlanHour.plan.currency Uncomment this when fix zl
+            payment_method_types: ['card', 'p24'],
+            appearance: {
+                theme: 'night'
+            },
+        };
+        console.log("options", options)
+        return (
+            <Elements stripe={stripePromise} options={options}>
+                <CheckoutForm
+                    // clientSecretKey={props.clientSecretKey}
+                />
+            </Elements>
+
+        )
+    }
+;
+
+export default TryAgainPaymentPage;

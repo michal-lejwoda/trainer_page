@@ -10,31 +10,6 @@ import {useTranslation} from "react-i18next";
 import {faMedal} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-
-// const navigation = [{name: t('Homepage'), href: '/', current: false},
-//     {
-//         name: t('About me'),
-//         href: '/about-me',
-//         current: false
-//     },
-//     {
-//         name: t('Reservation'),
-//         href: '/reservation/',
-//         current: false
-//     },
-//     {
-//         name: t('Transformations'),
-//         href: '/transformations/',
-//         current: true
-//     },
-//     {
-//         name: t('Contact'),
-//         href: '/contact/',
-//         current: false
-//     },
-//
-// ]
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }

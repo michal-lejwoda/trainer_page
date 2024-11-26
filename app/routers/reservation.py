@@ -88,6 +88,31 @@ def create_reservation(
     return {"detail": _("Reservation created successfully")}
 
 
+
+@router.post("/resume-payment/{reservation_id}")
+def resume_payment(
+    reservation_id: int,
+    db: Session = Depends(get_db)
+):
+    reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
+
+    if not reservation:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+
+    if reservation.is_paid:
+        raise HTTPException(status_code=400, detail="Reservation already paid")
+
+    if not reservation.payment_intent_id:
+        raise HTTPException(status_code=400, detail="PaymentIntent not found for this reservation")
+
+    payment_intent = stripe.PaymentIntent.retrieve(reservation.payment_id)
+
+    return {
+        "client_secret": payment_intent.client_secret,
+        "amount": payment_intent.amount,
+        "currency": payment_intent.currency,
+    }
+
 @router.get("/reservation", response_model=List[ReservationOut])
 def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return db.query(Reservation).offset(skip).limit(limit).all()
