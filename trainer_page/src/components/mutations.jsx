@@ -1,7 +1,7 @@
 import {useMutation} from "react-query";
 import {
     getDayWorkHours,
-    getNextAvailableDayWorkHours,
+    getNextAvailableDayWorkHours, getResumePayment,
     getTrainerPlan,
     getTrainers,
     getUserReservations
@@ -25,4 +25,8 @@ export const useGetNextAvailableDayWorkHours = () =>{
 
 export const useGetUserReservations = () => {
     return useMutation(getUserReservations)
+}
+
+export const useResumePayment = () => {
+    return useMutation(getResumePayment)
 }

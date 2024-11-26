@@ -73,6 +73,19 @@ export async function getUserReservations() {
     }
 }
 
+export async function getResumePayment(id) {
+    console.log("id", id)
+    try {
+        console.log("Fetching user reservations from API");
+        const response = await instance.post(`/api/resume-payment/${id}`, { withCredentials: true });
+        console.log("API response:", response);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching reservations:", error);
+        throw error;
+    }
+}
+
 export async function sendConfirmationEmail(data) {
     try {
         const response = await instance.post(`/api/send-email/background_task`, data, { withCredentials: true });
