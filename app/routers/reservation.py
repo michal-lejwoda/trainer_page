@@ -102,11 +102,11 @@ def resume_payment(
     if reservation.is_paid:
         raise HTTPException(status_code=400, detail="Reservation already paid")
 
-    if not reservation.payment_intent_id:
+    if not reservation.payment_id:
         raise HTTPException(status_code=400, detail="PaymentIntent not found for this reservation")
 
     payment_intent = stripe.PaymentIntent.retrieve(reservation.payment_id)
-
+    print("payment1234", payment_intent.status)
     return {
         "client_secret": payment_intent.client_secret,
         "amount": payment_intent.amount,

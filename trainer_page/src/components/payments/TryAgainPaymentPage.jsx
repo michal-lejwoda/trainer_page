@@ -1,15 +1,14 @@
-import {useTranslation} from "react-i18next";
-import {Elements} from "@stripe/react-stripe-js";
-import React, {useEffect, useState} from "react";
-import {loadStripe} from "@stripe/stripe-js";
-import CheckoutForm from "./CheckoutForm.jsx";
 import {useLocation} from "react-router-dom";
+import {loadStripe} from "@stripe/stripe-js";
+import {useTranslation} from "react-i18next";
+import {useEffect, useState} from "react";
+import {Elements} from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm.jsx";
 import {useResumePayment} from "../mutations.jsx";
-
 
 const TryAgainPaymentPage = () => {
     const location = useLocation();
-    const state = location.state || {}; // Zabezpieczenie przed brakiem state
+    const state = location.state || {};
     const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
     const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
     const {i18n} = useTranslation();
@@ -19,17 +18,18 @@ const TryAgainPaymentPage = () => {
     console.log("state", state);
     console.log("data", data);
 
-    const {mutateAsync: mutateGetResumePayment} = useResumePayment(state.id);
+    const {mutateAsync: mutateGetResumePayment} = useResumePayment();
 
     useEffect(() => {
         const fetchData = async () => {
             if (!state.id) {
                 console.warn("Brak state.id, pomijanie fetchowania danych");
+                setLoading(false);
                 return;
             }
             try {
                 setLoading(true);
-                const data = await mutateGetResumePayment();
+                const data = await mutateGetResumePayment(state.id);
                 setData(data);
             } catch (error) {
                 console.error("Error details:", error);
@@ -39,13 +39,14 @@ const TryAgainPaymentPage = () => {
         };
 
         fetchData();
-    }, [mutateGetResumePayment, state.id]); // state.id jako zależność
+    }, [mutateGetResumePayment, state.id]);
+
 
     const options = {
         mode: 'payment',
-        amount: 5000,
+        amount: data?.amount || 0,
         locale: i18n.language,
-        currency: 'pln',
+        currency: data?.currency || "pln",
         payment_method_types: ['card', 'p24'],
         appearance: {
             theme: 'night'
@@ -58,9 +59,13 @@ const TryAgainPaymentPage = () => {
         return <div>Loading...</div>;
     }
 
+    if (!data || !data.client_secret) {
+        return <div>Error: Nie udało się załadować danych płatności.</div>;
+    }
+
     return (
         <Elements stripe={stripePromise} options={options}>
-            <CheckoutForm />
+            <CheckoutForm clientSecretKey={data.client_secret}/>
         </Elements>
     );
 };
