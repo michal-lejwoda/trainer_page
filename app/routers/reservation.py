@@ -113,7 +113,7 @@ def resume_payment(
         "currency": payment_intent.currency,
     }
 
-@router.get("/reservation", response_model=List[ReservationOut])
+@router.get("/reservation", response_model=List[UserReservationOut])
 def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return db.query(Reservation).offset(skip).limit(limit).all()
 

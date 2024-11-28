@@ -21,7 +21,7 @@ COPY ./compose/local/trainer_backend/check_unregistered_payments.sh /scripts/che
 RUN chmod +x /scripts/createsuperuser.sh
 RUN chmod +x /scripts/check_unregistered_payments.sh
 
-ENTRYPOINT ["/scripts/create_versions_directory.sh","/scripts/createsuperuser.sh", "check_unregistered_payments"]
+ENTRYPOINT ["/scripts/create_versions_directory.sh","/scripts/createsuperuser.sh","/scripts/check_unregistered_payments.sh"]
 
 CMD ["sh", "-c", "python -m app.createsuperuser && uvicorn app.local:app --host 0.0.0.0 --port 8000 --reload"]
 
