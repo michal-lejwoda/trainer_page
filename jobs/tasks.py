@@ -1,6 +1,8 @@
 import datetime
+import os
+
 from sqlalchemy.orm import Session
-from app.reservations.models import WorkHours
+from app.reservations.models import WorkHours, Reservation
 
 
 def remove_unactive_records(db: Session):
@@ -30,3 +32,21 @@ def remove_unactive_records(db: Session):
 
     return "Success"
 
+# TODO Back here and add buy time
+def remove_unpaid_records(db: Session):
+    print("remove_unactive_records", flush=True)
+    current_time = datetime.datetime.now(datetime.timezone.utc)
+    # stripe_api_key = os.environ.get('STRIPE_SECRET_KEY')
+    # if not stripe_api_key:
+    #     raise RuntimeError("Stripe API key not configured.")
+    #
+    # stripe.api_key = stripe_api_key
+    unpaid_reservations = (
+        db.query(Reservation)
+        .filter(Reservation.is_paid == False,
+                Reservation.payment_id.isnot(None),
+                Reservation.payment_id != "",
+                Reservation.payment_id != "undefined")
+        .all()
+    )
+    pass

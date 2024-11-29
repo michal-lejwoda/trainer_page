@@ -1,7 +1,7 @@
 import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 from app.database import SessionLocal
-from jobs.tasks import remove_unactive_records
+from jobs.tasks import remove_unactive_records, remove_unpaid_records
 
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -25,3 +25,10 @@ if not scheduler.running:
     scheduler.start()
 else:
     print("Scheduler already running.")
+
+def delete_unpaid_records_with_db():
+    session = SessionLocal()
+    try:
+        remove_unpaid_records(session)
+    finally:
+        session.close()
