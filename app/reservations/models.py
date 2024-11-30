@@ -1,7 +1,7 @@
 import enum
 
 import sqlalchemy.sql
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime, func
 from sqlalchemy.orm import relationship
 from sqlalchemy import Enum as SQLAlchemyEnum
 from app.database import Base
@@ -50,6 +50,8 @@ class ReservationPlan(Base):
     reservation_id = Column(Integer, ForeignKey("reservations.id"))
     plan_id = Column(Integer, ForeignKey("plans.id"))
     price_at_booking = Column(Float)
+    reservation_datetime = Column(DateTime, default=func.now())
+    pay_datetime = Column(DateTime, default=None)
     reservation = relationship("Reservation", back_populates="reservation_plans")
     plan = relationship("Plan")
 
