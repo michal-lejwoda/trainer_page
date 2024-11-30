@@ -1,8 +1,9 @@
 import datetime
 import os
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
-from app.reservations.models import WorkHours, Reservation
+from app.reservations.models import WorkHours, Reservation, ReservationPlan
 
 
 def remove_unactive_records(db: Session):
@@ -34,19 +35,44 @@ def remove_unactive_records(db: Session):
 
 # TODO Back here and add buy time
 def remove_unpaid_records(db: Session):
-    print("remove_unactive_records", flush=True)
-    current_time = datetime.datetime.now(datetime.timezone.utc)
-    # stripe_api_key = os.environ.get('STRIPE_SECRET_KEY')
-    # if not stripe_api_key:
-    #     raise RuntimeError("Stripe API key not configured.")
-    #
-    # stripe.api_key = stripe_api_key
-    unpaid_reservations = (
-        db.query(Reservation)
-        .filter(Reservation.is_paid == False,
-                Reservation.payment_id.isnot(None),
-                Reservation.payment_id != "",
-                Reservation.payment_id != "undefined")
-        .all()
-    )
-    pass
+    print("remove_unpaid_records", flush=True)
+    # current_time = datetime.datetime.now(datetime.timezone.utc)
+
+
+    # unpaid_reservations = (
+    #     db.query(Reservation)
+    #     .join(ReservationPlan, Reservation.id == ReservationPlan.reservation_id)
+    #     .filter(
+    #         Reservation.is_paid == False,
+    #         Reservation.payment_id.isnot(None),
+    #         Reservation.payment_id != "",
+    #         Reservation.payment_id != "undefined",
+    #         ReservationPlan.pay_datetime.is_(None),
+    #         Reservation.reservation_datetime < func.now() - datetime.timedelta(hours=1)
+    #     )
+    #     .all()
+    # )
+
+    db.query(Reservation).filter(
+        Reservation.is_paid == False,
+        Reservation.payment_id.isnot(None),
+        Reservation.payment_id != "",
+        Reservation.payment_id != "undefined",
+        ReservationPlan.reservation_datetime < func.now() - datetime.timedelta(hours=1)
+    ).update({"is_paid": False}, synchronize_session=False)
+
+    db.query(ReservationPlan).join(Reservation, Reservation.id == ReservationPlan.reservation_id) \
+        .filter(
+        Reservation.is_paid == False,
+        Reservation.payment_id.isnot(None),
+        Reservation.payment_id != "",
+        Reservation.payment_id != "undefined",
+        ReservationPlan.pay_datetime.is_(None),
+        ReservationPlan.reservation_datetime < func.now() - datetime.timedelta(hours=1)
+
+    ).delete(synchronize_session=False)
+
+
+    db.commit()
+
+    return "Success"

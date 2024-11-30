@@ -6,7 +6,7 @@ from typing import List, Annotated
 import stripe
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie, Header
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
@@ -490,12 +490,20 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
         payment_intent = event["data"]["object"]
         payment_intent_id = payment_intent["payment_intent"]
         print("payment_intent_id", payment_intent_id)
-        rows_updated = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
-            {"is_paid": True})
-        db.commit()
-        print("rows_updated", rows_updated)
 
-        if rows_updated == 0:
+        rows_updated_reservation = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
+            {"is_paid": True})
+
+        rows_updated_plan = db.query(ReservationPlan).filter(ReservationPlan.reservation_id.in_(
+            db.query(Reservation.id).filter(Reservation.payment_id == payment_intent_id)
+        )).update({"pay_datetime": func.now()})
+
+        db.commit()
+
+        print("rows_updated_reservation", rows_updated_reservation)
+        print("rows_updated_plan", rows_updated_plan)
+
+        if rows_updated_reservation == 0:
             return {"message": "No reservation found to update."}, 404
 
     return {"message": "Success"}
