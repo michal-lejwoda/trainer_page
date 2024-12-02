@@ -72,13 +72,13 @@ def create_reservation(
         db.add(work_hours)
         db.commit()
         db.flush()
-
         reservation_plan = ReservationPlan(
             reservation_id=reservation_model.id,
             plan_id=plan_id,
             price_at_booking=plan.price
         )
         db.add(reservation_plan)
+        db.commit()
     except IntegrityError:
         db.rollback()
         raise HTTPException(status_code=400, detail=_("Error creating reservation"))
@@ -130,15 +130,15 @@ def user_reservations(
 
     reservations = (
         db.query(Reservation)
-        .join(WorkHours)
-        .join(Trainer)
+        .join(WorkHours, Reservation.work_hour_id == WorkHours.id)
+        .join(ReservationPlan, Reservation.id == ReservationPlan.reservation_id)
         .filter(Reservation.user_id == user.id)
-        .order_by(desc(WorkHours.start_datetime))
+        .order_by(WorkHours.start_datetime.desc())
         .offset(skip)
         .limit(limit)
         .all()
     )
-
+    print(reservations)
     return reservations
 
 
@@ -151,6 +151,9 @@ def list_trainers(db: Session = Depends(get_db)):
 def get_all_working_hours(db: Session = Depends(get_db)):
     return db.query(WorkingHour).all()
 
+@router.get("/get_all_reservation_plans")
+def get_all_reservation_plans(db: Session = Depends(get_db)):
+    return db.query(ReservationPlan).all()
 
 @router.post("/create_working_hour", response_model=WorkingHourOut)
 def create_working_hour(working_hours: WorkingHourBase, trainer=Depends(trainer_required), db: Session = Depends(

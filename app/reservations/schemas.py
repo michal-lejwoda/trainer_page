@@ -2,6 +2,7 @@ import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field, field_validator, validator
+from typing_extensions import List
 
 from app.reservations.models import PaymentCurrency, PaymentMethodType
 
@@ -229,7 +230,11 @@ class UserWorkHourOut(BaseModel):
     def convert_end_datetime_to_time(cls, v: datetime.datetime) -> str:
         return v.time()
 
-
+class ReservationPlanOut(BaseModel):
+    plan_id: int
+    price_at_booking: float
+    reservation_datetime: datetime.datetime
+    pay_datetime: Optional[datetime.datetime]
 
 class UserReservationOut(BaseModel):
     id: int
@@ -240,6 +245,9 @@ class UserReservationOut(BaseModel):
     payment_type: str
     payment_id: Optional[str]
     work_hours: UserWorkHourOut
+    reservation_plans: List[ReservationPlanOut]
+
+
 
 class CancelIntentRequest(BaseModel):
     payment_intent_id: str

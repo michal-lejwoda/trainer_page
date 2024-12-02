@@ -6,9 +6,6 @@ from jobs.tasks import remove_unactive_records, remove_unpaid_records
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
 
-# def test_message_every_minute():
-#     print("test_message", flush=True)
-#     logging.info("test_message123")
 
 def remove_unactive_records_with_db():
     session = SessionLocal()
