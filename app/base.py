@@ -1,5 +1,5 @@
-#TODO DONT REMOVE
-from jobs.my_jobs import scheduler # noqa: F401
+# TODO DONT REMOVE
+from jobs.my_jobs import scheduler  # noqa: F401
 import os
 import stripe
 from fastapi import FastAPI

@@ -2,10 +2,10 @@ import enum
 
 import sqlalchemy.sql
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float, Time, DateTime, func
-from sqlalchemy.orm import relationship
 from sqlalchemy import Enum as SQLAlchemyEnum
+from sqlalchemy.orm import relationship
 from app.database import Base
-# TODO IMportant dont remove that one
+# TODO Important dont remove that one
 from app.user.models import User
 
 
@@ -22,16 +22,6 @@ class PaymentCurrency(str, enum.Enum):
 class PaymentMethodType(str, enum.Enum):
     card = 'card'
     p24 = 'p24'
-
-
-class Day_of_Week(enum.Enum):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4
-    SATURDAY = 5
-    SUNDAY = 6
 
 
 class WorkHours(Base):

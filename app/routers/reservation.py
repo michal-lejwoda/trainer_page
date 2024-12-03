@@ -6,7 +6,7 @@ from typing import List, Annotated
 import stripe
 from dotenv import load_dotenv
 from fastapi import Depends, HTTPException, APIRouter, Form, Cookie, Header
-from sqlalchemy import asc, desc, func
+from sqlalchemy import asc, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
@@ -18,8 +18,8 @@ from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Train
     Reservation, PaymentType, ReservationPlan
 from app.reservations.schemas import TrainerBase, \
     WorkingHourBase, WorkHourCreate, DateRange, AddressBase, WorkHourGet, \
-    GetWorkHours, TrainerId, TrainerPlans, EmailBody, ReservationOut, TrainerOut, WorkingHourOut, WorkHourOut, \
-    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, PaymentIntentRequest, UserReservationOut, CancelIntentRequest, \
+    GetWorkHours, TrainerId, TrainerPlans, EmailBody, TrainerOut, WorkingHourOut, WorkHourOut, \
+    AddressOut, PlanOut, UserOut, WorkHourIn, MaxDate, UserReservationOut, CancelIntentRequest, \
     PaymentIdSchema
 from app.routers.dependencies import verify_jwt_trainer_auth, admin_required, trainer_required
 from app.routers.validation import validate_user, validate_work_hours, verify_user_permission, get_work_hour_or_404, \
@@ -35,7 +35,6 @@ WEBHOOK_API_KEY = os.getenv("WEBHOOK_API_KEY")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
 
-# TODO BACK HERE NEXT TIME
 @router.post("/reservation")
 def create_reservation(
         title: Annotated[str, Form()],
@@ -54,7 +53,6 @@ def create_reservation(
     user = get_current_user(jwt_trainer_auth, db)
     user_based_on_id = validate_user(user_id, db)
     verify_user_permission(user, user_based_on_id)
-    print("payment_id", payment_id)
     try:
         work_hours = validate_work_hours(work_hours_id, db)
         reservation_model = Reservation(
@@ -88,11 +86,10 @@ def create_reservation(
     return {"detail": _("Reservation created successfully")}
 
 
-
 @router.post("/resume-payment/{reservation_id}")
 def resume_payment(
-    reservation_id: int,
-    db: Session = Depends(get_db)
+        reservation_id: int,
+        db: Session = Depends(get_db)
 ):
     reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
 
@@ -106,12 +103,12 @@ def resume_payment(
         raise HTTPException(status_code=400, detail="PaymentIntent not found for this reservation")
 
     payment_intent = stripe.PaymentIntent.retrieve(reservation.payment_id)
-    print("payment1234", payment_intent.status)
     return {
         "client_secret": payment_intent.client_secret,
         "amount": payment_intent.amount,
         "currency": payment_intent.currency,
     }
+
 
 @router.get("/reservation", response_model=List[UserReservationOut])
 def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
@@ -138,7 +135,6 @@ def user_reservations(
         .limit(limit)
         .all()
     )
-    print(reservations)
     return reservations
 
 
@@ -151,9 +147,11 @@ def list_trainers(db: Session = Depends(get_db)):
 def get_all_working_hours(db: Session = Depends(get_db)):
     return db.query(WorkingHour).all()
 
+
 @router.get("/get_all_reservation_plans")
 def get_all_reservation_plans(db: Session = Depends(get_db)):
     return db.query(ReservationPlan).all()
+
 
 @router.post("/create_working_hour", response_model=WorkingHourOut)
 def create_working_hour(working_hours: WorkingHourBase, trainer=Depends(trainer_required), db: Session = Depends(
@@ -442,19 +440,6 @@ def send_direct_message(
     return {'message': _("Direct message has been sent")}
 
 
-@router.get("/test")
-def test_url(request: Request):
-    lang = request.headers.get('Accept-Language', 'de').split(',')[0]
-    print(f"Using language: {lang}")
-    return {"message": _("Message")}
-
-
-@router.get("/admin-only")
-async def admin_only_endpoint(superuser=Depends(admin_required)):
-    print("admin", superuser)
-    return {"message": "This is a protected endpoint for admins."}
-
-
 @router.post("/api/cancel-intent")
 async def cancel_payment_intent(request: CancelIntentRequest):
     try:
@@ -465,6 +450,7 @@ async def cancel_payment_intent(request: CancelIntentRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Unexpected error occurred")
 
+
 @router.post("/get_price")
 async def get_price(payment_id_schema: PaymentIdSchema, db: Session = Depends(get_db)):
     reservation = db.query(Reservation).filter(Reservation.payment_id == payment_id_schema.payment_id).first()
@@ -472,10 +458,9 @@ async def get_price(payment_id_schema: PaymentIdSchema, db: Session = Depends(ge
         raise HTTPException(status_code=404, detail=_("Reservation does not exist"))
     return reservation
 
+
 @router.post("/webhook_payment")
 async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
-    print("WEBHOOK_API_KEY", WEBHOOK_API_KEY)
-    print("----------------------------------------")
     payload = await request.body()
     sig_header = request.headers.get("Stripe-Signature")
     endpoint_secret = WEBHOOK_API_KEY
@@ -487,12 +472,9 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     except stripe.error.SignatureVerificationError as e:
         return {"message": "Invalid signature"}, 400
 
-    print("ev", event["type"])
-
     if event["type"] == "charge.succeeded":
         payment_intent = event["data"]["object"]
         payment_intent_id = payment_intent["payment_intent"]
-        print("payment_intent_id", payment_intent_id)
 
         rows_updated_reservation = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
             {"is_paid": True})
@@ -503,21 +485,11 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
 
         db.commit()
 
-        print("rows_updated_reservation", rows_updated_reservation)
-        print("rows_updated_plan", rows_updated_plan)
-
         if rows_updated_reservation == 0:
             return {"message": "No reservation found to update."}, 404
 
     return {"message": "Success"}
 
-
-@router.post("/webhook")
-async def webhook(request: Request):
-    print("webhook")
-    payload = await request.json()
-    print("Dane odebrane z webhooka:", payload)
-    return {"status": "success"}
 
 @router.post("/create-intent")
 async def create_intent(data: dict):
@@ -527,9 +499,6 @@ async def create_intent(data: dict):
             currency=data["currency"],
             payment_method_types=data["payment_method_types"],
         )
-        print("Utworzono PaymentIntent:", payment_intent.id)
-        print("payment_intetn", payment_intent)
-        return {"client_secret": payment_intent.client_secret, "id":payment_intent.id}
+        return {"client_secret": payment_intent.client_secret, "id": payment_intent.id}
     except Exception as e:
-        print("Błąd tworzenia PaymentIntent:", str(e))
         return {"error": str(e)}, 400

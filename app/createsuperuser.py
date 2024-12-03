@@ -16,7 +16,6 @@ def create_superuser():
     phone_number = env['ADMIN_PHONE_NUMBER']
     existing_user = db.query(User).filter(User.email == email).first()
     if existing_user:
-        print("Superuser already exists!")
         return
 
     hashed_password = pwd_context.hash(password)
@@ -28,4 +27,3 @@ def create_superuser():
     db.commit()
     db.refresh(superuser)
     authenticate_and_generate_token_for_user(email, password, db)
-    print(f"Superuser {email} created!")
