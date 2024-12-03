@@ -3,8 +3,6 @@ import {Elements} from "@stripe/react-stripe-js";
 import React from "react";
 import {loadStripe} from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm.jsx";
-import {useLocation} from "react-router-dom";
-
 
 
 const PaymentPage = (props) => {

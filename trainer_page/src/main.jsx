@@ -15,34 +15,23 @@ import Account from "./components/Account.jsx";
 import BoxLoading from "./components/BoxLoading.jsx";
 import PaymentPage from "./components/payments/PaymentPage.jsx";
 import TryAgainPaymentPage from "./components/payments/TryAgainPaymentPage.jsx";
+import ResetPasswordBasedonEmail from "./components/auth/ResetPasswordBasedOnEmail.jsx";
+import Footer from "./components/Footer.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Homepage from "./components/Homepage.jsx";
+import Contact from "./components/Contact.jsx";
+import Booking from "./components/booking/Booking.jsx";
+import AboutMe from "./components/AboutMe.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
+import {t} from "i18next";
 
-const ResetPasswordBasedonEmail = lazy(() => import("./components/auth/ResetPasswordBasedOnEmail.jsx"))
-const Navbar = lazy(() => import("./components/Navbar.jsx"))
-const Booking = lazy(() => import("./components/booking/Booking.jsx"))
-const AboutMe = lazy(() => import("./components/AboutMe.jsx"))
-const Homepage = lazy(() => import("./components/Homepage.jsx"))
-const Contact = lazy(() => import("./components/Contact.jsx"))
 const Transformations = lazy(() => import("./components/Transformations.jsx"))
-const Footer = lazy(() => import("./components/Footer.jsx"))
 const TermsAndConditions = lazy(() => import("./components/TermsAndConditions.jsx"))
 const PrivatePolicy = lazy(() => import("./components/PrivatePolicy.jsx"))
 const CookiesPolicy = lazy(() => import("./components/CookiesPolicy.jsx"))
-const ScrollToTop = lazy(() => import("./components/ScrollToTop.jsx"))
 
 
 const queryClient = new QueryClient()
-const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-
-const options = {
-    mode: 'payment',
-    amount: 1099,
-    currency: 'usd',
-    appearance: {
-        theme: 'night',
-        labels: 'floating'
-    },
-};
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -55,7 +44,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                         <div className="min-h-screen">
                             <Navbar/>
                             <ScrollToTop/>
-                            <Elements stripe={stripePromise} options={options}>
                                 <Routes>
                                     <Route path="/" element={<Homepage/>}/>
                                     <Route path="login" element={<LoginForm/>}/>
@@ -73,22 +61,20 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                                     <Route path="payment_page" element={<PaymentPage/>}/>
                                     <Route path="pay_the_order" element={<TryAgainPaymentPage/>}/>
                                 </Routes>
-                            </Elements>
                             <Footer/>
                         </div>
                         <CookieConsent
                             location="bottom"
-                            buttonText="Akceptuję"
+                            buttonText={t("Accept")}
                             enableDeclineButton
-                            declineButtonText="Nie zgadzam się"
-                            cookieName="myAwesomeCookieName2"
+                            declineButtonText={t("I don't agree")}
+                            cookieName="CookieConsent"
                             style={{background: "#2B373B"}}
                             buttonStyle={{color: "#4e503b", fontSize: "13px"}}
                             expires={150}
                         >
-                            Ta strona używa plików cookie. Kontynuując jej przeglądanie, wyrażasz zgodę na Politykę
-                            Prywatności. <NavLink to="/cookies-policy">Uzykaj więcej informacji o plikach
-                            cookie</NavLink>
+                            {t("This website uses cookies. By continuing to browse it, you agree to the Privacy" +
+                                " Policy.")}<NavLink to="/cookies-policy">{t("Use more information about cookies.")}</NavLink>
 
                         </CookieConsent>
                     </BrowserRouter>

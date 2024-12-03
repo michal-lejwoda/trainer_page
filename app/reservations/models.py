@@ -5,20 +5,24 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, Date, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy import Enum as SQLAlchemyEnum
 from app.database import Base
-#TODO IMportant dont remove that one
+# TODO IMportant dont remove that one
 from app.user.models import User
+
 
 class PaymentType(str, enum.Enum):
     cash = "cash"
     card = "card"
 
+
 class PaymentCurrency(str, enum.Enum):
     pln = "pln"
     eur = "eur"
 
+
 class PaymentMethodType(str, enum.Enum):
     card = 'card'
-    p24  = 'p24'
+    p24 = 'p24'
+
 
 class Day_of_Week(enum.Enum):
     MONDAY = 0
@@ -43,6 +47,7 @@ class WorkHours(Base):
     reservation = relationship("Reservation", back_populates="work_hours")
     trainer = relationship("Trainer", back_populates="work_hours")
 
+
 class ReservationPlan(Base):
     __tablename__ = "reservation_plans"
 
@@ -54,8 +59,6 @@ class ReservationPlan(Base):
     pay_datetime = Column(DateTime, default=None)
     reservation = relationship("Reservation", back_populates="reservation_plans")
     plan = relationship("Plan")
-
-
 
 
 class Reservation(Base):
@@ -73,7 +76,6 @@ class Reservation(Base):
     payment_id = Column(String)
     user = relationship("User", back_populates="reservations")
     reservation_plans = relationship("ReservationPlan", back_populates="reservation")
-
 
 
 class Trainer(Base):

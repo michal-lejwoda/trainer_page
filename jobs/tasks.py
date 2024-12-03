@@ -44,6 +44,7 @@ def remove_unpaid_records(db: Session):
         ReservationPlan.reservation_datetime < func.now() - datetime.timedelta(hours=1)
     ).update({"is_paid": False}, synchronize_session=False)
 
+    print("updated_count",updated_count, flush=True)
     unpaid_plan_ids = db.query(ReservationPlan.id).join(
         Reservation, Reservation.id == ReservationPlan.reservation_id
     ).filter(
@@ -55,6 +56,7 @@ def remove_unpaid_records(db: Session):
         ReservationPlan.reservation_datetime < func.now() - datetime.timedelta(hours=1)
     ).all()
 
+    print("unpaid_plan_ids", unpaid_plan_ids, flush=True)
     if unpaid_plan_ids:
         deleted_count = db.query(ReservationPlan).filter(
             ReservationPlan.id.in_([plan_id[0] for plan_id in unpaid_plan_ids])
