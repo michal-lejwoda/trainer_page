@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useFormik} from 'formik';
 import {validateRegistration} from "./validation.jsx";
@@ -10,11 +10,17 @@ import {useNavigate} from "react-router-dom";
 
 
 const RegisterForm = (props) => {
-    const [, setCookie] = useCookies(['jwt_trainer_auth']);
+    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
     const [errorregister, setErrorRegister] = useState(null)
     const navigate = useNavigate()
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const {t} = useTranslation()
+    useEffect(()=>{
+
+        if (cookies['jwt_trainer_auth_expires']){
+            navigate("/")
+        }
+    },[])
     const handleRegister = async (values) => {
         let form = new FormData()
         form.append("name", values.name)

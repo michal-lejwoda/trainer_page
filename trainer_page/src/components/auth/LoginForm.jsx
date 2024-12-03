@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useFormik} from 'formik';
 import {validateLogin} from "./validation.jsx";
@@ -12,8 +12,14 @@ const LoginForm = () => {
     const {setAuthUser, setIsLoggedIn} = useAuth()
     const {t} = useTranslation()
     const [errorlogin, setErrorLogin] = useState(null)
-    const [, setCookie] = useCookies(['jwt_trainer_auth']);
+    const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
+    useEffect(()=>{
+        console.log(cookies['jwt_trainer_auth_expires'])
+        if (cookies['jwt_trainer_auth_expires']){
+            navigate("/")
+        }
+    },[])
 
     const handleLogin = async (values) => {
         let form = new FormData()
