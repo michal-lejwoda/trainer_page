@@ -1,4 +1,4 @@
-export const trainer_gallery_store =  [
+export const trainer_gallery_store = [
     "/trener1.jpg",
     "/trener2.jpg",
     "/trener3.jpg",

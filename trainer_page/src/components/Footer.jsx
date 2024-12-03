@@ -8,7 +8,8 @@ function Footer() {
             <hr/>
             <footer
                 className="text-center text-neutral-600 lg:text-left ">
-                <div className="bg-background-black-color mx-6 py-10 text-center md:text-left text-white bg-background-black-color">
+                <div
+                    className="bg-background-black-color mx-6 py-10 text-center md:text-left text-white bg-background-black-color">
                     <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                         <div className="">
                             <h4
@@ -30,7 +31,7 @@ function Footer() {
 
                         <div className="flex flex-col">
                             <h4 className="mb-4 font-semibold uppercase "
-                                >
+                            >
                                 {t("Interesting links")}
                             </h4>
                             <NavLink
@@ -38,10 +39,12 @@ function Footer() {
                                 to="/about-me">
                                 {t("About me")}
                             </NavLink>
-                            <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/reservation">
+                            <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200"
+                                     to="/reservation">
                                 {t("Reservation")}
                             </NavLink>
-                            <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/transformations">
+                            <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200"
+                                     to="/transformations">
                                 {t("Transformations")}
                             </NavLink>
                             <NavLink className="mb-4 text-neutral-600 text-white  dark:text-neutral-200" to="/contact">
@@ -54,13 +57,16 @@ function Footer() {
                                 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
                                 {t("Documents")}
                             </h6>
-                            <NavLink to="/terms-and-conditions" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
+                            <NavLink to="/terms-and-conditions"
+                                     className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
                                 {t("Terms and Conditions")}
                             </NavLink>
-                            <NavLink to="/private-policy" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
+                            <NavLink to="/private-policy"
+                                     className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
                                 {t("Privacy policy")}
                             </NavLink>
-                            <NavLink to="/cookies-policy" className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
+                            <NavLink to="/cookies-policy"
+                                     className="mb-4 text-white text-neutral-600 dark:text-neutral-200">
                                 {t("Cookies policy")}
                             </NavLink>
                         </div>
@@ -110,7 +116,7 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-                <hr />
+                <hr/>
                 <div className="p-6 text-center dark:bg-background-black-color bg-background-black-color text-white">
                     <span>© 2024 Copyright: </span>
                     <p

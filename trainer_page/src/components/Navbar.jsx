@@ -43,11 +43,6 @@ export default function Navbar() {
         setIsLoggedIn(false)
     }
 
-    const handleToAccount = () => {
-        console.log("handleToAccount")
-        navigate("/account123")
-    }
-
     const onChangeLanguage = (e) => {
         i18n.changeLanguage(e.target.value)
     };

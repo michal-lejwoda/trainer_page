@@ -141,10 +141,12 @@ function Contact() {
                                             ref={recaptchaRef}
                                             sitekey={CAPTCHA_SITE_KEY}
                                         />
-                                        {captchaError && <p className="mt-3 text-red-800">{t("Complete the Captcha")}</p>}
+                                        {captchaError &&
+                                            <p className="mt-3 text-red-800">{t("Complete the Captcha")}</p>}
                                     </div>
                                     <div className="my-5">
-                                        <input type="checkbox" name="toggle" onChange={handleChange}/><span>{" " + t("I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.")}</span>
+                                        <input type="checkbox" name="toggle"
+                                               onChange={handleChange}/><span>{" " + t("I consent to the processing of my personal data in accordance with the Personal Data Protection Act for the purpose of sending commercial information electronically.")}</span>
                                         {errors.toggle && <p className="mt-3 text-red-800">{errors.toggle}</p>}
                                     </div>
                                     <div className="flex justify-center">

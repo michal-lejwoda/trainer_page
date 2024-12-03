@@ -15,9 +15,6 @@ const TryAgainPaymentPage = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    console.log("state", state);
-    console.log("data", data);
-
     const {mutateAsync: mutateGetResumePayment} = useResumePayment();
 
     useEffect(() => {

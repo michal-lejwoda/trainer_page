@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const instance = axios.create();
-// const DOMAIN = import.meta.env.VITE_DOMAIN
 
 export async function getTrainers() {
     const response = await instance.get(`/api/trainers`);
@@ -40,58 +39,46 @@ export async function getDayWorkHours(data) {
         const response = await instance.post(`/api/get_day_work_hours`, data);
         return response.data;
     } catch (error) {
-        // console.error("Error fetching day work hours:", error);
-        // throw new Error("Failed to fetch day work hours");
     }
 }
 
-export async function getNextAvailableDayWorkHours(data){
+export async function getNextAvailableDayWorkHours(data) {
     try {
-        const response = await instance.post(`/api/get_next_available_day_work_hours?trainer_id=${data.id}`, {"max_date": data.max_date}, { withCredentials: true });
+        const response = await instance.post(`/api/get_next_available_day_work_hours?trainer_id=${data.id}`, {"max_date": data.max_date}, {withCredentials: true});
         return response.data;
-    } catch (error) {}
+    } catch (error) {
+    }
 }
 
 export async function postReservation(data) {
     try {
         return await instance.post(`/api/reservation`, data, {withCredentials: true});
     } catch (error) {
-        console.error("Error posting reservation:", error);
         throw new Error("Failed to post reservation");
     }
 }
 
 export async function getUserReservations() {
     try {
-        console.log("Fetching user reservations from API");
-        const response = await instance.get(`/api/user_reservations`, { withCredentials: true });
-        console.log("API response:", response);
+        const response = await instance.get(`/api/user_reservations`, {withCredentials: true});
         return response.data;
     } catch (error) {
-        console.error("Error fetching reservations:", error);
         throw error;
     }
 }
 
 export async function getResumePayment(id) {
-    console.log("id", id)
     try {
-        console.log("Fetching user reservations from API");
-        const response = await instance.post(`/api/resume-payment/${id}`, { withCredentials: true });
-        console.log("API response:", response);
+        const response = await instance.post(`/api/resume-payment/${id}`, {withCredentials: true});
         return response.data;
     } catch (error) {
-        console.error("Error fetching reservations:", error);
         throw error;
     }
 }
 
 export async function sendConfirmationEmail(data) {
     try {
-        const response = await instance.post(`/api/send-email/background_task`, data, { withCredentials: true });
+        const response = await instance.post(`/api/send-email/background_task`, data, {withCredentials: true});
         return response.data;
-    } catch (error) {
-        // console.error("Error sending confirmation email:", error);
-        // throw new Error("Failed to send confirmation email");
-    }
+    } catch (error) {}
 }

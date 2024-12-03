@@ -73,9 +73,10 @@ const AboutMe = () => {
                 </strong>
             </div>
             <div className="about_me__gallery__container flex flex-col sm:flex-wrap sm:flex-row sm: justify-center ">
-                {trainer_gallery_store.map((image, key)=>{
+                {trainer_gallery_store.map((image, key) => {
                     return (
-                        <img loading="lazy" key={key} className="rounded-2xl h-96 my-10 sm:w-2/4 xl:w-1/4 lg: mx-4" src={image} alt=""/>
+                        <img loading="lazy" key={key} className="rounded-2xl h-96 my-10 sm:w-2/4 xl:w-1/4 lg: mx-4"
+                             src={image} alt=""/>
                     )
                 })}
             </div>

@@ -70,7 +70,8 @@ function Homepage() {
 
                             <div className="lg:w-1/2">
                                 <strong>
-                                    <span className="text-5xl text-lighter-grey my-5">{t("Personal Reverse Trainer")}</span>
+                                    <span
+                                        className="text-5xl text-lighter-grey my-5">{t("Personal Reverse Trainer")}</span>
                                     <br/>
                                     <span className="text-6xl mb-5 text-white">{"Trainer Reverse Personal"}</span>
                                 </strong>
@@ -78,15 +79,20 @@ function Homepage() {
                                     " suitable for you?")}</p>
                                 <p className="text-white">{t("You will find plenty of useful tips and advice on the 4 keys to success that will help you:")} </p>
                                 <p className="my-5 text-left px-3 text-white"><font
-                                    className="text-red-700 text-xl">✓ </font>{t("Eat better, without dieting and without feeling deprived.")}</p>
+                                    className="text-red-700 text-xl">✓ </font>{t("Eat better, without dieting and without feeling deprived.")}
+                                </p>
                                 <p className="my-5 text-left px-3 text-white"><font
-                                    className="text-red-700 text-xl">✓ </font>{t("Be active, regardless of your current fitness level.")}</p>
+                                    className="text-red-700 text-xl">✓ </font>{t("Be active, regardless of your current fitness level.")}
+                                </p>
                                 <p className="my-5 text-left px-3 text-white"><font
-                                    className="text-red-700 text-xl">✓ </font>{t("Ditch the food rules, ditch fad diets and conflicting advice.")}</p>
+                                    className="text-red-700 text-xl">✓ </font>{t("Ditch the food rules, ditch fad diets and conflicting advice.")}
+                                </p>
                                 <p className="my-5 text-left px-3 text-white"><font
-                                    className="text-red-700 text-xl">✓ </font>{t("Incorporate fitness into your life.")}</p>
+                                    className="text-red-700 text-xl">✓ </font>{t("Incorporate fitness into your life.")}
+                                </p>
                                 <p className="my-5 text-left px-3 text-white"><font
-                                    className="text-red-700 text-xl">✓ </font>{t("Achieve and maintain your goals, even when life gets busy.")}</p>
+                                    className="text-red-700 text-xl">✓ </font>{t("Achieve and maintain your goals, even when life gets busy.")}
+                                </p>
                             </div>
                             <img
                                 className="inline-block object-cover  rounded-lg lg:w-1/3  lg:object-contain overflow-hidden "
@@ -125,7 +131,7 @@ function Homepage() {
                             </div>
                             <div className="text-2xl font-bold text-red-800 text-center">{t("Mindset")}</div>
                             <p className="mt-3 text-center text-white">{t("By applying mindset principles toward the burning desire to achieve your goals – you will become a better version of yourself.")}
-                                </p>
+                            </p>
                         </div>
                         <div data-aos="fade-left"
                              className="p-10 mb-5 bg-even-more-darky-grey rounded-lg sm:w-2/5 sm:mx-5 lg:w-1/5">
@@ -168,7 +174,8 @@ function Homepage() {
                     <div className="homepage__transformations">
                         <div className="homepage__transformations--title text-center my-8">
                             <strong>
-                                <span className="text-4xl text-lighter-grey my-5">{t("Clients Reverse Transformations")}</span>
+                                <span
+                                    className="text-4xl text-lighter-grey my-5">{t("Clients Reverse Transformations")}</span>
                                 <br/>
                                 <span className="text-4xl mb-5 text-white">{t("Transformations Reverse Clients")}</span>
                             </strong>
@@ -220,7 +227,8 @@ function Homepage() {
                             </div>
                             <div className="flex flex-col items-center ">
                                 <NavLink to="/transformations" className="text-white">
-                                    <button className="mt-10  text-lg text-white bg-button-grey no-underline">{t("More Transformations")}
+                                    <button
+                                        className="mt-10  text-lg text-white bg-button-grey no-underline">{t("More Transformations")}
                                     </button>
                                 </NavLink>
                             </div>

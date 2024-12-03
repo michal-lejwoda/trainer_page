@@ -15,11 +15,9 @@ const AccountOrders = () => {
     const {t} = useTranslation();
 
     const handlePayment = (order) => {
-        console.log("order",order)
-        console.log("handlePayment");
         navigate("/pay_the_order", {state: order});
     };
-    console.log("data", data)
+
     useEffect(() => {
         const fetchData = async () => {
             try {
