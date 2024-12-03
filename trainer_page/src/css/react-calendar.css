@@ -1,31 +1,37 @@
-.react-calendar{
+.react-calendar {
     background-color: #323238;
     padding: 20px;
     border-radius: 15px;
     margin-top: 20px;
 }
-.react-calendar__tile--active{
+
+.react-calendar__tile--active {
     background-color: #A9A9B2 !important;
     background-color: rgba(0, 0, 0, 0.3)
 }
 
-.react-calendar__navigation__arrow{
+.react-calendar__navigation__arrow {
     padding: 0.6em 0.8em !important;
 }
-.react-calendar__navigation__label{
+
+.react-calendar__navigation__label {
     padding: 0.6em 0.2em !important;
 }
-.react-calendar__navigation{
+
+.react-calendar__navigation {
     margin-bottom: 4px;
     display: flex;
 }
-.react-calendar__tile{
+
+.react-calendar__tile {
     padding: 0.6em 0.4em !important;
 }
-.react-calendar__month-view__weekdays__weekday{
+
+.react-calendar__month-view__weekdays__weekday {
     display: flex;
     justify-content: center;
 }
-.react-calendar__tile:disabled{
+
+.react-calendar__tile:disabled {
     color: grey;
 }

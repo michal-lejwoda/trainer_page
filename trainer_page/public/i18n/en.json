@@ -227,6 +227,10 @@
   "Close": "Close",
   "Confirm Reservation and pay with cash": "Confirm Reservation and pay with cash",
   "Book and pay with other methods(blik, credit cart)": "Book and pay with other methods(blik, credit cart)",
-  "Make a payment": "Make a payment"
+  "Make a payment": "Make a payment",
+  "Accept": "Accept",
+  "I don't agree": "I don't agree",
+  "This website uses cookies. By continuing to browse it, you agree to the Privacy Policy.": "This website uses cookies. By continuing to browse it, you agree to the Privacy Policy.",
+  "Use more information about cookies.": "Use more information about cookies."
 
 }

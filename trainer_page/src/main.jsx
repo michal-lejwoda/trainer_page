@@ -6,8 +6,6 @@ import {CookieConsent} from "react-cookie-consent";
 import {AuthProvider} from "./components/auth/AuthContext.jsx";
 import "./i18n.jsx"
 import './index.css'
-import {loadStripe} from "@stripe/stripe-js";
-import {Elements} from "@stripe/react-stripe-js";
 import LoginForm from "./components/auth/LoginForm.jsx";
 import RegisterForm from "./components/auth/RegisterForm.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
@@ -38,29 +36,29 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <Suspense fallback={
-                    <BoxLoading />
+                    <BoxLoading/>
                 }>
                     <BrowserRouter>
                         <div className="min-h-screen">
                             <Navbar/>
                             <ScrollToTop/>
-                                <Routes>
-                                    <Route path="/" element={<Homepage/>}/>
-                                    <Route path="login" element={<LoginForm/>}/>
-                                    <Route path="register" element={<RegisterForm/>}/>
-                                    <Route path="contact" element={<Contact/>}/>
-                                    <Route path="reservation" element={<Booking/>}/>
-                                    <Route path="about-me" element={<AboutMe/>}/>
-                                    <Route path="transformations" element={<Transformations/>}/>
-                                    <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
-                                    <Route path="cookies-policy" element={<CookiesPolicy/>}/>
-                                    <Route path="private-policy" element={<PrivatePolicy/>}/>
-                                    <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
-                                    <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
-                                    <Route path="account" element={<Account/>}/>
-                                    <Route path="payment_page" element={<PaymentPage/>}/>
-                                    <Route path="pay_the_order" element={<TryAgainPaymentPage/>}/>
-                                </Routes>
+                            <Routes>
+                                <Route path="/" element={<Homepage/>}/>
+                                <Route path="login" element={<LoginForm/>}/>
+                                <Route path="register" element={<RegisterForm/>}/>
+                                <Route path="contact" element={<Contact/>}/>
+                                <Route path="reservation" element={<Booking/>}/>
+                                <Route path="about-me" element={<AboutMe/>}/>
+                                <Route path="transformations" element={<Transformations/>}/>
+                                <Route path="terms-and-conditions" element={<TermsAndConditions/>}/>
+                                <Route path="cookies-policy" element={<CookiesPolicy/>}/>
+                                <Route path="private-policy" element={<PrivatePolicy/>}/>
+                                <Route path="reset_password/:id/:name" element={<ResetPassword/>}/>
+                                <Route path="password_reminder" element={<ResetPasswordBasedonEmail/>}/>
+                                <Route path="account" element={<Account/>}/>
+                                <Route path="payment_page" element={<PaymentPage/>}/>
+                                <Route path="pay_the_order" element={<TryAgainPaymentPage/>}/>
+                            </Routes>
                             <Footer/>
                         </div>
                         <CookieConsent
@@ -74,7 +72,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                             expires={150}
                         >
                             {t("This website uses cookies. By continuing to browse it, you agree to the Privacy" +
-                                " Policy.")}<NavLink to="/cookies-policy">{t("Use more information about cookies.")}</NavLink>
+                                " Policy.")}<NavLink
+                            to="/cookies-policy"> {t("Use more information about cookies.")}</NavLink>
 
                         </CookieConsent>
                     </BrowserRouter>
