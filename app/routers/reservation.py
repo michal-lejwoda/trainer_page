@@ -34,6 +34,9 @@ FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 WEBHOOK_API_KEY = os.getenv("WEBHOOK_API_KEY")
 router = APIRouter(tags=["reservation"], prefix="/api")
 
+@router.get("/reservation123")
+async def get_reservation():
+    return {"message": "Reservation endpoint works"}
 
 @router.post("/reservation")
 def create_reservation(
