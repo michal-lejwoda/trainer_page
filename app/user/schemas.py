@@ -1,7 +1,7 @@
 import datetime
 import re
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, ConfigDict
 from pydantic_core import PydanticCustomError
 from validate_email import validate_email
 
@@ -20,8 +20,7 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserBaseSchema(BaseModel):
@@ -31,8 +30,7 @@ class UserBaseSchema(BaseModel):
     phone_number: str
     password: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @field_validator('name')
     def name_validator(cls, name):

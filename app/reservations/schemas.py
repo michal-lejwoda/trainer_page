@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from typing_extensions import List
 
 from app.reservations.models import PaymentCurrency, PaymentMethodType
@@ -12,8 +12,7 @@ class AddressBase(BaseModel):
     address1: str
     address2: Optional[str]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AddressOut(AddressBase):
@@ -27,8 +26,7 @@ class TrainerBase(BaseModel):
     address_id: int | None = None
     address: AddressBase | None = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TrainerOut(TrainerBase):
@@ -43,8 +41,7 @@ class TrainerSchema(TrainerBase):
     id: int
     owner_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ReservationBase(BaseModel):
@@ -57,8 +54,7 @@ class ReservationList(ReservationBase):
     trainer_id: int
     trainer: TrainerSchema
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ReservationOut(ReservationBase):
@@ -67,8 +63,7 @@ class ReservationOut(ReservationBase):
     trainer_id: int
     trainer: TrainerSchema
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ReservationCreate(ReservationBase):
@@ -82,8 +77,7 @@ class WorkingHourBase(BaseModel):
     end_hour: datetime.time
     trainer_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class WorkingHourOut(WorkingHourBase):
@@ -97,8 +91,7 @@ class WorkHourBase(BaseModel):
     trainer_id: int
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class WorkHourOut(WorkHourBase):
@@ -118,8 +111,7 @@ class WorkHourCreate(BaseModel):
     trainer_id: int
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class WorkHourGet(BaseModel):
@@ -127,8 +119,7 @@ class WorkHourGet(BaseModel):
     is_active: bool
     date: datetime.date
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MaxDate(BaseModel):
@@ -193,8 +184,7 @@ class UserBase(BaseModel):
     last_name: str | None
     phone_number: str | None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserOut(UserBase):
