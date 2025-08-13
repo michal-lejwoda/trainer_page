@@ -380,7 +380,7 @@ def send_reset_password_on_email(email: str = Form(...), background_tasks=Backgr
         raise HTTPException(status_code=404, detail="User not found")
 
     url = f"{FRONTEND_DOMAIN}/reset_password/{user.id}/{user.name}"
-    send_email(background_tasks, _("Password reset on trener-personalny-michal.pl website"), email, {'email': email,
+    send_email(background_tasks, _("Password reset on personal-trainer-michal.pl website"), email, {'email': email,
                                                                                                      'url': url},
                'reset_password.html')
     return {'message': _("Reset password email has been sent")}
