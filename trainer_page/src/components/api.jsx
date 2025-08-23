@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const instance = axios.create();
+const instance = axios.create({
+    // baseURL: import.meta.env.VITE_DOMAIN
+    });
 
 export async function getTrainers() {
     const response = await instance.get(`/api/trainers`);
