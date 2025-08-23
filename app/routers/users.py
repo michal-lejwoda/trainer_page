@@ -1,7 +1,7 @@
 from typing import Annotated, Optional, Union
 
 from fastapi import APIRouter, HTTPException
-from fastapi import Depends, Cookie, Form
+from fastapi import Depends, Cookie, Form, Header
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import exc
 from sqlalchemy.orm import Session
@@ -84,7 +84,8 @@ def get_users(db: Session = Depends(get_db)):
 
 
 @router.get("/users/me", response_model=UserBase)
-async def read_users_me(jwt_trainer_auth: Optional[str] = Cookie(None), db: Session = Depends(get_db)) -> Union[
+async def read_users_me(jwt_trainer_auth: Optional[str] = Cookie(None),jwt_trainer_auth_header: str | None = Header(None),
+        jwt_trainer_auth_query: str | None = None, db: Session = Depends(get_db)) -> Union[
     UserBase, None]:
     if jwt_trainer_auth is None:
         raise HTTPException(status_code=401, detail=_("Unauthorized"))

@@ -35,11 +35,12 @@ def refresh_token_based_on_old(old_token: str, db: Session):
     return {"access_token": new_token, "token_type": "bearer", "access_token_expires": expires_datetime}
 
 def authenticate_and_generate_token_for_user(email: str, password: str, db: Session):
+    print("authenticate_and_generate_token_for_user")
     user = authenticate_user(email, password, db)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password",
                             headers={"WWW-Authenticate": "Bearer"})
-    access_token_expires = datetime.timedelta(minutes=120)
+    access_token_expires = datetime.timedelta(minutes=240)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )

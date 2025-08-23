@@ -8,6 +8,7 @@ from app.user.models import User
 
 
 def create_superuser():
+    print("createsuperuser")
     db = SessionLocal()
     email = env['ADMIN_EMAIL']
     password = env['ADMIN_PASSWORD']
@@ -15,6 +16,7 @@ def create_superuser():
     last_name = env['ADMIN_LAST_NAME']
     phone_number = env['ADMIN_PHONE_NUMBER']
     existing_user = db.query(User).filter(User.email == email).first()
+    print("exists", existing_user)
     if existing_user:
         return
 
@@ -24,6 +26,7 @@ def create_superuser():
                      is_trainer=True)
 
     db.add(superuser)
+    print("created", superuser)
     db.commit()
     db.refresh(superuser)
     authenticate_and_generate_token_for_user(email, password, db)
