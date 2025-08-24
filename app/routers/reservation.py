@@ -354,6 +354,17 @@ async def create_trainer_plan(plan: TrainerPlans, db: Session = Depends(get_db))
     return db_trainer_plan
 
 
+@router.delete("/delete_trainer_plan/{plan_id}", status_code=204)
+async def delete_trainer_plan(plan_id: int, db: Session = Depends(get_db), admin=Depends(admin_required)):
+    plan = db.query(Plan).filter(Plan.id == plan_id).first()
+    if not plan:
+        raise HTTPException(status_code=404, detail="Plan not found")
+
+    db.delete(plan)
+    db.commit()
+    return {"message": "Plan was deleted"}
+
+
 @router.post("/trainer", response_model=TrainerOut, status_code=201)
 async def create_trainer(trainer: TrainerBase, db: Session = Depends(get_db), admin=Depends(admin_required)):
     trainer_model = Trainer(
