@@ -15,7 +15,6 @@ const LoginForm = () => {
     const [cookies, setCookie] = useCookies(['jwt_trainer_auth']);
     const navigate = useNavigate();
     useEffect(()=>{
-        console.log(cookies['jwt_trainer_auth_expires'])
         if (cookies['jwt_trainer_auth_expires']){
             navigate("/")
         }

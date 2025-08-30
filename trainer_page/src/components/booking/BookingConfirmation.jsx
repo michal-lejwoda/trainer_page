@@ -14,7 +14,6 @@ const BookingConfirmation = (props) => {
     const CAPTCHA_SITE_KEY = import.meta.env.VITE_CAPTCHA_SITE_KEY
 
     const handleCreditCartMethod = () => {
-        console.log("handleCreditCartMethod")
         if (sendReservationRequest("card", false)) {
             props.goToCheckoutForm()
         }
@@ -22,18 +21,15 @@ const BookingConfirmation = (props) => {
 
 
     const handleCashReservation = () => {
-        console.log("handleCashReservation")
         if (sendReservationRequest("cash", true)) {
             alert(t("The training has been booked. A confirmation has been sent to your email."))
             navigate('/');
         }
 
     }
-    console.log("props.selectedPlanHour",props.selectedPlanHour)
-    // #TODO Start here
     const sendReservationRequest = async (payment_type, is_paid) => {
         // try {
-        // TODO Weryfikacja Captcha (zakomentowane w trybie produkcyjnym)
+        // TODO Caption verifcation (zakomentowane w trybie produkcyjnym)
         // if (recaptchaRef.current.getValue().length === 0) {
         //     setCaptchaError(true);
         //     return false;
@@ -68,12 +64,9 @@ const BookingConfirmation = (props) => {
 
             form.append("client_secret", clientSecret);
             form.append("payment_id", paymentIntentId);
-            console.log("form", form)
             const reservationResponse = await postReservation(form);
 
             if (!reservationResponse || reservationResponse.status !== 200) {
-                console.log("Wrong")
-                // TODO CLEAN IT LATER
                 await fetch('/api/cancel-intent', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -100,16 +93,9 @@ const BookingConfirmation = (props) => {
             return clientSecret;
 
         } catch (err) {
-            console.error("Error during reservation process:", err);
             setCaptchaError(true);
             return false;
         }
-        // }
-        // catch (err) {
-        //     console.error("Error during reservation process:", err);
-        //     setCaptchaError(true);
-        //     return false;
-        // }
     };
 
 

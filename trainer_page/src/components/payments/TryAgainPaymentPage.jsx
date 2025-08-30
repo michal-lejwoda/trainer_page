@@ -20,7 +20,6 @@ const TryAgainPaymentPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             if (!state.id) {
-                console.warn("Brak state.id, pomijanie fetchowania danych");
                 setLoading(false);
                 return;
             }
@@ -29,7 +28,6 @@ const TryAgainPaymentPage = () => {
                 const data = await mutateGetResumePayment(state.id);
                 setData(data);
             } catch (error) {
-                console.error("Error details:", error);
             } finally {
                 setLoading(false);
             }
@@ -49,9 +47,7 @@ const TryAgainPaymentPage = () => {
             theme: 'night'
         },
     };
-
-    console.log("options", options);
-
+    // TODO
     if (loading) {
         return <div>Loading...</div>;
     }

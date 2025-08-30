@@ -92,8 +92,6 @@ export default function Navbar() {
                         setIsLoggedIn(false)
                     }
                 }
-            } else {
-                console.log("Brak cookies");
             }
         };
 

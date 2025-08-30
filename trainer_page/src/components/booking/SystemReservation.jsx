@@ -76,15 +76,9 @@ function SystemReservation(props) {
                             }
                         },
                         onError: (error) => {
-                            console.error("Błąd przy pobieraniu najbliższych dostępnych godzin pracy:", error);
+
                         }
                     });
-                    // mutateWorkHoursData(work_hours_args, {
-                    //     onSuccess: (data) => {
-                    //         setDayWorkHoursData(data);
-                    //     }
-                    // });
-                    // TODO paste here
                 } else {
                     props.setTrainerPlan(null)
                 }
@@ -117,7 +111,6 @@ function SystemReservation(props) {
                                         }
                                     },
                                     onError: (error) => {
-                                        console.error(t("Error fetching the nearest available working hours."), error);
                                     }
                                 });
                             } else {
@@ -125,13 +118,13 @@ function SystemReservation(props) {
                             }
                         },
                         onError: (error) => {
-                            console.error(t("Error fetching trainer plan."), error);
+
                         }
                     });
                 }
             },
             onError: (error) => {
-                console.error(t("Error fetching trainer data."), error);
+
             }
         });
     }, []);
