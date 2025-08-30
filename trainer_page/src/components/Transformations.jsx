@@ -36,9 +36,9 @@ function Transformations() {
                                 <div className="transformation__image__description p-4">
                                     <p className="flex justify-center my-3 font-semibold text-center">{el.name}</p>
                                     <p className="text-center ">
-                                        {el.description}
+                                        {t(el.description)}
                                     </p>
-                                    <p className="font-semibold text-center mt-4 mb-10">{el.realization}</p>
+                                    <p className="font-semibold text-center mt-4 mb-10">{t(el.realization)}</p>
                                 </div>
                             </div>
                         )
