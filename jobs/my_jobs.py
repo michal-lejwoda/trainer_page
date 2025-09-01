@@ -28,13 +28,7 @@ def delete_unpaid_records_with_db():
 scheduler = BackgroundScheduler()
 scheduler.add_job(remove_unactive_records_with_db, 'cron', minute=1)
 scheduler.add_job(delete_unpaid_records_with_db, 'cron', minute=2)
-scheduler.add_job(
-    check_unregistered_payments_with_db,
-    'cron',
-    minute=1,
-    id='check_payments',
-    replace_existing=True
-)
+scheduler.add_job(check_unregistered_payments_with_db, 'cron', minute='*', id='check_payments', replace_existing=True)
 
 
 if not scheduler.running:
