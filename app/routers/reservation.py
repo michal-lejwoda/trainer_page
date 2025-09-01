@@ -1,5 +1,6 @@
 import datetime
 import os
+import logging
 from datetime import datetime
 from typing import List, Annotated
 
@@ -32,11 +33,18 @@ from app.user.models import User
 load_dotenv()
 FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN")
 WEBHOOK_API_KEY = os.getenv("WEBHOOK_API_KEY")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 router = APIRouter(tags=["reservation"], prefix="/api")
+
 
 @router.get("/reservation123")
 async def get_reservation():
     return {"message": "Reservation endpoint works"}
+
 
 @router.post("/reservation")
 def create_reservation(
@@ -46,18 +54,30 @@ def create_reservation(
         work_hours_id: Annotated[int, Form()],
         is_paid: Annotated[bool, Form()],
         payment_type: Annotated[PaymentType, Form()],
-        payment_id: Annotated[str, Form()],
+        payment_id: Annotated[str, Form()] = None,
+        client_secret: Annotated[str, Form()] = None,
         jwt_trainer_auth: str = Depends(verify_jwt_trainer_auth),
         db: Session = Depends(get_db)
 ):
-    plan = db.query(Plan).filter(Plan.id == plan_id).one_or_none()
-    if not plan:
-        raise ValueError("Plan not found")
-    user = get_current_user(jwt_trainer_auth, db)
-    user_based_on_id = validate_user(user_id, db)
-    verify_user_permission(user, user_based_on_id)
     try:
+        # Validate plan exists
+        plan = db.query(Plan).filter(Plan.id == plan_id).first()
+        if not plan:
+            raise HTTPException(status_code=404, detail=_("Plan not found"))
+
+        # Get and validate user
+        user = get_current_user(jwt_trainer_auth, db)
+        user_based_on_id = validate_user(user_id, db)
+        verify_user_permission(user, user_based_on_id)
+
+        # Validate work hours
         work_hours = validate_work_hours(work_hours_id, db)
+
+        # Check if work hours are still available
+        if not work_hours.is_active:
+            raise HTTPException(status_code=400, detail=_("Selected time slot is no longer available"))
+
+        # Create reservation
         reservation_model = Reservation(
             title=title,
             plan_id=plan_id,
@@ -65,28 +85,46 @@ def create_reservation(
             is_paid=is_paid,
             user_id=user.id,
             payment_type=payment_type,
-            payment_id=payment_id
+            payment_id=payment_id  # This can be None for cash payments
         )
         db.add(reservation_model)
-        db.commit()
+        db.flush()  # Get ID without committing
+
+        # Mark work hours as inactive
         work_hours.is_active = False
         db.add(work_hours)
-        db.commit()
-        db.flush()
+
+        # Create reservation plan
         reservation_plan = ReservationPlan(
             reservation_id=reservation_model.id,
             plan_id=plan_id,
-            price_at_booking=plan.price
+            price_at_booking=plan.price,
+            pay_datetime=func.now() if is_paid else None
         )
         db.add(reservation_plan)
+
+        # Commit all changes
         db.commit()
-    except IntegrityError:
+
+        logger.info(f"Reservation {reservation_model.id} created successfully for user {user.id}")
+
+        return {
+            "detail": _("Reservation created successfully"),
+            "reservation_id": reservation_model.id,
+            "is_paid": is_paid
+        }
+
+    except IntegrityError as e:
         db.rollback()
+        logger.error(f"Database integrity error creating reservation: {e}")
         raise HTTPException(status_code=400, detail=_("Error creating reservation"))
+    except HTTPException:
+        db.rollback()
+        raise
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-    return {"detail": _("Reservation created successfully")}
+        logger.error(f"Unexpected error creating reservation: {e}")
+        raise HTTPException(status_code=500, detail=_("Internal server error"))
 
 
 @router.post("/resume-payment/{reservation_id}")
@@ -443,14 +481,17 @@ def send_direct_message(
     return {'message': _("Direct message has been sent")}
 
 
-@router.post("/api/cancel-intent")
+@router.post("/cancel-intent")
 async def cancel_payment_intent(request: CancelIntentRequest):
     try:
         canceled_intent = stripe.PaymentIntent.cancel(request.payment_intent_id)
-        return {"status": "success", "data": canceled_intent}
+        logger.info(f"Cancelled payment intent: {request.payment_intent_id}")
+        return {"status": "success", "message": "Payment intent cancelled successfully"}
     except stripe.error.StripeError as e:
-        raise HTTPException(status_code=500, detail=f"Stripe error: {e.user_message}")
+        logger.error(f"Stripe error cancelling payment intent: {e}")
+        raise HTTPException(status_code=400, detail=f"Stripe error: {e.user_message}")
     except Exception as e:
+        logger.error(f"Error cancelling payment intent: {e}")
         raise HTTPException(status_code=500, detail="Unexpected error occurred")
 
 
@@ -470,38 +511,116 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+        logger.info(f"Received webhook event: {event['type']}")
     except ValueError as e:
-        return {"message": "Invalid payload"}, 400
+        logger.error(f"Invalid payload: {e}")
+        raise HTTPException(status_code=400, detail="Invalid payload")
     except stripe.error.SignatureVerificationError as e:
-        return {"message": "Invalid signature"}, 400
+        logger.error(f"Invalid signature: {e}")
+        raise HTTPException(status_code=400, detail="Invalid signature")
 
-    if event["type"] == "charge.succeeded":
-        payment_intent = event["data"]["object"]
-        payment_intent_id = payment_intent["payment_intent"]
+    try:
+        if event["type"] == "payment_intent.succeeded":
+            payment_intent = event["data"]["object"]
+            payment_intent_id = payment_intent["id"]
 
-        rows_updated_reservation = db.query(Reservation).filter(Reservation.payment_id == payment_intent_id).update(
-            {"is_paid": True})
+            logger.info(f"Payment succeeded for payment_intent: {payment_intent_id}")
 
-        rows_updated_plan = db.query(ReservationPlan).filter(ReservationPlan.reservation_id.in_(
-            db.query(Reservation.id).filter(Reservation.payment_id == payment_intent_id)
-        )).update({"pay_datetime": func.now()})
+            # Update reservation status
+            reservation = db.query(Reservation).filter(
+                Reservation.payment_id == payment_intent_id
+            ).first()
 
-        db.commit()
+            if not reservation:
+                logger.warning(f"No reservation found for payment_intent: {payment_intent_id}")
+                raise HTTPException(status_code=404, detail="No reservation found to update")
+            reservation.is_paid = True
+            reservation_plan = db.query(ReservationPlan).filter(
+                ReservationPlan.reservation_id == reservation.id
+            ).first()
 
-        if rows_updated_reservation == 0:
-            return {"message": "No reservation found to update."}, 404
+            if reservation_plan:
+                reservation_plan.pay_datetime = func.now()
 
-    return {"message": "Success"}
+            db.commit()
+
+            logger.info(f"Successfully updated reservation {reservation.id} as paid")
+
+            return {"message": "Payment processed successfully"}
+
+        elif event["type"] == "payment_intent.payment_failed":
+            payment_intent = event["data"]["object"]
+            payment_intent_id = payment_intent["id"]
+
+            logger.warning(f"Payment failed for payment_intent: {payment_intent_id}")
+
+            return {"message": "Payment failed event processed"}
+
+        else:
+            logger.info(f"Unhandled event type: {event['type']}")
+            return {"message": f"Unhandled event type: {event['type']}"}
+
+    except Exception as e:
+        logger.error(f"Error processing webhook: {e}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error processing webhook: {str(e)}")
 
 
 @router.post("/create-intent")
 async def create_intent(data: dict):
     try:
+        # Validate required fields
+        required_fields = ["amount", "currency", "payment_method_types"]
+        for field in required_fields:
+            if field not in data:
+                raise HTTPException(status_code=400, detail=f"Missing required field: {field}")
+
+        # Validate amount
+        if data["amount"] <= 0:
+            raise HTTPException(status_code=400, detail="Amount must be greater than 0")
+
         payment_intent = stripe.PaymentIntent.create(
             amount=data["amount"],
             currency=data["currency"],
             payment_method_types=data["payment_method_types"],
+            metadata=data.get("metadata", {}),  # Include metadata if provided
+            automatic_payment_methods={
+                'enabled': True,
+            },
         )
-        return {"client_secret": payment_intent.client_secret, "id": payment_intent.id}
+
+        logger.info(f"Created payment intent: {payment_intent.id}")
+
+        return {
+            "client_secret": payment_intent.client_secret,
+            "id": payment_intent.id
+        }
+
+    except stripe.error.StripeError as e:
+        logger.error(f"Stripe error creating payment intent: {e}")
+        raise HTTPException(status_code=400, detail=f"Stripe error: {str(e)}")
     except Exception as e:
-        return {"error": str(e)}, 400
+        logger.error(f"Error creating payment intent: {e}")
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+
+@router.get("/payment-status/{payment_intent_id}")
+async def get_payment_status(payment_intent_id: str, db: Session = Depends(get_db)):
+    try:
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        reservation = db.query(Reservation).filter(
+            Reservation.payment_id == payment_intent_id
+        ).first()
+
+        return {
+            "payment_intent_status": payment_intent.status,
+            "reservation_paid": reservation.is_paid if reservation else False,
+            "reservation_id": reservation.id if reservation else None
+        }
+
+    except stripe.error.StripeError as e:
+        logger.error(f"Stripe error retrieving payment status: {e}")
+        raise HTTPException(status_code=400, detail=f"Stripe error: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error retrieving payment status: {e}")
+        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
