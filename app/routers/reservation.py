@@ -594,10 +594,7 @@ async def create_intent(data: dict):
             amount=data["amount"],
             currency=data["currency"],
             payment_method_types=data["payment_method_types"],
-            metadata=data.get("metadata", {}),  # Include metadata if provided
-            automatic_payment_methods={
-                'enabled': True,
-            },
+            metadata=data.get("metadata", {}),
         )
 
         logger.info(f"Created payment intent: {payment_intent.id}")
@@ -613,7 +610,6 @@ async def create_intent(data: dict):
     except Exception as e:
         logger.error(f"Error creating payment intent: {e}")
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
-
 
 @router.get("/payment-status/{payment_intent_id}")
 async def get_payment_status(payment_intent_id: str, db: Session = Depends(get_db)):
