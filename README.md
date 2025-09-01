@@ -1,6 +1,6 @@
 # Trainer page - Website for personal trainer with reservation system. 
 
-### Demo: https://www.trener-personalny-michal.pl
+### Demo: https://www.personal-trainer-michal.pl
 
 ## Important!!! All photos and transformations are obtained from the Internet and are for illustrative purposes.
 

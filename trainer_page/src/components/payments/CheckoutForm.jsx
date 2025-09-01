@@ -16,7 +16,6 @@ const CheckoutForm = (props) => {
 
         const {error: submitError} = await elements.submit();
         if (submitError) {
-            console.error("Błąd submitowania elementów:", submitError.message);
             setErrorMessage(submitError.message);
             return;
         }
@@ -44,10 +43,8 @@ const CheckoutForm = (props) => {
         });
 
         if (error) {
-            console.error("Błąd podczas potwierdzania płatności:", error.message);
             setErrorMessage(error.message);
         } else {
-            console.log("Płatność zakończona sukcesem!");
             setErrorMessage(null);
         }
     };

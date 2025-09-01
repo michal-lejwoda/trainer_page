@@ -26,8 +26,5 @@ scheduler.add_job(remove_unactive_records_with_db, 'cron', minute=1)
 scheduler.add_job(delete_unpaid_records_with_db, 'cron', minute=2)
 
 if not scheduler.running:
-    print("Starting scheduler...")
     scheduler.start()
-else:
-    print("Scheduler already running.")
 

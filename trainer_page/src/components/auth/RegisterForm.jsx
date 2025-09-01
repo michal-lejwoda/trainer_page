@@ -47,7 +47,6 @@ const RegisterForm = (props) => {
             }
             await navigate("/")
         } catch (err) {
-            console.log(err)
             setErrorRegister(err.response.data.detail)
         }
     }

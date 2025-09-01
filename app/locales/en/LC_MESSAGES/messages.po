@@ -79,8 +79,8 @@ msgstr "Message from user"
 msgid "Direct message has been sent"
 msgstr "Direct message has been sent"
 
-msgid "Password reset on trener-personalny-michal.pl website"
-msgstr "Password reset on trener-personalny-michal.pl website"
+msgid "Password reset on personal-trainer-michal.pl website"
+msgstr "Password reset on personal-trainer-michal.pl website"
 
 msgid "Reset password email has been sent"
 msgstr "Reset password email has been sent"

@@ -39,7 +39,7 @@ def authenticate_and_generate_token_for_user(email: str, password: str, db: Sess
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password",
                             headers={"WWW-Authenticate": "Bearer"})
-    access_token_expires = datetime.timedelta(minutes=120)
+    access_token_expires = datetime.timedelta(minutes=240)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
@@ -65,8 +65,6 @@ def get_password_hash(password):
 
 
 def get_user_by_email(email: str, db: Session):
-    print("email", email)
-    print("db.query(User).filter(User.email == email).first()",db.query(User).filter(User.email == email).first())
     return db.query(User).filter(User.email == email).first()
 
 
@@ -104,11 +102,7 @@ def get_current_user(token: Annotated[str, Depends(oauth_2_scheme)], db: Session
     except JWTError:
         raise credentials_exception
 
-    print("token", token)
-    print("token_data", token_data)
     user = get_user_by_email(token_data.email, db)
     if user is None:
         raise credentials_exception
-    print("user", user)
     return user
-    # return UserOut.model_validate(user)

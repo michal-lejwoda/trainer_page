@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-const instance = axios.create();
-const DOMAIN = import.meta.env.VITE_DOMAIN
+const instance = axios.create({
+    // baseURL: import.meta.env.VITE_DOMAIN
+});
+// const DOMAIN = import.meta.env.VITE_DOMAIN
 
 
 export async function checkIfUserLogged() {

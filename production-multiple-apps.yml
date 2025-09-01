@@ -25,6 +25,7 @@ services:
       - .:/code
     networks:
       - production_backend
+      - connector
 
 networks:
   production_backend:

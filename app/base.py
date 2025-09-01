@@ -19,7 +19,6 @@ def create_app(origins: list) -> FastAPI:
 
     stripe.api_key = stripe_api_key
     Base.metadata.create_all(bind=engine)
-
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,

@@ -26,14 +26,12 @@ const AccountOrders = () => {
                 setData(data);
                 setLoading(false);
             } catch (error) {
-                console.error("Error details:", error);
                 setLoading(false);
             }
         };
 
         fetchData();
     }, [mutateGetUserReservations]);
-    console.log("data", data)
     const toggleOrder = (orderId) => {
         setExpandedOrderIds(prevState =>
             prevState.includes(orderId)

@@ -88,8 +88,8 @@ msgstr "Nachricht vom Benutzer"
 msgid "Direct message has been sent"
 msgstr "Direktnachricht wurde gesendet"
 
-msgid "Password reset on trener-personalny-michal.pl website"
-msgstr "Passwortzurücksetzung auf der Website trener-personalny-michal.pl"
+msgid "Password reset on personal-trainer-michal.pl website"
+msgstr "Passwortzurücksetzung auf der Website personal-trainer-michal.pl"
 
 msgid "Reset password email has been sent"
 msgstr "E-Mail zur Passwortzurücksetzung wurde gesendet"

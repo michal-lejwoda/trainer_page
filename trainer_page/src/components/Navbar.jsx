@@ -33,12 +33,14 @@ export default function Navbar() {
     }, [t, i18n.language]);
     const moveToLogin = () => {
         removeCookie("jwt_trainer_auth")
+        removeCookie("jwt_trainer_auth_expires")
         setAuthUser(null)
         setIsLoggedIn(false)
         navigate("/login")
     }
     const handleLogout = () => {
         removeCookie("jwt_trainer_auth")
+        removeCookie("jwt_trainer_auth_expires")
         setAuthUser(null)
         setIsLoggedIn(false)
     }
@@ -90,8 +92,6 @@ export default function Navbar() {
                         setIsLoggedIn(false)
                     }
                 }
-            } else {
-                console.log("Brak cookies");
             }
         };
 
