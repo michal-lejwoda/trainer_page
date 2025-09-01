@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from starlette.background import BackgroundTasks
 from starlette.requests import Request
 
-from app.database import get_db
+from app.database import get_db, SessionLocal
 from app.reservations.helpers import generate_date_range, generate_work_hours
 from app.reservations.models import WorkHours, WorkingHour, Address, Plan, Trainer, \
     Reservation, PaymentType, ReservationPlan
@@ -154,6 +154,90 @@ def resume_payment(
 @router.get("/reservation", response_model=List[UserReservationOut])
 def list_reservations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return db.query(Reservation).offset(skip).limit(limit).all()
+
+
+@router.post("/check-payment-status")
+async def check_payment_status(data: dict):
+    try:
+        if "payment_intent_id" not in data:
+            raise HTTPException(status_code=400, detail="Missing payment_intent_id")
+        payment_intent_id = data["payment_intent_id"]
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+
+        logger.info(f"Payment status check: {payment_intent_id} = {payment_intent.status}")
+
+        return {
+            "payment_intent_id": payment_intent.id,
+            "status": payment_intent.status,
+            "amount": payment_intent.amount,
+            "currency": payment_intent.currency,
+            "created": payment_intent.created
+        }
+
+    except stripe.error.InvalidRequestError as e:
+        logger.error(f"Invalid payment intent ID: {payment_intent_id} - {str(e)}")
+        raise HTTPException(status_code=404, detail="Payment not found")
+
+    except stripe.error.StripeError as e:
+        logger.error(f"Stripe error checking payment status: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Payment service error: {str(e)}")
+
+    except Exception as e:
+        logger.error(f"Error checking payment status: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@router.post("/update-reservation-status")
+async def update_reservation_status(data: dict, db: Session = Depends(get_db)):
+    try:
+        if "reservation_id" not in data:
+            raise HTTPException(status_code=400, detail="Missing reservation_id")
+        if "is_paid" not in data:
+            raise HTTPException(status_code=400, detail="Missing is_paid")
+
+        reservation_id = data["reservation_id"]
+        is_paid = data["is_paid"]
+        if not isinstance(is_paid, bool):
+            raise HTTPException(status_code=400, detail="is_paid must be boolean")
+
+        reservation = db.query(Reservation).filter(
+            Reservation.id == reservation_id
+        ).first()
+
+        if not reservation:
+            logger.warning(f"Reservation not found: {reservation_id}")
+            raise HTTPException(status_code=404, detail="Reservation not found")
+
+        old_status = reservation.is_paid
+        if old_status == is_paid:
+            logger.info(f"Reservation {reservation_id} already has is_paid={is_paid}")
+            return {
+                "success": True,
+                "message": "Status already up to date",
+                "reservation_id": reservation_id,
+                "is_paid": is_paid
+            }
+
+        reservation.is_paid = is_paid
+        db.commit()
+
+        logger.info(f"✅ Updated reservation {reservation_id}: is_paid {old_status} -> {is_paid}")
+
+        return {
+            "success": True,
+            "message": "Reservation status updated successfully",
+            "reservation_id": reservation_id,
+            "is_paid": is_paid,
+            "previous_status": old_status
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error updating reservation status: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to update reservation status")
 
 
 @router.get("/user_reservations", response_model=List[UserReservationOut])
