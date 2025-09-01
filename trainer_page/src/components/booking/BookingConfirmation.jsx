@@ -29,10 +29,13 @@ const BookingConfirmation = (props) => {
     }
     const sendReservationRequest = async (payment_type, is_paid) => {
     try {
-        // if (process.env.NODE_ENV === 'production' && recaptchaRef.current.getValue().length === 0) {
-        //     setCaptchaError(true);
-        //     return false;
-        // }
+        const captchaToken = recaptchaRef.current?.getValue();
+        if (!captchaToken) {
+            setCaptchaError(true);
+            alert(t("Please complete the captcha verification"));
+            return false;
+        }
+        setCaptchaError(false);
 
         let form = new FormData();
         form.append("title", props.selectedPlanHour.plan.title);
@@ -63,6 +66,12 @@ const BookingConfirmation = (props) => {
 
             if (!paymentResponse.ok) {
                 const errorData = await paymentResponse.json();
+                if (errorData.error === 'recaptcha_failed') {
+                    setCaptchaError(true);
+                    recaptchaRef.current?.reset(); // Resetuj captcha
+                    throw new Error(t("Captcha verification failed. Please try again."));
+                }
+
                 throw new Error(errorData.message || "Failed to create PaymentIntent.");
             }
 
@@ -77,6 +86,11 @@ const BookingConfirmation = (props) => {
         const reservationResponse = await postReservation(form);
 
         if (!reservationResponse || reservationResponse.status !== 200) {
+            if (reservationResponse?.data?.error === 'recaptcha_failed') {
+                setCaptchaError(true);
+                recaptchaRef.current?.reset();
+                throw new Error(t("Captcha verification failed. Please try again."));
+            }
             if (paymentIntentId) {
                 try {
                     await fetch('/api/cancel-intent', {
@@ -90,7 +104,7 @@ const BookingConfirmation = (props) => {
             }
             throw new Error("Reservation request failed.");
         }
-
+        recaptchaRef.current?.reset();
         const emailData = {
             email: authUser.email,
             body: {
@@ -118,10 +132,14 @@ const BookingConfirmation = (props) => {
 
     } catch (err) {
         console.error('Reservation error:', err);
-        setCaptchaError(true);
-        alert(t("An error occurred while processing your reservation. Please try again."));
+        alert(err.message || t("An error occurred while processing your reservation. Please try again."));
         return false;
     }
+};
+
+const resetCaptcha = () => {
+    setCaptchaError(false);
+    recaptchaRef.current?.reset();
 };
 
 

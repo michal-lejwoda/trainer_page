@@ -92,6 +92,7 @@ const AccountOrders = () => {
             ) : (
                 <p>No orders found.</p>
             )}
+            <div>Sometimes you need to wait longer for Confirmation</div>
         </div>
     );
 };
