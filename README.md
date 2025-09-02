@@ -1,50 +1,59 @@
-# 💪 Trainer Page - Website for Personal Trainer with Reservation System
+# 💪 Personal Trainer - Website with Booking & Payments  
 
 🌍 **Demo**: [https://www.personal-trainer-michal.pl](https://www.personal-trainer-michal.pl)  
 
-⚠️ **Important**: All photos and transformations used in this project are obtained from the Internet and serve **illustrative purposes only**.
-
 ---
+
 ## 🔑 Test Account
-
 ### 👤 Login: **testuser@gmail.com**  
-### 🔒 Password: **testuser**
----
-
-## 🚀 Overview
-
-This project is a **modern website for a personal trainer** designed to:  
-- showcase services,  
-- attract new clients,  
-- and simplify the process of **booking training sessions online**.  
-
-The app runs in **Docker containers** and is automatically deployed on a VPS server with **GitHub Actions** CI/CD.
+### 🔒 Password: **testuser**  
 
 ---
 
-## 🛠️ Tech Stack
+## 📖 Overview  
 
-### ⚙️ DevOps & Infrastructure
-- 🐳 **Docker** - containerized deployment  
-- 🌐 **Nginx** - reverse proxy & static file serving  
-- 🤖 **GitHub Actions** - CI/CD automation  
-- 🖥️ **VPS hosting**  
+A **modern, responsive website** for a personal trainer, designed to showcase services and encourage clients to book sessions.  
+- Includes a **complete booking system** with **Stripe payments**, enabling users to reserve and pay for sessions directly online.  
+- Clear presentation of offers and a streamlined booking process enhances the client experience and helps convert visitors into paying customers.  
+
+---
+
+## 🚀 Features  
+
+- 🔑 **User Authentication** - optional login for clients  
+- 🗓️ **Booking System** - schedule training sessions  
+- 💳 **Online Payments** - integrated Stripe payments  
+- 📋 **Service Presentation** - clear display of offers and training options  
+- ⚙️ **Admin Panel** - manage bookings and services  
+- 📧 **Contact Form** - send messages to the trainer  
+
+---
+
+## 🛠️ Technology Stack  
 
 ### 🔙 Backend
-- ⚡ **FastAPI** - Python framework for REST API  
-- 🔌 **Uvicorn** - ASGI server  
+- **FastAPI** - API framework  
+- **Alembic** - database migrations  
+- **PostgreSQL** - database  
+- **APScheduler** - scheduled tasks  
 
 ### 🎨 Frontend
-- ⚛️ **React** - component-based UI  
-- 🔗 **Axios** - API communication  
-- 🎨 **TailwindCSS / Styled Components** (if used - specify)  
+- **React** - UI components  
+- **TailwindCSS** - styling  
+
+### ⚙️ DevOps
+- **Docker** - containerized deployment  
+- **GitHub Actions** - CI/CD automation  
+- **Nginx** - static file serving & reverse proxy  
 
 ---
 
-## 📌 Features
+## 🏗️ Architecture  
 
-- 🗓️ **Training Reservations** - book training sessions online  
-- ✉️ **Contact Form** - send messages directly to trainer  
-- 📱 **Responsive Design** - mobile & desktop friendly  
-- 🔒 **Secure Communication** - HTTPS with Nginx  
-- ⚡ **Lightweight & Fast** - modern web stack  
+🔹 **Frontend (React + TailwindCSS)** - UI and booking interface  
+🔹 **Backend (FastAPI + Alembic + PostgreSQL)** - API, bookings, payments  
+🔹 **Stripe** - payment processing  
+🔹 **Nginx** - static files & reverse proxy  
+🔹 **Docker & GitHub Actions** - deployment & CI/CD  
+
+---
