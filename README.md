@@ -1,23 +1,45 @@
-# Trainer page - Website for personal trainer with reservation system. 
+# 💪 Trainer Page – Website for Personal Trainer with Reservation System
 
-### Demo: https://www.personal-trainer-michal.pl
+🌍 **Demo**: [https://www.personal-trainer-michal.pl](https://www.personal-trainer-michal.pl)  
 
-## Important!!! All photos and transformations are obtained from the Internet and are for illustrative purposes.
+⚠️ **Important**: All photos and transformations used in this project are obtained from the Internet and serve **illustrative purposes only**.
 
-## Technology stack
+---
 
-### DevOps
-- Nginx
-- Docker
-### Backend 
-- Fast api
-### Frontend:
-- React
+## 🚀 Overview
 
-## Aplication description
+This project is a **modern website for a personal trainer** designed to:  
+- showcase services,  
+- attract new clients,  
+- and simplify the process of **booking training sessions online**.  
 
-A website designed to attract the use of a personal trainer. The application utilizes Docker containers for seamless deployment and execution. Also, the application is hosted on my vps server and with each approved PR, it is built and reloaded automatically thanks to github actions.
+The app runs in **Docker containers** and is automatically deployed on a VPS server with **GitHub Actions** CI/CD.
 
-## Websites allows to:
-- Create training reservations
-- Send Messages to trainer
+---
+
+## 🛠️ Tech Stack
+
+### ⚙️ DevOps & Infrastructure
+- 🐳 **Docker** – containerized deployment  
+- 🌐 **Nginx** – reverse proxy & static file serving  
+- 🤖 **GitHub Actions** – CI/CD automation  
+- 🖥️ **VPS hosting**  
+
+### 🔙 Backend
+- ⚡ **FastAPI** – Python framework for REST API  
+- 🔌 **Uvicorn** – ASGI server  
+
+### 🎨 Frontend
+- ⚛️ **React** – component-based UI  
+- 🔗 **Axios** – API communication  
+- 🎨 **TailwindCSS / Styled Components** (if used – specify)  
+
+---
+
+## 📌 Features
+
+- 🗓️ **Training Reservations** – book training sessions online  
+- ✉️ **Contact Form** – send messages directly to trainer  
+- 📱 **Responsive Design** – mobile & desktop friendly  
+- 🔒 **Secure Communication** – HTTPS with Nginx  
+- ⚡ **Lightweight & Fast** – modern web stack  
